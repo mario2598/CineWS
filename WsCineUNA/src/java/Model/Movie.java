@@ -15,6 +15,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -43,6 +46,15 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Movie.findByMovieEstado", query = "SELECT m FROM Movie m WHERE m.movieEstado = :movieEstado")
     , @NamedQuery(name = "Movie.findByMoviePortada", query = "SELECT m FROM Movie m WHERE m.moviePortada = :moviePortada")})
 public class Movie implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "movieId", fetch = FetchType.LAZY)
+    private List<Comprobante> comprobanteList;
+
+    @JoinTable(name = "SALAMOVIE", joinColumns = {
+        @JoinColumn(name = "SM_MOVIE_ID", referencedColumnName = "MOVIE_ID")}, inverseJoinColumns = {
+        @JoinColumn(name = "SM_SAL_ID", referencedColumnName = "SALA_ID")})
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<Sala> salaList;
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -186,6 +198,24 @@ public class Movie implements Serializable {
     @Override
     public String toString() {
         return "Model.Movie[ movieId=" + movieId + " ]";
+    }
+
+    @XmlTransient
+    public List<Sala> getSalaList() {
+        return salaList;
+    }
+
+    public void setSalaList(List<Sala> salaList) {
+        this.salaList = salaList;
+    }
+
+    @XmlTransient
+    public List<Comprobante> getComprobanteList() {
+        return comprobanteList;
+    }
+
+    public void setComprobanteList(List<Comprobante> comprobanteList) {
+        this.comprobanteList = comprobanteList;
     }
     
 }

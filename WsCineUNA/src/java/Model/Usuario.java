@@ -6,8 +6,7 @@
 package Model;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.math.BigInteger;
+import java.lang.Long;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
@@ -53,6 +52,11 @@ import javax.xml.bind.annotation.XmlTransient;
       
 public class Usuario implements Serializable {
 
+    @Column(name = "USU_IDIOMA")
+    private Long usuIdioma;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuId", fetch = FetchType.LAZY)
+    private List<Comprobante> comprobanteList;
+
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -86,10 +90,6 @@ public class Usuario implements Serializable {
  //   @Size(min = 1, max = 80)
     @Column(name = "USU_EMAIL")
     private String usuEmail;
-   @Basic(optional = false)
- //   @NotNull
-    @Column(name = "USU_IDIOMA")
-    private Long usuIdioma;
     @Basic(optional = false)
 //    @NotNull
  //   @Size(min = 1, max = 1)
@@ -153,11 +153,11 @@ public class Usuario implements Serializable {
          this.usuCambio = usu.getUsuCambio();
          this.usuEstado = usu.getUsuEstado();
          List<Cine> cList = new ArrayList<>();
-/*         for(CineDto cDto : usu.getCineList()){ //Convertir cines a dto
+          for(CineDto cDto : usu.getCineList()){ //Convertir cines a dto
              Cine c = new Cine();
              cList.add(c);
          }
-         this.cineList = cList;*/
+         this.cineList = cList;
     }
 
     public Long getUsuId() {
@@ -289,5 +289,15 @@ public class Usuario implements Serializable {
     public String toString() {
         return "Model.Usuario[ usuId=" + usuId + " ]";
     }
+
+    @XmlTransient
+    public List<Comprobante> getComprobanteList() {
+        return comprobanteList;
+    }
+
+    public void setComprobanteList(List<Comprobante> comprobanteList) {
+        this.comprobanteList = comprobanteList;
+    }
+
     
 }

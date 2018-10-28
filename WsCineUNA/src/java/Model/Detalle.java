@@ -7,7 +7,6 @@ package Model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -42,6 +41,23 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Detalle.findByDetFechafin", query = "SELECT d FROM Detalle d WHERE d.detFechafin = :detFechafin")})
 public class Detalle implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "DET_IDIOMA")
+    private Long detIdioma;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "DET_COSTO")
+    private Long detCosto;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "DET_HORAINI")
+    private Long detHoraini;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "DET_HORAFIN")
+    private Long detHorafin;
+
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -49,22 +65,6 @@ public class Detalle implements Serializable {
    // @NotNull
     @Column(name = "DET_ID")
     private Long detId;
-    @Basic(optional = false)
-  //  @NotNull
-    @Column(name = "DET_IDIOMA")
-    private Long detIdioma;
-    @Basic(optional = false)
- //   @NotNull
-    @Column(name = "DET_COSTO")
-    private Long detCosto;
-    @Basic(optional = false)
- //   @NotNull
-    @Column(name = "DET_HORAINI")
-    private Long detHoraini;
-    @Basic(optional = false)
- //   @NotNull
-    @Column(name = "DET_HORAFIN")
-    private Long detHorafin;
     @Basic(optional = false)
  //   @NotNull
     @Column(name = "DET_FECHAINI")
@@ -195,5 +195,5 @@ public class Detalle implements Serializable {
     public String toString() {
         return "Model.Detalle[ detId=" + detId + " ]";
     }
-    
+
 }

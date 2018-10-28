@@ -43,6 +43,11 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Cine.findByCineCierra", query = "SELECT c FROM Cine c WHERE c.cineCierra = :cineCierra")})
 public class Cine implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "CINE_TEL")
+    private Long cineTel;
+
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -55,10 +60,6 @@ public class Cine implements Serializable {
    // @Size(min = 1, max = 30)
     @Column(name = "CINE_NOMBRE")
     private String cineNombre;
-    @Basic(optional = false)
-   // @NotNull
-    @Column(name = "CINE_TEL")
-    private Long cineTel;
     @Basic(optional = false)
   //  @NotNull
   //  @Size(min = 1, max = 80)
@@ -185,5 +186,4 @@ public class Cine implements Serializable {
     public String toString() {
         return "Model.Cine[ cineId=" + cineId + " ]";
     }
-    
 }

@@ -9,11 +9,13 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -37,6 +39,14 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Sala.findBySalaEstado", query = "SELECT s FROM Sala s WHERE s.salaEstado = :salaEstado")
     , @NamedQuery(name = "Sala.findBySalaImgfondo", query = "SELECT s FROM Sala s WHERE s.salaImgfondo = :salaImgfondo")})
 public class Sala implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "salaId", fetch = FetchType.LAZY)
+    private List<Comprobante> comprobanteList;
+    @OneToMany(mappedBy = "salaId", fetch = FetchType.LAZY)
+    private List<Butaca> butacaList;
+
+    @ManyToMany(mappedBy = "salaList", fetch = FetchType.LAZY)
+    private List<Movie> movieList;
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -135,6 +145,33 @@ public class Sala implements Serializable {
     @Override
     public String toString() {
         return "Model.Sala[ salaId=" + salaId + " ]";
+    }
+
+    @XmlTransient
+    public List<Movie> getMovieList() {
+        return movieList;
+    }
+
+    public void setMovieList(List<Movie> movieList) {
+        this.movieList = movieList;
+    }
+
+    @XmlTransient
+    public List<Comprobante> getComprobanteList() {
+        return comprobanteList;
+    }
+
+    public void setComprobanteList(List<Comprobante> comprobanteList) {
+        this.comprobanteList = comprobanteList;
+    }
+
+    @XmlTransient
+    public List<Butaca> getButacaList() {
+        return butacaList;
+    }
+
+    public void setButacaList(List<Butaca> butacaList) {
+        this.butacaList = butacaList;
     }
     
 }
