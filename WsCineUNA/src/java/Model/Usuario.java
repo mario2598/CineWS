@@ -52,8 +52,14 @@ import javax.xml.bind.annotation.XmlTransient;
       
 public class Usuario implements Serializable {
 
+    @Size(max = 8)
+    @Column(name = "USU_COD_ACT")
+    private String usuCodAct;
+
     @Column(name = "USU_IDIOMA")
     private Long usuIdioma;
+    @OneToMany(mappedBy = "usuId", fetch = FetchType.LAZY)
+    private List<Review> reviewList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuId", fetch = FetchType.LAZY)
     private List<Comprobante> comprobanteList;
 
@@ -297,6 +303,23 @@ public class Usuario implements Serializable {
 
     public void setComprobanteList(List<Comprobante> comprobanteList) {
         this.comprobanteList = comprobanteList;
+    }
+
+    @XmlTransient
+    public List<Review> getReviewList() {
+        return reviewList;
+    }
+
+    public void setReviewList(List<Review> reviewList) {
+        this.reviewList = reviewList;
+    }
+
+    public String getUsuCodAct() {
+        return usuCodAct;
+    }
+
+    public void setUsuCodAct(String usuCodAct) {
+        this.usuCodAct = usuCodAct;
     }
 
     

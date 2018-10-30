@@ -40,6 +40,15 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Sala.findBySalaImgfondo", query = "SELECT s FROM Sala s WHERE s.salaImgfondo = :salaImgfondo")})
 public class Sala implements Serializable {
 
+    @Column(name = "SALA_COL")
+    private Long salaCol;
+    @Column(name = "SALA_FILAS")
+    private Long salaFilas;
+    @Column(name = "SALA_PANT")
+    private Long salaPant;
+    @OneToMany(mappedBy = "salaId", fetch = FetchType.LAZY)
+    private List<Tanda> tandaList;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "salaId", fetch = FetchType.LAZY)
     private List<Comprobante> comprobanteList;
     @OneToMany(mappedBy = "salaId", fetch = FetchType.LAZY)
@@ -172,6 +181,39 @@ public class Sala implements Serializable {
 
     public void setButacaList(List<Butaca> butacaList) {
         this.butacaList = butacaList;
+    }
+
+    public Long getSalaCol() {
+        return salaCol;
+    }
+
+    public void setSalaCol(Long salaCol) {
+        this.salaCol = salaCol;
+    }
+
+    public Long getSalaFilas() {
+        return salaFilas;
+    }
+
+    public void setSalaFilas(Long salaFilas) {
+        this.salaFilas = salaFilas;
+    }
+
+    public Long getSalaPant() {
+        return salaPant;
+    }
+
+    public void setSalaPant(Long salaPant) {
+        this.salaPant = salaPant;
+    }
+
+    @XmlTransient
+    public List<Tanda> getTandaList() {
+        return tandaList;
+    }
+
+    public void setTandaList(List<Tanda> tandaList) {
+        this.tandaList = tandaList;
     }
     
 }

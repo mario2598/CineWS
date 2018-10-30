@@ -32,8 +32,15 @@ public class MovieDto {
      private LocalDate movieDate;
      private String movieEstado;
      private String moviePortada;
+     private Long movieDuracion;
      @XmlTransient
      private List<ComprobanteDto> comprobanteList = new ArrayList<>();
+     @XmlTransient
+     private List<TandaDto> tandaList = new ArrayList<>();
+     @XmlTransient
+     private List<ReviewDto> reviewList = new ArrayList<>();
+     @XmlTransient
+     private List<DetalleDto> detalleList = new ArrayList<>();
      
      public MovieDto(Movie m) {
          this.movieId = m.getMovieId();
@@ -43,12 +50,73 @@ public class MovieDto {
          this.movieDate = m.getMovieDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
          this.movieEstado = m.getMovieEstado();
          this.moviePortada = m.getMoviePortada();
+         this.movieDuracion = m.getMovieDuracion();
     }
 
     public void convList(Movie m){
         for(Comprobante c : m.getComprobanteList()){ //Convertir cines a dto
              ComprobanteDto cDto = new ComprobanteDto(c);
              comprobanteList.add(cDto);
+         }
+    }
+    public void convListDet(Movie m){
+        for(Detalle d : m.getDetalleList()){ //Convertir cines a dto
+             DetalleDto cDto = new DetalleDto(d);
+             detalleList.add(cDto);
+         }
+    }
+    @XmlTransient
+    public List<DetalleDto> getDetalleList() {
+        return detalleList;
+    }
+
+    public void setDetalleList(List<DetalleDto> detalleList) {
+        this.detalleList = detalleList;
+    }
+
+    public Long getMovieDuracion() {
+        return movieDuracion;
+    }
+
+    public void setMovieDuracion(Long movieDuracion) {
+        this.movieDuracion = movieDuracion;
+    }
+    @XmlTransient
+    public List<ComprobanteDto> getComprobanteList() {
+        return comprobanteList;
+    }
+
+    public void setComprobanteList(List<ComprobanteDto> comprobanteList) {
+        this.comprobanteList = comprobanteList;
+    }
+    @XmlTransient
+    public List<TandaDto> getTandaList() {
+        return tandaList;
+    }
+
+    public void setTandaList(List<TandaDto> tandaList) {
+        this.tandaList = tandaList;
+    }
+    @XmlTransient
+    public List<ReviewDto> getReviewList() {
+        return reviewList;
+    }
+
+    public void setReviewList(List<ReviewDto> reviewList) {
+        this.reviewList = reviewList;
+    }
+    
+     public void convListTand(Movie m){
+        for(Tanda t : m.getTandaList()){ //Convertir cines a dto
+             TandaDto cDto = new TandaDto(t);
+             tandaList.add(cDto);
+         }
+    }
+     
+      public void convListRev(Movie m){
+        for(Review t : m.getReviewList()){ //Convertir cines a dto
+            ReviewDto cDto = new ReviewDto(t);
+             reviewList.add(cDto);
          }
     }
      

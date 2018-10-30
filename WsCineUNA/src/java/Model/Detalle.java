@@ -42,19 +42,19 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Detalle implements Serializable {
 
     @Basic(optional = false)
-    @NotNull
+  //  @NotNull
     @Column(name = "DET_IDIOMA")
     private Long detIdioma;
     @Basic(optional = false)
-    @NotNull
+  //  @NotNull
     @Column(name = "DET_COSTO")
     private Long detCosto;
     @Basic(optional = false)
-    @NotNull
+   // @NotNull
     @Column(name = "DET_HORAINI")
     private Long detHoraini;
     @Basic(optional = false)
-    @NotNull
+   // @NotNull
     @Column(name = "DET_HORAFIN")
     private Long detHorafin;
 

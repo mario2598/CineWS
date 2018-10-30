@@ -42,8 +42,7 @@ public class CineDto {
          this.cineNombre = c.getCineNombre();
          this.cineTel = c.getCineTel();
          this.cineAbre = c.getCineAbre().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-         this.cineCierra = c.getCineCierra().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-         
+         this.cineCierra = c.getCineCierra().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();        
     }
 
     public void convList(Cine c){

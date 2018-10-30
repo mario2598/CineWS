@@ -27,6 +27,10 @@ public class SalaDto {
     private List<MovieDto> movieList = new ArrayList<>();
     @XmlTransient
     private List<ButacaDto> butacaList = new ArrayList<>();
+    @XmlTransient
+    private List<ComprobanteDto> comprobanteList = new ArrayList<>();
+    @XmlTransient
+    private List<DetalleDto> detalleList = new ArrayList<>();;
     
     public SalaDto(Sala s) {
          this.salaId = s.getSalaId();
@@ -35,6 +39,20 @@ public class SalaDto {
         
     }
 
+    public void convListDet(Sala s){
+         for(Detalle d : s.getDetalleList()){ 
+             DetalleDto dDto = new DetalleDto(d);
+             detalleList.add(dDto);
+         }
+    }
+    
+    public void convListComp(Sala s){
+         for(Comprobante c : s.getComprobanteList()){ 
+             ComprobanteDto cDto = new ComprobanteDto(c);
+             comprobanteList.add(cDto);
+         }
+    }
+    
     public void convList(Sala s){
          for(Movie m : s.getMovieList()){ 
              MovieDto mDto = new MovieDto(m);
@@ -59,6 +77,14 @@ public class SalaDto {
 
     public String getSalaEstado() {
         return salaEstado;
+    }
+    @XmlTransient
+    public List<DetalleDto> getDetalleList() {
+        return detalleList;
+    }
+
+    public void setDetalleList(List<DetalleDto> detalleList) {
+        this.detalleList = detalleList;
     }
 
     public void setSalaEstado(String salaEstado) {
@@ -87,6 +113,14 @@ public class SalaDto {
 
     public void setButacaList(List<ButacaDto> butacaList) {
         this.butacaList = butacaList;
+    }
+    @XmlTransient
+    public List<ComprobanteDto> getComprobanteList() {
+        return comprobanteList;
+    }
+
+    public void setComprobanteList(List<ComprobanteDto> comprobanteList) {
+        this.comprobanteList = comprobanteList;
     }
     
     

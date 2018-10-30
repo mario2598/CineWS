@@ -25,6 +25,7 @@ public class ButacaDto {
      private String butLetra;
      private String butPantalla;
      private SalaDto salaId;
+     private String butActiva;
      
      public ButacaDto(Butaca but) {
          this.butId = but.getButId();
@@ -35,6 +36,15 @@ public class ButacaDto {
          this.butLetra = but.getButLetra();
          this.butPantalla = but.getButPantalla();
          this.salaId = new SalaDto(but.getSalaId());
+         this.butActiva = but.getButActiva();
+    }
+
+    public String getButActiva() {
+        return butActiva;
+    }
+
+    public void setButActiva(String butActiva) {
+        this.butActiva = butActiva;
     }
 
     public Long getButId() {

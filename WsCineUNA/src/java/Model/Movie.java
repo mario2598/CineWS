@@ -6,7 +6,6 @@
 package Model;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -46,6 +45,19 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Movie.findByMovieEstado", query = "SELECT m FROM Movie m WHERE m.movieEstado = :movieEstado")
     , @NamedQuery(name = "Movie.findByMoviePortada", query = "SELECT m FROM Movie m WHERE m.moviePortada = :moviePortada")})
 public class Movie implements Serializable {
+
+    @Column(name = "MOVIE_DURACION")
+    private Long movieDuracion;
+   // @Size(max = 2)
+    @Column(name = "MOVIE_TIPO")
+    private String movieTipo;
+  //  @Size(max = 100)
+    @Column(name = "MOVIE_URLENG")
+    private String movieUrleng;
+    @OneToMany(mappedBy = "movieId", fetch = FetchType.LAZY)
+    private List<Tanda> tandaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "movieId", fetch = FetchType.LAZY)
+    private List<Review> reviewList;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "movieId", fetch = FetchType.LAZY)
     private List<Comprobante> comprobanteList;
@@ -216,6 +228,48 @@ public class Movie implements Serializable {
 
     public void setComprobanteList(List<Comprobante> comprobanteList) {
         this.comprobanteList = comprobanteList;
+    }
+
+    public Long getMovieDuracion() {
+        return movieDuracion;
+    }
+
+    public void setMovieDuracion(Long movieDuracion) {
+        this.movieDuracion = movieDuracion;
+    }
+
+    public String getMovieTipo() {
+        return movieTipo;
+    }
+
+    public void setMovieTipo(String movieTipo) {
+        this.movieTipo = movieTipo;
+    }
+
+    public String getMovieUrleng() {
+        return movieUrleng;
+    }
+
+    public void setMovieUrleng(String movieUrleng) {
+        this.movieUrleng = movieUrleng;
+    }
+
+    @XmlTransient
+    public List<Tanda> getTandaList() {
+        return tandaList;
+    }
+
+    public void setTandaList(List<Tanda> tandaList) {
+        this.tandaList = tandaList;
+    }
+
+    @XmlTransient
+    public List<Review> getReviewList() {
+        return reviewList;
+    }
+
+    public void setReviewList(List<Review> reviewList) {
+        this.reviewList = reviewList;
     }
     
 }

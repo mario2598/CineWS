@@ -41,29 +41,32 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Butaca.findByButPantalla", query = "SELECT b FROM Butaca b WHERE b.butPantalla = :butPantalla")})
 public class Butaca implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "BUT_ID")
-    private Long butId;
     @Column(name = "BUT_COLUMNA")
     private Long butColumna;
-    @Size(max = 1)
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+   // @Size(max = 1)
     @Column(name = "BUT_ESTADO")
     private String butEstado;
     @Column(name = "BUT_FILA")
     private Long butFila;
-    @Size(max = 100)
+  //  @Size(max = 100)
     @Column(name = "BUT_IMG")
     private String butImg;
-    @Size(max = 1)
+ //   @Size(max = 3)
     @Column(name = "BUT_LETRA")
     private String butLetra;
-    @Size(max = 1)
+ //   @Size(max = 1)
     @Column(name = "BUT_PANTALLA")
     private String butPantalla;
+ //   @Size(max = 1)
+    @Column(name = "BUT_ACTIVA")
+    private String butActiva;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+   // @NotNull
+    @Column(name = "BUT_ID")
+    private Long butId;
     @OneToMany(mappedBy = "butId", fetch = FetchType.LAZY)
     private List<Comprobante> comprobanteList;
     @JoinColumn(name = "SALA_ID", referencedColumnName = "SALA_ID")
@@ -173,6 +176,14 @@ public class Butaca implements Serializable {
     @Override
     public String toString() {
         return "Model.Butaca[ butId=" + butId + " ]";
+    }
+
+    public String getButActiva() {
+        return butActiva;
+    }
+
+    public void setButActiva(String butActiva) {
+        this.butActiva = butActiva;
     }
     
 }

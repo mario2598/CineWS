@@ -44,7 +44,7 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Cine implements Serializable {
 
     @Basic(optional = false)
-    @NotNull
+  //  @NotNull
     @Column(name = "CINE_TEL")
     private Long cineTel;
 
@@ -186,4 +186,5 @@ public class Cine implements Serializable {
     public String toString() {
         return "Model.Cine[ cineId=" + cineId + " ]";
     }
+
 }
