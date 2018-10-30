@@ -105,8 +105,8 @@ public class UsuarioService {
     
      public String activarUsuario(String user) {
              Usuario usu;
-             Query qryUsu = em.createNamedQuery("Usuario.findByUsuUser",Usuario.class);            
-             qryUsu.setParameter("usuUser",user);             
+             Query qryUsu = em.createNamedQuery("Usuario.findByUsuCodAct",Usuario.class);            
+             qryUsu.setParameter("usuCodAct",user);             
              usu = (Usuario) qryUsu.getSingleResult();
              usu.setUsuEstado("A");
              usu = em.merge(usu);

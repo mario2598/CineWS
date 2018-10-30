@@ -48,11 +48,12 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Usuario.findByUsuAdmin", query = "SELECT u FROM Usuario u WHERE u.usuAdmin = :usuAdmin")
     , @NamedQuery(name = "Usuario.findByUsuNewpassword", query = "SELECT u FROM Usuario u WHERE u.usuNewpassword = :usuNewpassword")
     , @NamedQuery(name = "Usuario.findByUsuNewClave", query = "SELECT u FROM Usuario u WHERE u.usuUser = :usuUser and u.usuNewpassword = :usuNewpassword")
-    , @NamedQuery(name = "Usuario.findByUsuClave", query = "SELECT u FROM Usuario u WHERE u.usuUser = :usuUser and u.usuPassword = :usuPassword")})
+    , @NamedQuery(name = "Usuario.findByUsuClave", query = "SELECT u FROM Usuario u WHERE u.usuUser = :usuUser and u.usuPassword = :usuPassword")
+    , @NamedQuery(name = "Usuario.findByUsuCodAct", query = "SELECT u FROM Usuario u WHERE u.usuCodAct = :usuCodAct")})
       
 public class Usuario implements Serializable {
 
-    @Size(max = 8)
+   // @Size(max = 8)
     @Column(name = "USU_COD_ACT")
     private String usuCodAct;
 
@@ -158,6 +159,7 @@ public class Usuario implements Serializable {
          this.usuNewpassword = usu.getUsuNewpassword();
          this.usuCambio = usu.getUsuCambio();
          this.usuEstado = usu.getUsuEstado();
+         this.usuCodAct = usu.getUsuCodAct();
          List<Cine> cList = new ArrayList<>();
           for(CineDto cDto : usu.getCineList()){ //Convertir cines a dto
              Cine c = new Cine();
