@@ -6,9 +6,9 @@
 package Model;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -35,29 +35,47 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Sala.findAll", query = "SELECT s FROM Sala s")
     , @NamedQuery(name = "Sala.findBySalaId", query = "SELECT s FROM Sala s WHERE s.salaId = :salaId")
     , @NamedQuery(name = "Sala.findBySalaEstado", query = "SELECT s FROM Sala s WHERE s.salaEstado = :salaEstado")
-    , @NamedQuery(name = "Sala.findBySalaImgfondo", query = "SELECT s FROM Sala s WHERE s.salaImgfondo = :salaImgfondo")})
+    , @NamedQuery(name = "Sala.findBySalaImgfondo", query = "SELECT s FROM Sala s WHERE s.salaImgfondo = :salaImgfondo")
+    , @NamedQuery(name = "Sala.findBySalaCol", query = "SELECT s FROM Sala s WHERE s.salaCol = :salaCol")
+    , @NamedQuery(name = "Sala.findBySalaFilas", query = "SELECT s FROM Sala s WHERE s.salaFilas = :salaFilas")
+    , @NamedQuery(name = "Sala.findBySalaNombre", query = "SELECT s FROM Sala s WHERE s.salaNombre = :salaNombre")
+    , @NamedQuery(name = "Sala.findBySalaTipo", query = "SELECT s FROM Sala s WHERE s.salaTipo = :salaTipo")})
 public class Sala implements Serializable {
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @Basic(optional = false)
- //   @NotNull
+    //@NotNull
     @Column(name = "SALA_ID")
     private Long salaId;
     @Basic(optional = false)
-//    @NotNull
-//    @Size(min = 1, max = 1)
+    //@NotNull
+    //@Size(min = 1, max = 1)
     @Column(name = "SALA_ESTADO")
     private String salaEstado;
-//    @Size(max = 100)
+    //@Size(max = 100)
     @Column(name = "SALA_IMGFONDO")
     private String salaImgfondo;
+    @Column(name = "SALA_COL")
+    private Long salaCol;
+    @Column(name = "SALA_FILAS")
+    private Long salaFilas;
+    //@Size(max = 10)
+    @Column(name = "SALA_NOMBRE")
+    private String salaNombre;
+    //@Size(max = 3)
+    @Column(name = "SALA_TIPO")
+    private String salaTipo;
     @OneToMany(mappedBy = "salaId", fetch = FetchType.LAZY)
-    private List<Detalle> detalleList;
+    private List<Tanda> tandaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "salaId", fetch = FetchType.LAZY)
+    private List<Comprobante> comprobanteList;
     @JoinColumn(name = "CINE_ID", referencedColumnName = "CINE_ID")
     @ManyToOne(fetch = FetchType.LAZY)
     private Cine cineId;
+    @OneToMany(mappedBy = "salaId", fetch = FetchType.LAZY)
+    private List<Butaca> butacaList;
 
     public Sala() {
     }
@@ -95,13 +113,54 @@ public class Sala implements Serializable {
         this.salaImgfondo = salaImgfondo;
     }
 
-    @XmlTransient
-    public List<Detalle> getDetalleList() {
-        return detalleList;
+    public Long getSalaCol() {
+        return salaCol;
     }
 
-    public void setDetalleList(List<Detalle> detalleList) {
-        this.detalleList = detalleList;
+    public void setSalaCol(Long salaCol) {
+        this.salaCol = salaCol;
+    }
+
+    public Long getSalaFilas() {
+        return salaFilas;
+    }
+
+    public void setSalaFilas(Long salaFilas) {
+        this.salaFilas = salaFilas;
+    }
+
+    public String getSalaNombre() {
+        return salaNombre;
+    }
+
+    public void setSalaNombre(String salaNombre) {
+        this.salaNombre = salaNombre;
+    }
+
+    public String getSalaTipo() {
+        return salaTipo;
+    }
+
+    public void setSalaTipo(String salaTipo) {
+        this.salaTipo = salaTipo;
+    }
+
+    @XmlTransient
+    public List<Tanda> getTandaList() {
+        return tandaList;
+    }
+
+    public void setTandaList(List<Tanda> tandaList) {
+        this.tandaList = tandaList;
+    }
+
+    @XmlTransient
+    public List<Comprobante> getComprobanteList() {
+        return comprobanteList;
+    }
+
+    public void setComprobanteList(List<Comprobante> comprobanteList) {
+        this.comprobanteList = comprobanteList;
     }
 
     public Cine getCineId() {
@@ -110,6 +169,15 @@ public class Sala implements Serializable {
 
     public void setCineId(Cine cineId) {
         this.cineId = cineId;
+    }
+
+    @XmlTransient
+    public List<Butaca> getButacaList() {
+        return butacaList;
+    }
+
+    public void setButacaList(List<Butaca> butacaList) {
+        this.butacaList = butacaList;
     }
 
     @Override

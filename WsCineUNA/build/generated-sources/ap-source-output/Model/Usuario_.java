@@ -1,12 +1,13 @@
 package Model;
 
 import Model.Cine;
+import Model.Comprobante;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2018-10-23T15:57:13")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2018-10-27T18:30:08")
 @StaticMetamodel(Usuario.class)
 public class Usuario_ { 
 
@@ -23,5 +24,6 @@ public class Usuario_ {
     public static volatile SingularAttribute<Usuario, String> usuEmail;
     public static volatile SingularAttribute<Usuario, String> usuPassword;
     public static volatile SingularAttribute<Usuario, String> usuPapellido;
+    public static volatile ListAttribute<Usuario, Comprobante> comprobanteList;
 
 }

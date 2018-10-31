@@ -92,8 +92,20 @@ public class UsuarioService {
                 usu.actualizarUsuario(usuDto);
                 usu = em.merge(usu);
             } else {
-                usu = new Usuario(usuDto);
-                em.persist(usu);
+                Query qryUsu = em.createNamedQuery("Usuario.findByUsuUser",Usuario.class);            
+                qryUsu.setParameter("usuUser",usuDto.getUsuUser());    
+                try {
+                    usu = (Usuario) qryUsu.getSingleResult(); 
+                } catch (Exception e) {
+                    usu = null; 
+                }
+                if(usu == null){
+                 usu = new Usuario(usuDto);
+                 em.persist(usu);  
+                }
+                else{
+                   return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ya existe un usuario con ese nombre de usuario.", "guardarUsuario "); 
+                }
             }
             em.flush();
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Usuario", new UsuarioDto(usu));
@@ -105,8 +117,8 @@ public class UsuarioService {
     
      public String activarUsuario(String user) {
              Usuario usu;
-             Query qryUsu = em.createNamedQuery("Usuario.findByUsuUser",Usuario.class);            
-             qryUsu.setParameter("usuUser",user);             
+             Query qryUsu = em.createNamedQuery("Usuario.findByUsuCodAct",Usuario.class);            
+             qryUsu.setParameter("usuCodAct",user);             
              usu = (Usuario) qryUsu.getSingleResult();
              usu.setUsuEstado("A");
              usu = em.merge(usu);

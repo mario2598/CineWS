@@ -13,8 +13,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -51,34 +49,33 @@ public class Cine implements Serializable {
     @Column(name = "CINE_ID")
     private Long cineId;
     @Basic(optional = false)
-   // @NotNull
-   // @Size(min = 1, max = 30)
+    //@NotNull
+    @Size(min = 1, max = 30)
     @Column(name = "CINE_NOMBRE")
     private String cineNombre;
     @Basic(optional = false)
-   // @NotNull
+    //@NotNull
     @Column(name = "CINE_TEL")
     private Long cineTel;
     @Basic(optional = false)
-  //  @NotNull
-  //  @Size(min = 1, max = 80)
+    // @NotNull
+    @Size(min = 1, max = 80)
     @Column(name = "CINE_EMAIL")
     private String cineEmail;
     @Basic(optional = false)
-  //  @NotNull
+    //@NotNull
     @Column(name = "CINE_ABRE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date cineAbre;
     @Basic(optional = false)
- //   @NotNull
+    //@NotNull
     @Column(name = "CINE_CIERRA")
     @Temporal(TemporalType.TIMESTAMP)
     private Date cineCierra;
-    @JoinColumn(name = "USU_ID", referencedColumnName = "USU_ID")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Usuario usuId;
     @OneToMany(mappedBy = "cineId", fetch = FetchType.LAZY)
     private List<Sala> salaList;
+    @OneToMany(mappedBy = "cineId", fetch = FetchType.LAZY)
+    private List<Usuario> usuarioList;
 
     public Cine() {
     }
@@ -144,14 +141,6 @@ public class Cine implements Serializable {
         this.cineCierra = cineCierra;
     }
 
-    public Usuario getUsuId() {
-        return usuId;
-    }
-
-    public void setUsuId(Usuario usuId) {
-        this.usuId = usuId;
-    }
-
     @XmlTransient
     public List<Sala> getSalaList() {
         return salaList;
@@ -159,6 +148,15 @@ public class Cine implements Serializable {
 
     public void setSalaList(List<Sala> salaList) {
         this.salaList = salaList;
+    }
+
+    @XmlTransient
+    public List<Usuario> getUsuarioList() {
+        return usuarioList;
+    }
+
+    public void setUsuarioList(List<Usuario> usuarioList) {
+        this.usuarioList = usuarioList;
     }
 
     @Override

@@ -5,6 +5,7 @@
  */
 package Model;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -14,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -35,7 +37,7 @@ public class UsuarioDto {
     private String usuAdmin; 
     private String usuNewpassword; 
     private String usuCambio;
-    private List<CineDto> cineList;
+    private String usuCodAct;
     
     //Constructores
 
@@ -54,13 +56,18 @@ public class UsuarioDto {
          this.usuNewpassword = usu.getUsuNewpassword();
          this.usuCambio = usu.getUsuCambio();
          this.usuEstado = usu.getUsuEstado();
-       /*  for(Cine c : usu.getCineList()){ //Convertir cines a dto
-             CineDto cDto = new CineDto();
-             cineList.add(cDto);
-         }*/
+         this.usuCodAct = usu.getUsuCodAct();
     }
-    
-     //Metodos
+     
+    public String getUsuCodAct(){
+        return usuCodAct;
+    }
+
+    //Metodos
+    public void setUsuCodAct(String usuCodAct) {
+        this.usuCodAct = usuCodAct;
+    }
+
 
     public Long getUsuId() {
         if(usuId == null){
@@ -160,19 +167,5 @@ public class UsuarioDto {
     public void setUsuCambio(String usuCambio) {
         this.usuCambio = usuCambio;
     }
-
-    public List<CineDto> getCineList() {
-        return cineList;
-    }
-
-    public void setCineList(List<CineDto> cineList) {
-        this.cineList = cineList;
-    }
-     
-     
-
-    
-    
-    
-    
+  
 }
