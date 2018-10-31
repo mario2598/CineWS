@@ -23,8 +23,7 @@ public class ButacaDto {
      private Long butFila;
      private String butImg;
      private String butLetra;
-     private String butPantalla;
-     private SalaDto salaId;
+     private Long salaId;
      private String butActiva;
      
      public ButacaDto(Butaca but) {
@@ -34,8 +33,7 @@ public class ButacaDto {
          this.butFila = but.getButFila();
          this.butImg = but.getButImg();
          this.butLetra = but.getButLetra();
-         this.butPantalla = but.getButPantalla();
-         this.salaId = new SalaDto(but.getSalaId());
+         this.salaId = but.getSalaId().getSalaId();
          this.butActiva = but.getButActiva();
     }
 
@@ -95,19 +93,11 @@ public class ButacaDto {
         this.butLetra = butLetra;
     }
 
-    public String getButPantalla() {
-        return butPantalla;
-    }
-
-    public void setButPantalla(String butPantalla) {
-        this.butPantalla = butPantalla;
-    }
-
-    public SalaDto getSalaId() {
+    public Long getSalaId() {
         return salaId;
     }
 
-    public void setSalaId(SalaDto salaId) {
+    public void setSalaId(Long salaId) {
         this.salaId = salaId;
     }
      

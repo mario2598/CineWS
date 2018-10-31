@@ -38,12 +38,12 @@ public class Review implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @Basic(optional = false)
-  //  @NotNull
+    //@NotNull
     @Column(name = "REV_ID")
     private Long revId;
     @Column(name = "REV_CALIF")
     private Long revCalif;
-  //  @Size(max = 150)
+   // @Size(max = 150)
     @Column(name = "REV_OPINION")
     private String revOpinion;
     @JoinColumn(name = "MOVIE_ID", referencedColumnName = "MOVIE_ID")

@@ -6,10 +6,6 @@
 package Model;
 
 import java.io.Serializable;
-import java.lang.Long;
-import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -17,10 +13,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.QueryHint;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -47,97 +44,61 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Usuario.findByUsuEstado", query = "SELECT u FROM Usuario u WHERE u.usuEstado = :usuEstado")
     , @NamedQuery(name = "Usuario.findByUsuAdmin", query = "SELECT u FROM Usuario u WHERE u.usuAdmin = :usuAdmin")
     , @NamedQuery(name = "Usuario.findByUsuNewpassword", query = "SELECT u FROM Usuario u WHERE u.usuNewpassword = :usuNewpassword")
-    , @NamedQuery(name = "Usuario.findByUsuNewClave", query = "SELECT u FROM Usuario u WHERE u.usuUser = :usuUser and u.usuNewpassword = :usuNewpassword")
-    , @NamedQuery(name = "Usuario.findByUsuClave", query = "SELECT u FROM Usuario u WHERE u.usuUser = :usuUser and u.usuPassword = :usuPassword")
+    , @NamedQuery(name = "Usuario.findByUsuCambio", query = "SELECT u FROM Usuario u WHERE u.usuCambio = :usuCambio")
     , @NamedQuery(name = "Usuario.findByUsuCodAct", query = "SELECT u FROM Usuario u WHERE u.usuCodAct = :usuCodAct")})
-      
 public class Usuario implements Serializable {
-
-   // @Size(max = 8)
-    @Column(name = "USU_COD_ACT")
-    private String usuCodAct;
-
-    @Column(name = "USU_IDIOMA")
-    private Long usuIdioma;
-    @OneToMany(mappedBy = "usuId", fetch = FetchType.LAZY)
-    private List<Review> reviewList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuId", fetch = FetchType.LAZY)
-    private List<Comprobante> comprobanteList;
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @Basic(optional = false)
-   // @NotNull
+    //@NotNull
     @Column(name = "USU_ID")
     private Long usuId;
-    @Basic(optional = false)
-  //  @NotNull
-  //  @Size(min = 1, max = 30)
+    //@Size(max = 30)
     @Column(name = "USU_USER")
     private String usuUser;
-    @Basic(optional = false)
-   // @NotNull
-  //  @Size(min = 1, max = 30)
+    //@Size(max = 30)
     @Column(name = "USU_NOMBRE")
     private String usuNombre;
- //   @Size(max = 30)
+    //@Size(max = 30)
     @Column(name = "USU_PAPELLIDO")
     private String usuPapellido;
- //   @Size(max = 30)
+    //@Size(max = 30)
     @Column(name = "USU_SAPELLIDO")
     private String usuSapellido;
-    @Basic(optional = false)
- //   @NotNull
- //   @Size(min = 1, max = 30)
+    //@Size(max = 30)
     @Column(name = "USU_PASSWORD")
     private String usuPassword;
-    @Basic(optional = false)
- //   @NotNull
- //   @Size(min = 1, max = 80)
+   // @Size(max = 80)
     @Column(name = "USU_EMAIL")
     private String usuEmail;
-    @Basic(optional = false)
-//    @NotNull
- //   @Size(min = 1, max = 1)
+    @Column(name = "USU_IDIOMA")
+    private Long usuIdioma;
+    //@Size(max = 1)
     @Column(name = "USU_ESTADO")
     private String usuEstado;
-    @Basic(optional = false)
- //   @NotNull
-  //  @Size(min = 1, max = 1)
+    //@Size(max = 1)
     @Column(name = "USU_ADMIN")
     private String usuAdmin;
-    @Basic(optional = false)
-  //  @NotNull
-  //  @Size(min = 1, max = 4)
+    //@Size(max = 8)
     @Column(name = "USU_NEWPASSWORD")
     private String usuNewpassword;
-    @Basic(optional = false)
-  //  @NotNull
-  //  @Size(min = 1, max = 1)
+    //@Size(max = 1)
     @Column(name = "USU_CAMBIO")
     private String usuCambio;
+   // @Size(max = 10)
+    @Column(name = "USU_COD_ACT")
+    private String usuCodAct;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuId", fetch = FetchType.LAZY)
-    private List<Cine> cineList;
+    private List<Comprobante> comprobanteList;
+    @OneToMany(mappedBy = "usuId", fetch = FetchType.LAZY)
+    private List<Review> reviewList;
+    @JoinColumn(name = "CINE_ID", referencedColumnName = "CINE_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Cine cineId;
 
     public Usuario() {
-    }
-
-    public Usuario(Long usuId) {
-        this.usuId = usuId;
-    }
-
-    public Usuario(Long usuId, String usuUser, String usuNombre, String usuPassword, String usuEmail, Long usuIdioma, String usuEstado, String usuAdmin, String usuNewpassword, String usuCambio) {
-        this.usuId = usuId;
-        this.usuUser = usuUser;
-        this.usuNombre = usuNombre;
-        this.usuPassword = usuPassword;
-        this.usuEmail = usuEmail;
-        this.usuIdioma = usuIdioma;
-        this.usuEstado = usuEstado;
-        this.usuAdmin = usuAdmin;
-        this.usuNewpassword = usuNewpassword;
-        this.usuCambio = usuCambio;
     }
     
     public Usuario(UsuarioDto usu) {
@@ -160,12 +121,10 @@ public class Usuario implements Serializable {
          this.usuCambio = usu.getUsuCambio();
          this.usuEstado = usu.getUsuEstado();
          this.usuCodAct = usu.getUsuCodAct();
-         List<Cine> cList = new ArrayList<>();
-          for(CineDto cDto : usu.getCineList()){ //Convertir cines a dto
-             Cine c = new Cine();
-             cList.add(c);
-         }
-         this.cineList = cList;
+    }
+
+    public Usuario(Long usuId) {
+        this.usuId = usuId;
     }
 
     public Long getUsuId() {
@@ -264,13 +223,38 @@ public class Usuario implements Serializable {
         this.usuCambio = usuCambio;
     }
 
-    @XmlTransient
-    public List<Cine> getCineList() {
-        return cineList;
+    public String getUsuCodAct() {
+        return usuCodAct;
     }
 
-    public void setCineList(List<Cine> cineList) {
-        this.cineList = cineList;
+    public void setUsuCodAct(String usuCodAct) {
+        this.usuCodAct = usuCodAct;
+    }
+
+    @XmlTransient
+    public List<Comprobante> getComprobanteList() {
+        return comprobanteList;
+    }
+
+    public void setComprobanteList(List<Comprobante> comprobanteList) {
+        this.comprobanteList = comprobanteList;
+    }
+
+    @XmlTransient
+    public List<Review> getReviewList() {
+        return reviewList;
+    }
+
+    public void setReviewList(List<Review> reviewList) {
+        this.reviewList = reviewList;
+    }
+
+    public Cine getCineId() {
+        return cineId;
+    }
+
+    public void setCineId(Cine cineId) {
+        this.cineId = cineId;
     }
 
     @Override
@@ -297,32 +281,5 @@ public class Usuario implements Serializable {
     public String toString() {
         return "Model.Usuario[ usuId=" + usuId + " ]";
     }
-
-    @XmlTransient
-    public List<Comprobante> getComprobanteList() {
-        return comprobanteList;
-    }
-
-    public void setComprobanteList(List<Comprobante> comprobanteList) {
-        this.comprobanteList = comprobanteList;
-    }
-
-    @XmlTransient
-    public List<Review> getReviewList() {
-        return reviewList;
-    }
-
-    public void setReviewList(List<Review> reviewList) {
-        this.reviewList = reviewList;
-    }
-
-    public String getUsuCodAct() {
-        return usuCodAct;
-    }
-
-    public void setUsuCodAct(String usuCodAct) {
-        this.usuCodAct = usuCodAct;
-    }
-
     
 }

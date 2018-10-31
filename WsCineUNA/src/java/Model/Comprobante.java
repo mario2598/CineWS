@@ -6,7 +6,6 @@
 package Model;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,15 +29,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Comprobante.findAll", query = "SELECT c FROM Comprobante c")
     , @NamedQuery(name = "Comprobante.findByCompId", query = "SELECT c FROM Comprobante c WHERE c.compId = :compId")
-    , @NamedQuery(name = "Comprobante.findByMovieId", query = "SELECT c FROM Comprobante c WHERE c.movieId = :movieId")
-    , @NamedQuery(name = "Comprobante.findBySalaId", query = "SELECT c FROM Comprobante c WHERE c.salaId = :salaId")
-    , @NamedQuery(name = "Comprobante.findByUsuId", query = "SELECT c FROM Comprobante c WHERE c.usuId = :usuId")
     , @NamedQuery(name = "Comprobante.findByCompCosto", query = "SELECT c FROM Comprobante c WHERE c.compCosto = :compCosto")})
 public class Comprobante implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Id
     @Basic(optional = false)
-  //  @NotNull
-    @NotNull()
+   // @NotNull
+    @Column(name = "COMP_ID")
+    private Long compId;
+    @Basic(optional = false)
+   // @NotNull
     @Column(name = "COMP_COSTO")
     private Long compCosto;
     @JoinColumn(name = "BUT_ID", referencedColumnName = "BUT_ID")
@@ -54,14 +56,6 @@ public class Comprobante implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Usuario usuId;
 
-    private static final long serialVersionUID = 1L;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Id
-    @Basic(optional = false)
-   // @NotNull
-    @Column(name = "COMP_ID")
-    private Long compId;
-   
     public Comprobante() {
     }
 
@@ -69,7 +63,10 @@ public class Comprobante implements Serializable {
         this.compId = compId;
     }
 
-
+    public Comprobante(Long compId, Long compCosto) {
+        this.compId = compId;
+        this.compCosto = compCosto;
+    }
 
     public Long getCompId() {
         return compId;
@@ -79,7 +76,6 @@ public class Comprobante implements Serializable {
         this.compId = compId;
     }
 
-  
     public Long getCompCosto() {
         return compCosto;
     }
@@ -88,29 +84,12 @@ public class Comprobante implements Serializable {
         this.compCosto = compCosto;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (compId != null ? compId.hashCode() : 0);
-        return hash;
+    public Butaca getButId() {
+        return butId;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Comprobante)) {
-            return false;
-        }
-        Comprobante other = (Comprobante) object;
-        if ((this.compId == null && other.compId != null) || (this.compId != null && !this.compId.equals(other.compId))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "Model.Comprobante[ compId=" + compId + " ]";
+    public void setButId(Butaca butId) {
+        this.butId = butId;
     }
 
     public Movie getMovieId() {
@@ -137,13 +116,29 @@ public class Comprobante implements Serializable {
         this.usuId = usuId;
     }
 
-    public Butaca getButId() {
-        return butId;
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (compId != null ? compId.hashCode() : 0);
+        return hash;
     }
 
-    public void setButId(Butaca butId) {
-        this.butId = butId;
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Comprobante)) {
+            return false;
+        }
+        Comprobante other = (Comprobante) object;
+        if ((this.compId == null && other.compId != null) || (this.compId != null && !this.compId.equals(other.compId))) {
+            return false;
+        }
+        return true;
     }
 
+    @Override
+    public String toString() {
+        return "Model.Comprobante[ compId=" + compId + " ]";
+    }
     
 }

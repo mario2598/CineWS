@@ -23,28 +23,27 @@ public class SalaDto {
     private Long salaId;
     private String salaEstado;
     private String salaImgfondo;
+    private String salaTipo;
+    private String salaNombre;
+    private Long salaFilas;
+    private Long salaCol;
     @XmlTransient
-    private List<MovieDto> movieList = new ArrayList<>();
+    private List<TandaDto> tandaList = new ArrayList<>();
     @XmlTransient
     private List<ButacaDto> butacaList = new ArrayList<>();
     @XmlTransient
     private List<ComprobanteDto> comprobanteList = new ArrayList<>();
-    @XmlTransient
-    private List<DetalleDto> detalleList = new ArrayList<>();;
     
     public SalaDto(Sala s) {
          this.salaId = s.getSalaId();
          this.salaEstado = s.getSalaEstado();
          this.salaImgfondo = s.getSalaImgfondo();
-        
+         this.salaTipo = s.getSalaTipo();
+         this.salaNombre = s.getSalaNombre();
+         this.salaFilas = s.getSalaFilas();
+         this.salaCol = s.getSalaCol();  
     }
 
-    public void convListDet(Sala s){
-         for(Detalle d : s.getDetalleList()){ 
-             DetalleDto dDto = new DetalleDto(d);
-             detalleList.add(dDto);
-         }
-    }
     
     public void convListComp(Sala s){
          for(Comprobante c : s.getComprobanteList()){ 
@@ -54,9 +53,9 @@ public class SalaDto {
     }
     
     public void convList(Sala s){
-         for(Movie m : s.getMovieList()){ 
-             MovieDto mDto = new MovieDto(m);
-             movieList.add(mDto);
+         for(Tanda m : s.getTandaList()){ 
+             TandaDto mDto = new TandaDto(m);
+             tandaList.add(mDto);
          }
     }
     
@@ -78,14 +77,6 @@ public class SalaDto {
     public String getSalaEstado() {
         return salaEstado;
     }
-    @XmlTransient
-    public List<DetalleDto> getDetalleList() {
-        return detalleList;
-    }
-
-    public void setDetalleList(List<DetalleDto> detalleList) {
-        this.detalleList = detalleList;
-    }
 
     public void setSalaEstado(String salaEstado) {
         this.salaEstado = salaEstado;
@@ -99,13 +90,14 @@ public class SalaDto {
         this.salaImgfondo = salaImgfondo;
     }
     @XmlTransient
-    public List<MovieDto> getMovieList() {
-        return movieList;
+    public List<TandaDto> getTandaList() {
+        return tandaList;
     }
 
-    public void setMovieList(List<MovieDto> movieList) {
-        this.movieList = movieList;
+    public void setTandaList(List<TandaDto> tandaList) {
+        this.tandaList = tandaList;
     }
+
     @XmlTransient
     public List<ButacaDto> getButacaList() {
         return butacaList;
@@ -121,6 +113,38 @@ public class SalaDto {
 
     public void setComprobanteList(List<ComprobanteDto> comprobanteList) {
         this.comprobanteList = comprobanteList;
+    }
+
+    public String getSalaTipo() {
+        return salaTipo;
+    }
+
+    public void setSalaTipo(String salaTipo) {
+        this.salaTipo = salaTipo;
+    }
+
+    public String getSalaNombre() {
+        return salaNombre;
+    }
+
+    public void setSalaNombre(String salaNombre) {
+        this.salaNombre = salaNombre;
+    }
+
+    public Long getSalaFilas() {
+        return salaFilas;
+    }
+
+    public void setSalaFilas(Long salaFilas) {
+        this.salaFilas = salaFilas;
+    }
+
+    public Long getSalaCol() {
+        return salaCol;
+    }
+
+    public void setSalaCol(Long salaCol) {
+        this.salaCol = salaCol;
     }
     
     

@@ -27,7 +27,8 @@ public class MovieDto {
      private Long movieId;
      private String movieNombre;
      private String movieResena;
-     private String movieUrlyt;
+     private String movieUrlesp;
+     private String movieUrleng;
      @XmlJavaTypeAdapter(LocalDateAdapter.class)
      private LocalDate movieDate;
      private String movieEstado;
@@ -39,14 +40,13 @@ public class MovieDto {
      private List<TandaDto> tandaList = new ArrayList<>();
      @XmlTransient
      private List<ReviewDto> reviewList = new ArrayList<>();
-     @XmlTransient
-     private List<DetalleDto> detalleList = new ArrayList<>();
      
      public MovieDto(Movie m) {
          this.movieId = m.getMovieId();
          this.movieNombre = m.getMovieNombre();
          this.movieResena = m.getMovieResena();
-         this.movieUrlyt = m.getMovieUrlyt();
+         this.movieUrlesp = m.getMovieUrlesp();
+         this.movieUrleng = m.getMovieUrleng();
          this.movieDate = m.getMovieDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
          this.movieEstado = m.getMovieEstado();
          this.moviePortada = m.getMoviePortada();
@@ -58,20 +58,6 @@ public class MovieDto {
              ComprobanteDto cDto = new ComprobanteDto(c);
              comprobanteList.add(cDto);
          }
-    }
-    public void convListDet(Movie m){
-        for(Detalle d : m.getDetalleList()){ //Convertir cines a dto
-             DetalleDto cDto = new DetalleDto(d);
-             detalleList.add(cDto);
-         }
-    }
-    @XmlTransient
-    public List<DetalleDto> getDetalleList() {
-        return detalleList;
-    }
-
-    public void setDetalleList(List<DetalleDto> detalleList) {
-        this.detalleList = detalleList;
     }
 
     public Long getMovieDuracion() {
@@ -144,13 +130,22 @@ public class MovieDto {
         this.movieResena = movieResena;
     }
 
-    public String getMovieUrlyt() {
-        return movieUrlyt;
+    public String getMovieUrlesp() {
+        return movieUrlesp;
     }
 
-    public void setMovieUrlyt(String movieUrlyt) {
-        this.movieUrlyt = movieUrlyt;
+    public void setMovieUrlesp(String movieUrlesp) {
+        this.movieUrlesp = movieUrlesp;
     }
+
+    public String getMovieUrleng() {
+        return movieUrleng;
+    }
+
+    public void setMovieUrleng(String movieUrleng) {
+        this.movieUrleng = movieUrleng;
+    }
+
 
     public LocalDate getMovieDate() {
         return movieDate;

@@ -14,9 +14,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -40,71 +37,67 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Movie.findByMovieId", query = "SELECT m FROM Movie m WHERE m.movieId = :movieId")
     , @NamedQuery(name = "Movie.findByMovieNombre", query = "SELECT m FROM Movie m WHERE m.movieNombre = :movieNombre")
     , @NamedQuery(name = "Movie.findByMovieResena", query = "SELECT m FROM Movie m WHERE m.movieResena = :movieResena")
-    , @NamedQuery(name = "Movie.findByMovieUrlyt", query = "SELECT m FROM Movie m WHERE m.movieUrlyt = :movieUrlyt")
+    , @NamedQuery(name = "Movie.findByMovieUrlesp", query = "SELECT m FROM Movie m WHERE m.movieUrlesp = :movieUrlesp")
     , @NamedQuery(name = "Movie.findByMovieDate", query = "SELECT m FROM Movie m WHERE m.movieDate = :movieDate")
     , @NamedQuery(name = "Movie.findByMovieEstado", query = "SELECT m FROM Movie m WHERE m.movieEstado = :movieEstado")
-    , @NamedQuery(name = "Movie.findByMoviePortada", query = "SELECT m FROM Movie m WHERE m.moviePortada = :moviePortada")})
+    , @NamedQuery(name = "Movie.findByMoviePortada", query = "SELECT m FROM Movie m WHERE m.moviePortada = :moviePortada")
+    , @NamedQuery(name = "Movie.findByMovieDuracion", query = "SELECT m FROM Movie m WHERE m.movieDuracion = :movieDuracion")
+    , @NamedQuery(name = "Movie.findByMovieTipo", query = "SELECT m FROM Movie m WHERE m.movieTipo = :movieTipo")
+    , @NamedQuery(name = "Movie.findByMovieUrleng", query = "SELECT m FROM Movie m WHERE m.movieUrleng = :movieUrleng")
+    , @NamedQuery(name = "Movie.findByMovieIdioma", query = "SELECT m FROM Movie m WHERE m.movieIdioma = :movieIdioma")})
 public class Movie implements Serializable {
-
-    @Column(name = "MOVIE_DURACION")
-    private Long movieDuracion;
-   // @Size(max = 2)
-    @Column(name = "MOVIE_TIPO")
-    private String movieTipo;
-  //  @Size(max = 100)
-    @Column(name = "MOVIE_URLENG")
-    private String movieUrleng;
-    @OneToMany(mappedBy = "movieId", fetch = FetchType.LAZY)
-    private List<Tanda> tandaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "movieId", fetch = FetchType.LAZY)
-    private List<Review> reviewList;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "movieId", fetch = FetchType.LAZY)
-    private List<Comprobante> comprobanteList;
-
-    @JoinTable(name = "SALAMOVIE", joinColumns = {
-        @JoinColumn(name = "SM_MOVIE_ID", referencedColumnName = "MOVIE_ID")}, inverseJoinColumns = {
-        @JoinColumn(name = "SM_SAL_ID", referencedColumnName = "SALA_ID")})
-    @ManyToMany(fetch = FetchType.LAZY)
-    private List<Sala> salaList;
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @Basic(optional = false)
-  //  @NotNull
+    @NotNull
     @Column(name = "MOVIE_ID")
     private Long movieId;
     @Basic(optional = false)
-  //  @NotNull
-  //  @Size(min = 1, max = 50)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "MOVIE_NOMBRE")
     private String movieNombre;
     @Basic(optional = false)
-  //  @NotNull
-  //  @Size(min = 1, max = 500)
+    @NotNull
+    @Size(min = 1, max = 500)
     @Column(name = "MOVIE_RESENA")
     private String movieResena;
-  //  @Size(max = 20)
-    @Column(name = "MOVIE_URLYT")
-    private String movieUrlyt;
+    @Size(max = 100)
+    @Column(name = "MOVIE_URLESP")
+    private String movieUrlesp;
     @Basic(optional = false)
-  //  @NotNull
+    @NotNull
     @Column(name = "MOVIE_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date movieDate;
     @Basic(optional = false)
- //   @NotNull
- //   @Size(min = 1, max = 1)
+    @NotNull
+    @Size(min = 1, max = 1)
     @Column(name = "MOVIE_ESTADO")
     private String movieEstado;
     @Basic(optional = false)
- //   @NotNull
- //   @Size(min = 1, max = 100)
+    @NotNull
+    @Size(min = 1, max = 100)
     @Column(name = "MOVIE_PORTADA")
     private String moviePortada;
+    @Column(name = "MOVIE_DURACION")
+    private Long movieDuracion;
+    @Size(max = 3)
+    @Column(name = "MOVIE_TIPO")
+    private String movieTipo;
+    @Size(max = 100)
+    @Column(name = "MOVIE_URLENG")
+    private String movieUrleng;
+    @Column(name = "MOVIE_IDIOMA")
+    private Long movieIdioma;
+    @OneToMany(mappedBy = "movieId", fetch = FetchType.LAZY)
+    private List<Tanda> tandaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "movieId", fetch = FetchType.LAZY)
-    private List<Detalle> detalleList;
+    private List<Comprobante> comprobanteList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "movieId", fetch = FetchType.LAZY)
+    private List<Review> reviewList;
 
     public Movie() {
     }
@@ -146,12 +139,12 @@ public class Movie implements Serializable {
         this.movieResena = movieResena;
     }
 
-    public String getMovieUrlyt() {
-        return movieUrlyt;
+    public String getMovieUrlesp() {
+        return movieUrlesp;
     }
 
-    public void setMovieUrlyt(String movieUrlyt) {
-        this.movieUrlyt = movieUrlyt;
+    public void setMovieUrlesp(String movieUrlesp) {
+        this.movieUrlesp = movieUrlesp;
     }
 
     public Date getMovieDate() {
@@ -178,13 +171,63 @@ public class Movie implements Serializable {
         this.moviePortada = moviePortada;
     }
 
-    @XmlTransient
-    public List<Detalle> getDetalleList() {
-        return detalleList;
+    public Long getMovieDuracion() {
+        return movieDuracion;
     }
 
-    public void setDetalleList(List<Detalle> detalleList) {
-        this.detalleList = detalleList;
+    public void setMovieDuracion(Long movieDuracion) {
+        this.movieDuracion = movieDuracion;
+    }
+
+    public String getMovieTipo() {
+        return movieTipo;
+    }
+
+    public void setMovieTipo(String movieTipo) {
+        this.movieTipo = movieTipo;
+    }
+
+    public String getMovieUrleng() {
+        return movieUrleng;
+    }
+
+    public void setMovieUrleng(String movieUrleng) {
+        this.movieUrleng = movieUrleng;
+    }
+
+    public Long getMovieIdioma() {
+        return movieIdioma;
+    }
+
+    public void setMovieIdioma(Long movieIdioma) {
+        this.movieIdioma = movieIdioma;
+    }
+
+    @XmlTransient
+    public List<Tanda> getTandaList() {
+        return tandaList;
+    }
+
+    public void setTandaList(List<Tanda> tandaList) {
+        this.tandaList = tandaList;
+    }
+
+    @XmlTransient
+    public List<Comprobante> getComprobanteList() {
+        return comprobanteList;
+    }
+
+    public void setComprobanteList(List<Comprobante> comprobanteList) {
+        this.comprobanteList = comprobanteList;
+    }
+
+    @XmlTransient
+    public List<Review> getReviewList() {
+        return reviewList;
+    }
+
+    public void setReviewList(List<Review> reviewList) {
+        this.reviewList = reviewList;
     }
 
     @Override
@@ -210,66 +253,6 @@ public class Movie implements Serializable {
     @Override
     public String toString() {
         return "Model.Movie[ movieId=" + movieId + " ]";
-    }
-
-    @XmlTransient
-    public List<Sala> getSalaList() {
-        return salaList;
-    }
-
-    public void setSalaList(List<Sala> salaList) {
-        this.salaList = salaList;
-    }
-
-    @XmlTransient
-    public List<Comprobante> getComprobanteList() {
-        return comprobanteList;
-    }
-
-    public void setComprobanteList(List<Comprobante> comprobanteList) {
-        this.comprobanteList = comprobanteList;
-    }
-
-    public Long getMovieDuracion() {
-        return movieDuracion;
-    }
-
-    public void setMovieDuracion(Long movieDuracion) {
-        this.movieDuracion = movieDuracion;
-    }
-
-    public String getMovieTipo() {
-        return movieTipo;
-    }
-
-    public void setMovieTipo(String movieTipo) {
-        this.movieTipo = movieTipo;
-    }
-
-    public String getMovieUrleng() {
-        return movieUrleng;
-    }
-
-    public void setMovieUrleng(String movieUrleng) {
-        this.movieUrleng = movieUrleng;
-    }
-
-    @XmlTransient
-    public List<Tanda> getTandaList() {
-        return tandaList;
-    }
-
-    public void setTandaList(List<Tanda> tandaList) {
-        this.tandaList = tandaList;
-    }
-
-    @XmlTransient
-    public List<Review> getReviewList() {
-        return reviewList;
-    }
-
-    public void setReviewList(List<Review> reviewList) {
-        this.reviewList = reviewList;
     }
     
 }

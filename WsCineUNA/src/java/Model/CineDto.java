@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  */
 @XmlRootElement(name = "CineDto")
 @XmlAccessorType(XmlAccessType.PUBLIC_MEMBER)
-public class CineDto {
+public class CineDto { 
     
     private Long cineId;
     private String cineNombre;
@@ -34,8 +34,9 @@ public class CineDto {
     @XmlJavaTypeAdapter(LocalDateAdapter.class)
     private LocalDate cineCierra;
     @XmlTransient
-    private List<SalaDto> salaList = new ArrayList<>(); 
-    
+    private List<SalaDto> salaList = new ArrayList<>();
+    @XmlTransient
+    private List<Usuario> usuarioList = new ArrayList<>();;
     
      public CineDto(Cine c) {
          this.cineId = c.getCineId();
@@ -107,5 +108,14 @@ public class CineDto {
     public void setSalaList(List<SalaDto> salaList) {
         this.salaList = salaList;
     }
+    @XmlTransient
+    public List<Usuario> getUsuarioList() {
+        return usuarioList;
+    }
+
+    public void setUsuarioList(List<Usuario> usuarioList) {
+        this.usuarioList = usuarioList;
+    }
+    
     
 }

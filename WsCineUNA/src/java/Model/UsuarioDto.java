@@ -38,8 +38,6 @@ public class UsuarioDto {
     private String usuNewpassword; 
     private String usuCambio;
     private String usuCodAct;
-    @XmlTransient
-    private List<CineDto> cineList = new ArrayList<>();
     
     //Constructores
 
@@ -70,12 +68,6 @@ public class UsuarioDto {
         this.usuCodAct = usuCodAct;
     }
 
-    public void convList(Usuario usu) {
-        for(Cine c : usu.getCineList()){ //Convertir cines a dto
-            CineDto cDto = new CineDto(c);
-            cineList.add(cDto);
-        }
-    }
 
     public Long getUsuId() {
         if(usuId == null){
@@ -175,19 +167,5 @@ public class UsuarioDto {
     public void setUsuCambio(String usuCambio) {
         this.usuCambio = usuCambio;
     }
-    @XmlTransient
-    public List<CineDto> getCineList() {
-        return cineList;
-    }
-
-    public void setCineList(List<CineDto> cineList) {
-        this.cineList = cineList;
-    }
-     
-     
-
-    
-    
-    
-    
+  
 }
