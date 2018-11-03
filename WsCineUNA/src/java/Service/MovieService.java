@@ -32,8 +32,6 @@ public class MovieService {
     private static final Logger LOG = Logger.getLogger(UsuarioService.class.getName());
     @PersistenceContext(unitName = "WsCineUNAPU")
      private EntityManager em;
-    List<MovieDto> listDto = new ArrayList<>();
-    List<Movie> list ;
     
     /**
      * obtiene película a partir de un id
@@ -66,12 +64,13 @@ public class MovieService {
     public Respuesta getMovies(){
         try {
             Query qryActividad = em.createNamedQuery("Movie.findAll", Movie.class);
-            list= qryActividad.getResultList();
-            list.stream().map((m) -> new MovieDto(m)).forEachOrdered((mDto) -> {
-                listDto.add(mDto);
-            });
+            List<Movie> movies = qryActividad.getResultList();
+            List<MovieDto> moviesDto = new ArrayList<>();
+            for (Movie m : movies) {
+                moviesDto.add(new MovieDto(m));
+            }
             
-            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "AllMovieList",listDto);
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "AllMovieList",moviesDto);
 
         } catch (NoResultException ex) {
             return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No existen películas.", "getListFromMovie NoResultException");
@@ -88,14 +87,16 @@ public class MovieService {
      */
     public Respuesta getListMovies(String estado){
         try {
+            //limpiarListas();
             Query qryActividad = em.createNamedQuery("Movie.findByMovieEstado", Movie.class);
             qryActividad.setParameter("movieEstado", estado);
-            list= qryActividad.getResultList();
-            list.stream().map((m) -> new MovieDto(m)).forEachOrdered((mDto) -> {
-                listDto.add(mDto);
-            });
-            
-            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "MovieList",listDto);
+            List<Movie> movies = qryActividad.getResultList();
+            List<MovieDto> moviesDto = new ArrayList<>();
+            for (Movie m : movies) {
+                moviesDto.add(new MovieDto(m));
+            }
+
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "MovieList",moviesDto);
 
         } catch (NoResultException ex) {
             return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No existe Películas con ese estado.", "getListFromMovie NoResultException");
@@ -157,5 +158,6 @@ public class MovieService {
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al eliminar la película.", "eliminarPelícula " + ex.getMessage());
         }
     }
+    
     
 }
