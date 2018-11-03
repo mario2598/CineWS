@@ -6,6 +6,7 @@
 package Model;
 
 import java.io.Serializable;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -44,7 +45,10 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Movie.findByMovieDuracion", query = "SELECT m FROM Movie m WHERE m.movieDuracion = :movieDuracion")
     , @NamedQuery(name = "Movie.findByMovieTipo", query = "SELECT m FROM Movie m WHERE m.movieTipo = :movieTipo")
     , @NamedQuery(name = "Movie.findByMovieUrleng", query = "SELECT m FROM Movie m WHERE m.movieUrleng = :movieUrleng")
-    , @NamedQuery(name = "Movie.findByMovieIdioma", query = "SELECT m FROM Movie m WHERE m.movieIdioma = :movieIdioma")})
+    , @NamedQuery(name = "Movie.findByMovieIdioma", query = "SELECT m FROM Movie m WHERE m.movieIdioma = :movieIdioma")
+    , @NamedQuery(name = "Movie.findAvailable", query = "SELECT m from MOVIE m WHERE m.movieEstado='C'")
+    , @NamedQuery(name = "Movie.findUnavailable", query = "SELECT m from MOVIE m WHERE m.movieEstado='P'")    
+})
 public class Movie implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -102,6 +106,21 @@ public class Movie implements Serializable {
     public Movie() {
     }
 
+    public Movie(MovieDto movie) {
+        if(movie.getMovieId() != null){
+          this.movieId = movie.getMovieId();
+        }
+        actualizarMovie(movie);
+    }
+    
+    public void actualizarMovie(MovieDto movie){
+        this.movieNombre = movie.getMovieNombre();
+        this.movieResena = movie.getMovieResena();
+        this.movieDate = Date.from(movie.getMovieDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
+        this.movieEstado = movie.getMovieEstado();
+        this.moviePortada = movie.getMoviePortada();
+    }
+    
     public Movie(Long movieId) {
         this.movieId = movieId;
     }
