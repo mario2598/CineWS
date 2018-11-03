@@ -5,6 +5,7 @@
  */
 package Service;
 
+import Util.Respuesta;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -20,4 +21,6 @@ public class MovieService {
     @PersistenceContext(unitName = "WsCineUNAPU")
      private EntityManager em;
     
+    
+
 }

@@ -29,6 +29,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Comprobante.findAll", query = "SELECT c FROM Comprobante c")
     , @NamedQuery(name = "Comprobante.findByCompId", query = "SELECT c FROM Comprobante c WHERE c.compId = :compId")
+    , @NamedQuery(name = "Comprobante.findByMovieId", query = "SELECT c FROM Comprobante c  WHERE c.movieId = :movieId")
+    , @NamedQuery(name = "Comprobante.findBySalaId", query = "SELECT c FROM Comprobante c  WHERE c.salaId = :salaId")
     , @NamedQuery(name = "Comprobante.findByCompCosto", query = "SELECT c FROM Comprobante c WHERE c.compCosto = :compCosto")})
 public class Comprobante implements Serializable {
 
@@ -61,6 +63,11 @@ public class Comprobante implements Serializable {
 
     public Comprobante(Long compId) {
         this.compId = compId;
+    }
+    
+     public Comprobante(ComprobanteDto compDto) {
+        this.compId = compDto.getCompId();
+        this.compCosto = compDto.getCompCosto();
     }
 
     public Comprobante(Long compId, Long compCosto) {
