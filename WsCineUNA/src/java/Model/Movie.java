@@ -46,8 +46,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Movie.findByMovieTipo", query = "SELECT m FROM Movie m WHERE m.movieTipo = :movieTipo")
     , @NamedQuery(name = "Movie.findByMovieUrleng", query = "SELECT m FROM Movie m WHERE m.movieUrleng = :movieUrleng")
     , @NamedQuery(name = "Movie.findByMovieIdioma", query = "SELECT m FROM Movie m WHERE m.movieIdioma = :movieIdioma")
-    , @NamedQuery(name = "Movie.findAvailable", query = "SELECT m from MOVIE m WHERE m.movieEstado='C'")
-    , @NamedQuery(name = "Movie.findUnavailable", query = "SELECT m from MOVIE m WHERE m.movieEstado='P'")    
+    /*, @NamedQuery(name = "Movie.findAvailable", query = "SELECT m from MOVIE m WHERE m.movieEstado='C'")
+    , @NamedQuery(name = "Movie.findUnavailable", query = "SELECT m from MOVIE m WHERE m.movieEstado='P'")*/  
 })
 public class Movie implements Serializable {
 
@@ -55,43 +55,43 @@ public class Movie implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @Basic(optional = false)
-    @NotNull
+    //@NotNull
     @Column(name = "MOVIE_ID")
     private Long movieId;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
+    //@NotNull
+    //@Size(min = 1, max = 50)
     @Column(name = "MOVIE_NOMBRE")
     private String movieNombre;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 500)
+    //@NotNull
+    //@Size(min = 1, max = 500)
     @Column(name = "MOVIE_RESENA")
     private String movieResena;
-    @Size(max = 100)
+    //@Size(max = 100)
     @Column(name = "MOVIE_URLESP")
     private String movieUrlesp;
     @Basic(optional = false)
-    @NotNull
+    //@NotNull
     @Column(name = "MOVIE_DATE")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)//todo preguntar
     private Date movieDate;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 1)
+    //@NotNull
+    //@Size(min = 1, max = 1)
     @Column(name = "MOVIE_ESTADO")
     private String movieEstado;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
+    //@NotNull
+    //@Size(min = 1, max = 100)
     @Column(name = "MOVIE_PORTADA")
     private String moviePortada;
     @Column(name = "MOVIE_DURACION")
     private Long movieDuracion;
-    @Size(max = 3)
+    //@Size(max = 3)
     @Column(name = "MOVIE_TIPO")
     private String movieTipo;
-    @Size(max = 100)
+    //@Size(max = 100)
     @Column(name = "MOVIE_URLENG")
     private String movieUrleng;
     @Column(name = "MOVIE_IDIOMA")
