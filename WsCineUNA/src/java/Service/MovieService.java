@@ -5,10 +5,22 @@
  */
 package Service;
 
+import Model.Movie;
+import Model.MovieDto;
+import Util.CodigoRespuesta;
+import Util.Respuesta;
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.persistence.Query;
 
 /**
  *
@@ -16,8 +28,134 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 @LocalBean
-public class MovieService {     
+public class MovieService {
+    private static final Logger LOG = Logger.getLogger(UsuarioService.class.getName());
     @PersistenceContext(unitName = "WsCineUNAPU")
      private EntityManager em;
+    List<MovieDto> listDto = new ArrayList<>();
+    List<Movie> list ;
+    
+    /**
+     * obtiene película a partir de un id
+     * @param id
+     * @return 
+     */
+    public Respuesta getMovie(Long id){
+        try{
+            Query qryActividad = em.createNamedQuery("Movie.findByMovieId", Movie.class);
+            qryActividad.setParameter("movieId", id);
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Movie", new MovieDto((Movie) qryActividad.getSingleResult()));
+        }
+        catch(NoResultException ex){
+            return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No existe una Película con las credenciales ingresadas.", "validarPelícula NoResultException");
+        }
+        catch(NonUniqueResultException ex){
+            LOG.log(Level.SEVERE, "Ocurrio un error al consultar la película.", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar la película.", "validarUsuario NonUniqueResultException");
+        }
+        catch(Exception ex){
+            LOG.log(Level.SEVERE, "Ocurrio un error al consultar la película.", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar la película.", "validarUsuario " + ex.getMessage());
+        }
+    }
+    
+    /**
+     * busca todas las películas
+     * @return 
+     */
+    public Respuesta getMovies(){
+        try {
+            Query qryActividad = em.createNamedQuery("Movie.findAll", Movie.class);
+            list= qryActividad.getResultList();
+            list.stream().map((m) -> new MovieDto(m)).forEachOrdered((mDto) -> {
+                listDto.add(mDto);
+            });
+            
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "AllMovieList",listDto);
+
+        } catch (NoResultException ex) {
+            return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No existen películas.", "getListFromMovie NoResultException");
+        } catch (Exception ex) {
+            LOG.log(Level.SEVERE, "Ocurrió un error al consultar todas las películas.", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar todas las películas con ese estado.", "getListFromMovie " + ex.getMessage());
+        }
+    }
+    
+    /**
+     * obtiene una lista de películas de acuerdo al estado
+     * @param estado  P = DISPONIBLE PRONTO, C = EN CARTELERA, I = INACTIVA
+     * @return 
+     */
+    public Respuesta getListMovies(String estado){
+        try {
+            Query qryActividad = em.createNamedQuery("Movie.findByMovieEstado", Movie.class);
+            qryActividad.setParameter("movieEstado", estado);
+            list= qryActividad.getResultList();
+            list.stream().map((m) -> new MovieDto(m)).forEachOrdered((mDto) -> {
+                listDto.add(mDto);
+            });
+            
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "MovieList",listDto);
+
+        } catch (NoResultException ex) {
+            return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No existe Películas con ese estado.", "getListFromMovie NoResultException");
+        } catch (Exception ex) {
+            LOG.log(Level.SEVERE, "Ocurrio un error al consultar las películas con ese estado.", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar las películas con ese estado.", "getListFromMovie " + ex.getMessage());
+        }
+    }
+
+    /**
+     * guardar Movie a partir de un dto
+     */
+    public Respuesta guardarMovie(MovieDto movDto) {
+        try {
+            Movie movie;
+            if (movDto.getMovieId()!= null && movDto.getMovieId()> 0) {//si tra id
+                movie = em.find(Movie.class,movDto.getMovieId());//busca la película con ese id para actualizar
+                if (movie == null) {
+                    return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encrontró la película a modificar.", "guardarUsuario NoResultException");
+                }
+                movie.actualizarMovie(movDto);//actualiza la movie si ya existía
+                movie = em.merge(movie);//actualiza
+            } else {
+                movie = new Movie(movDto);//crea una nueva a partir del Dto
+                em.persist(movie);//periste
+            }
+            em.flush();//refresca
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Movie", new MovieDto(movie));    
+            } catch (Exception ex) {
+            LOG.log(Level.SEVERE, "Ocurrio un error al guardar la película.", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar el empleado.", "guardarEmpleado " + ex.getMessage());
+        }
+    }
+    
+    /**
+     * elimina una película a partir de un id
+     * @param id
+     * @return 
+     */
+    public Respuesta eliminarMovie(Long id) {
+        try {
+            Movie empleado; 
+            if (id != null && id > 0) {
+                empleado = em.find(Movie.class, id);
+                if (empleado == null) {
+                    return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encrontró la película a eliminar.", "eliminarPelícula NoResultException");
+                }
+                em.remove(empleado);
+            } else {
+                return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "Debe cargar la pelicula a eliminar.", "eliminarPelícula NoResultException");
+            }
+            em.flush();
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "");//no se ocupa obtener la película de la respuesta
+        } catch (Exception ex) {
+            if (ex.getCause() != null && ex.getCause().getCause().getClass() == SQLIntegrityConstraintViolationException.class) {
+                return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "No se puede eliminar la pelicula porque tiene relaciones con otros registros.", "eliminarPelícula " + ex.getMessage());
+            }
+            LOG.log(Level.SEVERE, "Ocurrio un error al guardar el empleado.", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al eliminar la película.", "eliminarPelícula " + ex.getMessage());
+        }
+    }
     
 }
