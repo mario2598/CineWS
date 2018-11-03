@@ -21,8 +21,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -40,7 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Movie.findByMovieResena", query = "SELECT m FROM Movie m WHERE m.movieResena = :movieResena")
     , @NamedQuery(name = "Movie.findByMovieUrlesp", query = "SELECT m FROM Movie m WHERE m.movieUrlesp = :movieUrlesp")
     , @NamedQuery(name = "Movie.findByMovieDate", query = "SELECT m FROM Movie m WHERE m.movieDate = :movieDate")
-    , @NamedQuery(name = "Movie.findByMovieEstado", query = "SELECT m FROM Movie m WHERE m.movieEstado = :movieEstado")
+    , @NamedQuery(name = "Movie.findByMovieEstado", query = "SELECT m FROM Movie m WHERE UPPER(m.movieEstado) like :movieEstado")//revisar ese upper() like
     , @NamedQuery(name = "Movie.findByMoviePortada", query = "SELECT m FROM Movie m WHERE m.moviePortada = :moviePortada")
     , @NamedQuery(name = "Movie.findByMovieDuracion", query = "SELECT m FROM Movie m WHERE m.movieDuracion = :movieDuracion")
     , @NamedQuery(name = "Movie.findByMovieTipo", query = "SELECT m FROM Movie m WHERE m.movieTipo = :movieTipo")
