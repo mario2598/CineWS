@@ -8,6 +8,7 @@ package Model;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -38,39 +39,51 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Butaca.findByButFila", query = "SELECT b FROM Butaca b WHERE b.butFila = :butFila")
     , @NamedQuery(name = "Butaca.findByButImg", query = "SELECT b FROM Butaca b WHERE b.butImg = :butImg")
     , @NamedQuery(name = "Butaca.findByButLetra", query = "SELECT b FROM Butaca b WHERE b.butLetra = :butLetra")
-    , @NamedQuery(name = "Butaca.findByButActiva", query = "SELECT b FROM Butaca b WHERE b.butActiva = :butActiva")})
+    , @NamedQuery(name = "Butaca.findByButActiva", query = "SELECT b FROM Butaca b WHERE b.butActiva = :butActiva")
+    , @NamedQuery(name = "Butaca.findBySalaId", query = "SELECT b FROM Butaca b WHERE b.salaId = :salID")})
 public class Butaca implements Serializable {
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @Basic(optional = false)
-    @NotNull
+//    @NotNull
     @Column(name = "BUT_ID")
     private Long butId;
     @Column(name = "BUT_COLUMNA")
     private Long butColumna;
-    @Size(max = 1)
+//    @Size(max = 1)
     @Column(name = "BUT_ESTADO")
     private String butEstado;
     @Column(name = "BUT_FILA")
     private Long butFila;
-    @Size(max = 100)
+//    @Size(max = 100)
     @Column(name = "BUT_IMG")
     private String butImg;
-    @Size(max = 3)
+//    @Size(max = 3)
     @Column(name = "BUT_LETRA")
     private String butLetra;
-    @Size(max = 1)
+//    @Size(max = 1)
     @Column(name = "BUT_ACTIVA")
     private String butActiva;
-    @OneToMany(mappedBy = "butId", fetch = FetchType.LAZY)
-    private List<Comprobante> comprobanteList;
     @JoinColumn(name = "SALA_ID", referencedColumnName = "SALA_ID")
     @ManyToOne(fetch = FetchType.LAZY)
     private Sala salaId;
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "butId", fetch = FetchType.LAZY)
+    private List<Comprobante> comprobanteList;
 
     public Butaca() {
+        
+    }
+    
+    public void duplicateData(ButacaDto dto){
+        this.butId = dto.getButId();
+        this.butColumna = dto.getButColumna();
+        this.butEstado = dto.getButEstado();
+        this.butFila = dto.getButFila();
+        this.butImg = dto.getButImg();
+        this.butLetra = dto.getButLetra();
+        this.butActiva = dto.getButActiva();
     }
 
     public Butaca(Long butId) {

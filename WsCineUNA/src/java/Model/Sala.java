@@ -67,17 +67,28 @@ public class Sala implements Serializable {
     //@Size(max = 3)
     @Column(name = "SALA_TIPO")
     private String salaTipo;
-    @OneToMany(mappedBy = "salaId", fetch = FetchType.LAZY)
-    private List<Tanda> tandaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "salaId", fetch = FetchType.LAZY)
-    private List<Comprobante> comprobanteList;
     @JoinColumn(name = "CINE_ID", referencedColumnName = "CINE_ID")
     @ManyToOne(fetch = FetchType.LAZY)
     private Cine cineId;
-    @OneToMany(mappedBy = "salaId", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "salaId", fetch = FetchType.LAZY)
+    private List<Tanda> tandaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "salaId", fetch = FetchType.LAZY)
+    private List<Comprobante> comprobanteList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "salaId", fetch = FetchType.LAZY)
     private List<Butaca> butacaList;
 
     public Sala() {
+        
+    }
+    
+    public void duplicateData(SalaDto dto){
+        this.salaId = dto.getSalaId();
+        this.salaEstado = dto.getSalaEstado();
+        this.salaImgfondo = dto.getSalaImgfondo();
+        this.salaCol = dto.getSalaCol();
+        this.salaFilas = dto.getSalaFilas();
+        this.salaNombre = dto.getSalaNombre();
+        this.salaTipo = dto.getSalaTipo();
     }
 
     public Sala(Long salaId) {

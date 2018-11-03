@@ -6,9 +6,11 @@
 package Model;
 
 import java.io.Serializable;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -50,7 +52,7 @@ public class Cine implements Serializable {
     private Long cineId;
     @Basic(optional = false)
     //@NotNull
-    @Size(min = 1, max = 30)
+    //@Size(min = 1, max = 30)
     @Column(name = "CINE_NOMBRE")
     private String cineNombre;
     @Basic(optional = false)
@@ -59,7 +61,7 @@ public class Cine implements Serializable {
     private Long cineTel;
     @Basic(optional = false)
     // @NotNull
-    @Size(min = 1, max = 80)
+    //@Size(min = 1, max = 80)
     @Column(name = "CINE_EMAIL")
     private String cineEmail;
     @Basic(optional = false)
@@ -72,12 +74,13 @@ public class Cine implements Serializable {
     @Column(name = "CINE_CIERRA")
     @Temporal(TemporalType.TIMESTAMP)
     private Date cineCierra;
-    @OneToMany(mappedBy = "cineId", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "cineId", fetch = FetchType.LAZY)
     private List<Sala> salaList;
-    @OneToMany(mappedBy = "cineId", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "cineId", fetch = FetchType.LAZY)
     private List<Usuario> usuarioList;
 
     public Cine() {
+        
     }
 
     public Cine(Long cineId) {
@@ -91,6 +94,14 @@ public class Cine implements Serializable {
         this.cineEmail = cineEmail;
         this.cineAbre = cineAbre;
         this.cineCierra = cineCierra;
+    }
+    
+    public void dulplicateData(CineDto c){
+        this.cineId = c.getCineId();
+        this.cineNombre = c.getCineNombre();
+        this.cineTel = c.getCineTel();
+        this.cineAbre = Date.from(c.getCineAbre().atStartOfDay(ZoneId.systemDefault()).toInstant());
+        this.cineCierra = Date.from(c.getCineCierra().atStartOfDay(ZoneId.systemDefault()).toInstant());        
     }
 
     public Long getCineId() {

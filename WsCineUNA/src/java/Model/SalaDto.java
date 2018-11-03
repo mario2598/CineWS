@@ -5,7 +5,6 @@
  */
 package Model;
 
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -27,12 +26,17 @@ public class SalaDto {
     private String salaNombre;
     private Long salaFilas;
     private Long salaCol;
+    private Long cineId;
     @XmlTransient
     private List<TandaDto> tandaList = new ArrayList<>();
     @XmlTransient
     private List<ButacaDto> butacaList = new ArrayList<>();
     @XmlTransient
     private List<ComprobanteDto> comprobanteList = new ArrayList<>();
+    
+    public SalaDto(){
+        
+    }
     
     public SalaDto(Sala s) {
          this.salaId = s.getSalaId();
@@ -42,6 +46,7 @@ public class SalaDto {
          this.salaNombre = s.getSalaNombre();
          this.salaFilas = s.getSalaFilas();
          this.salaCol = s.getSalaCol();  
+         this.cineId = s.getCineId().getCineId();
     }
 
     
@@ -145,6 +150,14 @@ public class SalaDto {
 
     public void setSalaCol(Long salaCol) {
         this.salaCol = salaCol;
+    }
+
+    public Long getCineId() {
+        return cineId;
+    }
+
+    public void setCineId(Long cineId) {
+        this.cineId = cineId;
     }
     
     

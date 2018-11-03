@@ -9,7 +9,6 @@ import Util.LocalDateAdapter;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -37,6 +36,10 @@ public class CineDto {
     private List<SalaDto> salaList = new ArrayList<>();
     @XmlTransient
     private List<Usuario> usuarioList = new ArrayList<>();;
+    
+    public CineDto(){
+        
+    }
     
      public CineDto(Cine c) {
          this.cineId = c.getCineId();
@@ -100,6 +103,7 @@ public class CineDto {
     public void setCineCierra(LocalDate cineCierra) {
         this.cineCierra = cineCierra;
     }
+    
     @XmlTransient
     public List<SalaDto> getSalaList() {
         return salaList;

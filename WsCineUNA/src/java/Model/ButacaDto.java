@@ -17,24 +17,28 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "ButacaDto")
 @XmlAccessorType(XmlAccessType.PUBLIC_MEMBER)
 public class ButacaDto {
-     private Long butId;
-     private Long butColumna;
-     private String butEstado;
-     private Long butFila;
-     private String butImg;
-     private String butLetra;
-     private Long salaId;
-     private String butActiva;
-     
-     public ButacaDto(Butaca but) {
-         this.butId = but.getButId();
-         this.butColumna = but.getButColumna();
-         this.butEstado = but.getButEstado();
-         this.butFila = but.getButFila();
-         this.butImg = but.getButImg();
-         this.butLetra = but.getButLetra();
-         this.salaId = but.getSalaId().getSalaId();
-         this.butActiva = but.getButActiva();
+    private Long butId;
+    private Long butColumna;
+    private String butEstado;
+    private Long butFila;
+    private String butImg;
+    private String butLetra;
+    private String butActiva;
+    private Long salaId;
+
+    public ButacaDto(){
+        
+    }
+    
+    public ButacaDto(Butaca but) {
+        this.butId = but.getButId();
+        this.butColumna = but.getButColumna();
+        this.butEstado = but.getButEstado();
+        this.butFila = but.getButFila();
+        this.butImg = but.getButImg();
+        this.butLetra = but.getButLetra();
+        this.salaId = but.getSalaId().getSalaId();
+        this.butActiva = but.getButActiva();
     }
 
     public String getButActiva() {
