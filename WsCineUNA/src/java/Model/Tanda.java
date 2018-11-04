@@ -6,6 +6,7 @@
 package Model;
 
 import java.io.Serializable;
+import java.time.ZoneId;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -33,7 +34,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Tanda.findAll", query = "SELECT t FROM Tanda t")
     , @NamedQuery(name = "Tanda.findByTandaId", query = "SELECT t FROM Tanda t WHERE t.tandaId = :tandaId")
     , @NamedQuery(name = "Tanda.findByTandaCobro", query = "SELECT t FROM Tanda t WHERE t.tandaCobro = :tandaCobro")
-        , @NamedQuery(name = "Tanda.findBySalaId", query = "SELECT t FROM Tanda t WHERE t.salaId = :salaId")
+    , @NamedQuery(name = "Tanda.findBySalaId", query = "SELECT t FROM Tanda t WHERE t.salaId = :salaId")
+    , @NamedQuery(name = "Tanda.findByMovieId", query = "SELECT t FROM Tanda t WHERE t.movieId = :movieId")    
     , @NamedQuery(name = "Tanda.findByTandaHinicio", query = "SELECT t FROM Tanda t WHERE t.tandaHinicio = :tandaHinicio")
     , @NamedQuery(name = "Tanda.findByTandaHfin", query = "SELECT t FROM Tanda t WHERE t.tandaHfin = :tandaHfin")})
 public class Tanda implements Serializable {
@@ -61,8 +63,26 @@ public class Tanda implements Serializable {
     private Sala salaId;
 
     public Tanda() {
+        this.movieId=new Movie();
+        this.salaId = new Sala();
     }
 
+    public Tanda(TandaDto tDto){
+        if(tDto.getMovieId() != null){
+          this.tandaId = tDto.getTandaId();
+        }
+        actualizarTanda(tDto);
+    }
+    
+    public void actualizarTanda(TandaDto tDto){
+        this.tandaCobro = tDto.getTandaCobro();
+        this.tandaHfin = Date.from(tDto.getTandaHfin().atStartOfDay(ZoneId.systemDefault()).toInstant());
+        this.tandaHinicio = Date.from(tDto.getTandaHinicio().atStartOfDay(ZoneId.systemDefault()).toInstant());
+        this.movieId = new Movie(tDto.getMovieId());
+        this.salaId = new Sala(tDto.getTandaId());
+        //this.
+    }
+    
     public Tanda(Long tandaId) {
         this.tandaId = tandaId;
     }

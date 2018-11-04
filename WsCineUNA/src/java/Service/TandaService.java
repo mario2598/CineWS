@@ -53,7 +53,7 @@ public class TandaService {
         }
     }
     
-    public Respuesta getListTanda(Long salaId){
+    public Respuesta getListTandaS(Long salaId){
         ArrayList<Tanda> resultList;
         ArrayList<TandaDto> dtoList;
         try{
@@ -72,6 +72,31 @@ public class TandaService {
         } catch (Exception ex) {
             LOG.log(Level.SEVERE, "Ocurrio un error al consultar la lista de butacas realcionadas con la sala ID: "+ salaId +".", ex);
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar la lista de butacas realcionadas con la sala ID: "+ salaId +".", "getListaButacas " + ex.getMessage());
+        }
+    }
+    
+    public Respuesta getListTandaM(Long movieId){
+        ArrayList<Tanda> resultList;
+        ArrayList<TandaDto> dtoList;
+        try{
+            Query qryListButacas = em.createNamedQuery("Tanda.findByMovieId", Tanda.class);
+            qryListButacas.setParameter("movieId", movieId);
+            resultList = new ArrayList<>(qryListButacas.getResultList());
+            dtoList = new ArrayList<>();
+            /*resultList.stream().forEach(tanda -> {
+                TandaDto newDto = new TandaDto(tanda);
+                dtoList.add(newDto);
+            });*/
+            for(Tanda t: resultList){
+                dtoList.add(new TandaDto(t));
+            }
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "TandaListM", dtoList);
+        } catch (NoResultException ex) {
+            LOG.log(Level.SEVERE, "Ocurrio un error al consultar la lista de tandas realcionadas con la sala ID: "+ movieId +".", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No existe tnadas relacionadas con la movie ID: "+ movieId +".", "getListaButacas NoResultException");
+        } catch (Exception ex) {
+            LOG.log(Level.SEVERE, "Ocurrio un error al consultar la lista de tandas tandas con la movie ID: "+ movieId +".", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar la lista de tnadas realcionadas con la movie ID: "+ movieId +".", "getListaButacas " + ex.getMessage());
         }
     }
     
