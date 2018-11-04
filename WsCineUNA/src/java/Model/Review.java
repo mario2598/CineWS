@@ -30,8 +30,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Review.findAll", query = "SELECT r FROM Review r")
     , @NamedQuery(name = "Review.findByRevId", query = "SELECT r FROM Review r WHERE r.revId = :revId")
-    , @NamedQuery(name = "Review.findByMovieId", query = "SELECT r FROM Review r  WHERE r.modieId= :movieId")
-        , @NamedQuery(name = "Review.findByUsuId", query = "SELECT r FROM Review r  WHERE r.usuId= :usuId")
+    , @NamedQuery(name = "Review.findByMovieId", query = "SELECT r FROM Review r  WHERE r.movieId= :movieId")
+    , @NamedQuery(name = "Review.findByUsuId", query = "SELECT r FROM Review r  WHERE r.usuId= :usuId")
     , @NamedQuery(name = "Review.findByRevCalif", query = "SELECT r FROM Review r WHERE r.revCalif = :revCalif")
     , @NamedQuery(name = "Review.findByRevOpinion", query = "SELECT r FROM Review r WHERE r.revOpinion = :revOpinion")})
 public class Review implements Serializable {
