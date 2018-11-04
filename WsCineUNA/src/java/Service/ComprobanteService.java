@@ -10,6 +10,7 @@ import Model.Comprobante;
 import Model.ComprobanteDto;
 import Model.Movie;
 import Model.Sala;
+import Model.Tanda;
 import Model.Usuario;
 import Model.UsuarioDto;
 import Util.CodigoRespuesta;
@@ -38,6 +39,24 @@ public class ComprobanteService {
      private EntityManager em;
     List<ComprobanteDto> listDto = new ArrayList<>();
     List<Comprobante> list ;
+    
+    
+    public Respuesta getComp(Long id){
+        try {
+            Query qryActividad = em.createNamedQuery("Comprobante.findByCompId", Comprobante.class);
+            qryActividad.setParameter("compId", id);
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Comprobante", new ComprobanteDto((Comprobante) qryActividad.getSingleResult()));
+        } catch (NoResultException ex) {
+            LOG.log(Level.SEVERE, "Ocurrio un error al consultar un Comprobante único.", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No existe un Comprobante con determinado id.", "getComp NoResultException");
+        } catch (NonUniqueResultException ex) {
+            LOG.log(Level.SEVERE, "Ocurrio un error al consultar una butaca única.", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar un Comprobante único.", "getComp NonUniqueResultException");
+        } catch (Exception ex) {
+            LOG.log(Level.SEVERE, "Ocurrio un error al consultar una butaca única.", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar un Comprobante único.", "getComp " + ex.getMessage());
+        }
+    }
     
     public Respuesta getListFromMovie(Long id){
         try {
@@ -123,6 +142,36 @@ public class ComprobanteService {
         } catch (Exception ex) {
             LOG.log(Level.SEVERE, "Ocurrio un error al guardar el comprobante.", ex);
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar el comprobante.", "guardarComp " + ex.getMessage());
+        }
+    }
+     
+     public Respuesta eliminarComp(Long id){
+        try{
+            Comprobante compAux;
+            if(id!=null && id>0){
+                Query qryId = em.createNamedQuery("Comprobante.findByCompId", Comprobante.class);            
+                qryId.setParameter("compId", id);   
+                compAux = (Comprobante) qryId.getSingleResult();
+                if(compAux != null){
+                    em.remove(compAux);
+                } else {
+                    return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "El comprobante que se desea eliminar no existe en la base de datos", "eliminarTanda NoResultExeption");
+                }
+                em.flush();
+                if(!getComp(compAux.getCompId()).getEstado()){
+                    return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "");
+                } else {
+                    return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Se ha producido un error eliminando un comprobante.", "eliminarComp ");
+                }
+            } else {
+                return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "El comprobante que se desea eliminar no contiene id", "eliminarComp @param 'tanda' null ID");
+            }
+        } catch(NoResultException ex){
+            LOG.log(Level.SEVERE, "El comprobante que se desea eliminar no existe en la base de datos", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "El comprobante que se desea eliminar no existe en la base de datos", "eliminarComp NoResultExeption");
+        } catch(Exception ex){
+            LOG.log(Level.SEVERE, "Se ha producido un error eliminando e comprobante.", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Se ha producido un error eliminando el comprobante.", "eliminarTanda " + ex.getMessage());
         }
     }
 }

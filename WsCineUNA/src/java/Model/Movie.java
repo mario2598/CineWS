@@ -15,6 +15,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -48,6 +49,14 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Movie.findUnavailable", query = "SELECT m from MOVIE m WHERE m.movieEstado='P'")*/  
 })
 public class Movie implements Serializable {
+
+    @Column(name = "MOVIE_DURACION")
+    private Long movieDuracion;
+    @Column(name = "MOVIE_IDIOMA")
+    private Long movieIdioma;
+    @Lob
+    @Column(name = "MOVIE_URLIMG")
+    private Serializable movieUrlimg;
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -84,16 +93,12 @@ public class Movie implements Serializable {
     //@Size(min = 1, max = 100)
     @Column(name = "MOVIE_PORTADA")
     private String moviePortada;
-    @Column(name = "MOVIE_DURACION")
-    private Long movieDuracion;
     //@Size(max = 3)
     @Column(name = "MOVIE_TIPO")
     private String movieTipo;
     //@Size(max = 100)
     @Column(name = "MOVIE_URLENG")
     private String movieUrleng;
-    @Column(name = "MOVIE_IDIOMA")
-    private Long movieIdioma;
     @OneToMany(mappedBy = "movieId", fetch = FetchType.LAZY)
     private List<Tanda> tandaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "movieId", fetch = FetchType.LAZY)
@@ -117,6 +122,7 @@ public class Movie implements Serializable {
         this.movieDate = Date.from(movie.getMovieDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
         this.movieEstado = movie.getMovieEstado();
         this.moviePortada = movie.getMoviePortada();
+        this.movieUrlimg = movie.getMovieUrlimg();
     }
     
     public Movie(Long movieId) {
@@ -270,6 +276,14 @@ public class Movie implements Serializable {
     @Override
     public String toString() {
         return "Model.Movie[ movieId=" + movieId + " ]";
+    }
+
+    public Serializable getMovieUrlimg() {
+        return movieUrlimg;
+    }
+
+    public void setMovieUrlimg(Serializable movieUrlimg) {
+        this.movieUrlimg = movieUrlimg;
     }
     
 }
