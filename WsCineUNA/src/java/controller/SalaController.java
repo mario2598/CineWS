@@ -5,6 +5,8 @@
  */
 package controller;
 
+import Model.Butaca;
+import Model.ButacaDto;
 import Model.Cine;
 import Model.Sala;
 import Model.SalaDto;
@@ -86,6 +88,12 @@ public class SalaController {
             Cine cine = new Cine();
             cine.setCineId(dto.getCineId());
             sala.setCineId(cine);
+            for(ButacaDto b : dto.getButacaList()){
+                Butaca butaca = new Butaca();
+                butaca.duplicateData(b);
+                butaca.setSalaId(sala);
+                sala.getButacaList().add(butaca);
+            }
             Respuesta resp = salaService.guardarSala(sala);
             if(!resp.getEstado()){
                 return Response.status(resp.getCodigoRespuesta().getValue()).entity(resp.getMensaje()).build();
