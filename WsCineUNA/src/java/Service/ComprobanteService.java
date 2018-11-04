@@ -10,6 +10,7 @@ import Model.Comprobante;
 import Model.ComprobanteDto;
 import Model.Movie;
 import Model.Sala;
+import Model.Tanda;
 import Model.Usuario;
 import Model.UsuarioDto;
 import Util.CodigoRespuesta;
@@ -125,4 +126,34 @@ public class ComprobanteService {
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar el comprobante.", "guardarComp " + ex.getMessage());
         }
     }
+     
+    /*  public Respuesta eliminarComp(Long id){
+        try{
+            Tanda tandaAux;
+            if(id!=null && id>0){
+                Query qryId = em.createNamedQuery("Tanda.findByTandaId", Tanda.class);            
+                qryId.setParameter("tandaId", id);   
+                tandaAux = (Tanda) qryId.getSingleResult();
+                if(tandaAux != null){
+                    em.remove(tandaAux);
+                } else {
+                    return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "La Tanda que se desea eliminar no existe en la base de datos", "eliminarTanda NoResultExeption");
+                }
+                em.flush();
+                if(!getTanda(tandaAux.getTandaId()).getEstado()){
+                    return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "");
+                } else {
+                    return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Se ha producido un error eliminando una tanda.", "eliminarTanda ");
+                }
+            } else {
+                return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "La Tanda que se desea eliminar no contiene id", "eliminarTanda @param 'tanda' null ID");
+            }
+        } catch(NoResultException ex){
+            LOG.log(Level.SEVERE, "La tanda que se desea eliminar no existe en la base de datos", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "La tanda que se desea eliminar no existe en la base de datos", "eliminarTanda 11111111111111111NoResultExeption");
+        } catch(Exception ex){
+            LOG.log(Level.SEVERE, "Se ha producido un error eliminando una tanda.", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Se ha producido un error eliminando una tanda.", "eliminarTanda " + ex.getMessage());
+        }
+    }*/
 }
