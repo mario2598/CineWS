@@ -7,6 +7,7 @@ package Model;
 
 import java.io.Serializable;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -14,10 +15,13 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -46,6 +50,8 @@ public class Cine implements Serializable {
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
+    @SequenceGenerator(name = "CINE_ID_GENERATOR", sequenceName = "CINEUNA.CINE_SEQ01", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CINE_ID_GENERATOR")
     @Basic(optional = false)
    // @NotNull
     @Column(name = "CINE_ID")
@@ -80,14 +86,17 @@ public class Cine implements Serializable {
     private List<Usuario> usuarioList;
 
     public Cine() {
-        
+        salaList = new ArrayList<>();
+        usuarioList = new ArrayList<>();
     }
 
     public Cine(Long cineId) {
+        this();
         this.cineId = cineId;
     }
 
     public Cine(Long cineId, String cineNombre, Long cineTel, String cineEmail, Date cineAbre, Date cineCierra) {
+        this();
         this.cineId = cineId;
         this.cineNombre = cineNombre;
         this.cineTel = cineTel;
