@@ -33,6 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Tanda.findAll", query = "SELECT t FROM Tanda t")
     , @NamedQuery(name = "Tanda.findByTandaId", query = "SELECT t FROM Tanda t WHERE t.tandaId = :tandaId")
     , @NamedQuery(name = "Tanda.findByTandaCobro", query = "SELECT t FROM Tanda t WHERE t.tandaCobro = :tandaCobro")
+        , @NamedQuery(name = "Tanda.findBySalaId", query = "SELECT t FROM Tanda t WHERE t.salaId = :salaId")
     , @NamedQuery(name = "Tanda.findByTandaHinicio", query = "SELECT t FROM Tanda t WHERE t.tandaHinicio = :tandaHinicio")
     , @NamedQuery(name = "Tanda.findByTandaHfin", query = "SELECT t FROM Tanda t WHERE t.tandaHfin = :tandaHfin")})
 public class Tanda implements Serializable {
