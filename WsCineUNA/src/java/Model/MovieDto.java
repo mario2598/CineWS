@@ -6,7 +6,6 @@
 package Model;
 
 import Util.LocalDateAdapter;
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -40,7 +39,6 @@ public class MovieDto {
      private List<TandaDto> tandaList = new ArrayList<>();
      @XmlTransient
      private List<ReviewDto> reviewList = new ArrayList<>();
-     private byte[] movieUrlimg;
      
      public MovieDto(Movie m) {
          this.movieId = m.getMovieId();
@@ -52,7 +50,6 @@ public class MovieDto {
          this.movieEstado = m.getMovieEstado();
          this.moviePortada = m.getMoviePortada();
          this.movieDuracion = m.getMovieDuracion();
-         this.movieUrlimg = (byte[]) m.getMovieUrlimg();
     }
 
     public void convList(Movie m){
@@ -60,14 +57,6 @@ public class MovieDto {
              ComprobanteDto cDto = new ComprobanteDto(c);
              comprobanteList.add(cDto);
          }
-    }
-
-    public byte[] getMovieUrlimg() {
-        return movieUrlimg;
-    }
-
-    public void setMovieUrlimg(byte[] movieUrlimg) {
-        this.movieUrlimg = movieUrlimg;
     }
 
     public Long getMovieDuracion() {
