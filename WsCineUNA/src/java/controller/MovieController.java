@@ -88,6 +88,7 @@ public class MovieController {
         try {
              Respuesta res = movieService.getListMovies(estado);
             if (!res.getEstado()) {
+                
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }
             return Response.ok(new GenericEntity<List<MovieDto>>((List<MovieDto>) res.getResultado("MovieList")) {}).build();
