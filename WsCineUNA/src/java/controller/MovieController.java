@@ -9,6 +9,7 @@ import Model.MovieDto;
 import Service.MovieService;
 import Util.CodigoRespuesta;
 import Util.Respuesta;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -81,6 +82,23 @@ public class MovieController {
      * @param estado
      * @return 
      */
+    @GET
+    @Path("/moviesList/{date1}/{date2}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getMovieLust(@PathParam("date1") Date date1,@PathParam("date2") Date date2) {
+    try {
+             Respuesta res = movieService.reporteMovieList(date1, date2);
+            if (!res.getEstado()) {
+                return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
+            }
+
+            return Response.ok((res.getResultado("Movie"))).build();
+        } catch (Exception ex) {
+            Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error creando comprobante").build();
+        }      
+    }
+    
     @GET
     @Path("/getMovieList/{estado}")
     @Produces(MediaType.APPLICATION_JSON)

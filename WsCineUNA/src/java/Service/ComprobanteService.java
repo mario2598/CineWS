@@ -41,6 +41,22 @@ public class ComprobanteService {
     List<Comprobante> list ;
     
     
+        public Respuesta countFromMovie(Long id){
+        try {
+            Query qryActividad = em.createNamedQuery("Comprobante.count", Comprobante.class);
+            qryActividad.setParameter("movieId", id);
+            int result = (int) qryActividad.getSingleResult();
+            
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Comprobante",result);
+
+        } catch (NoResultException ex) {
+            return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "Esta pelicula no tiene comprobantes.", "countFromMovie NoResultException");
+        } catch (Exception ex) {
+            LOG.log(Level.SEVERE, "Ocurrio un error al consultar los comprobantes.", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar los comprobantes.", "countFromMovie " + ex.getMessage());
+        }
+    }
+    
     public Respuesta getComp(Long id){
         try {
             Query qryActividad = em.createNamedQuery("Comprobante.findByCompId", Comprobante.class);

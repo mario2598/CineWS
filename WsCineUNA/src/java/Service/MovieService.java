@@ -7,11 +7,23 @@ package Service;
 
 import Model.Movie;
 import Model.MovieDto;
+import Model.reportMovie;
 import Util.CodigoRespuesta;
 import Util.Respuesta;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -20,7 +32,16 @@ import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.inject.Inject;
 import javax.persistence.Query;
+import javax.servlet.ServletContext;
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 /**
  *
@@ -32,12 +53,70 @@ public class MovieService {
     private static final Logger LOG = Logger.getLogger(UsuarioService.class.getName());
     @PersistenceContext(unitName = "WsCineUNAPU")
      private EntityManager em;
+     @Inject
+     ServletContext context;
     
     /**
      * obtiene película a partir de un id
      * @param id
      * @return 
      */
+    
+     public Respuesta reporteMovieList(Date date1, Date date2) {
+        try {
+            List<Movie> listMovies;
+            Query qryActividad = em.createNamedQuery("Movie.ReporteList", Movie.class);
+            qryActividad.setParameter("date1", date1);
+            qryActividad.setParameter("date2", date2);
+            listMovies= qryActividad.getResultList();
+            List<reportMovie> listJasper = new ArrayList<>();
+            reportMovie rp;
+            for(Movie m : listMovies){
+                
+                rp = new reportMovie(m.getMovieNombre(), m.getMovieId());
+                listJasper.add(rp);
+            }
+            Collections.sort(listJasper, (reportMovie p1, reportMovie p2) -> { 
+                return p2.getCantidad().compareTo(p1.getCantidad());
+            } 
+            );
+            
+            String ruta = context.getRealPath("/");
+            String JasperRuta = ruta+ "\\jasper\\movieReport.jrxml";
+            String pdfRuta = ruta+ "\\jasper\\reporteMovies.pdf";
+            String outPutFile = pdfRuta;
+            
+            JRBeanCollectionDataSource cobrojrb = new JRBeanCollectionDataSource(listJasper);
+            JasperReport jasperReport = JasperCompileManager.compileReport(JasperRuta);
+            Map<String, Object> parametros = new HashMap<>();
+            parametros.put("dataSource", cobrojrb);
+            JasperPrint jasperprint = JasperFillManager.fillReport(jasperReport, parametros, new JREmptyDataSource());        
+            OutputStream outputStream = new FileOutputStream(new File(outPutFile));
+            
+            JasperExportManager.exportReportToPdfStream(jasperprint, outputStream);
+            byte[] ReportBytes = convertDocToByteArray(outPutFile);
+           
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Movie",ReportBytes);
+        } catch (Exception ex) {
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al generar el reporte.", "reporteMovieList " + ex.getMessage());
+        }
+    }
+     
+         public static byte[] convertDocToByteArray(String path)throws FileNotFoundException, IOException{
+        File file = new File(path);
+        FileInputStream fis = new FileInputStream(file);
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        byte[] buf = new byte[1024];
+        try {
+            for (int readNum; (readNum = fis.read(buf)) != -1;) {
+                bos.write(buf, 0, readNum);
+            }
+        } catch (IOException ex) {
+        }
+        byte[] bytes = bos.toByteArray();
+        return bytes;
+    }
+     
     public Respuesta getMovie(Long id){
         try{
             Query qryActividad = em.createNamedQuery("Movie.findByMovieId", Movie.class);
