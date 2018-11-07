@@ -27,8 +27,8 @@ public class TandaDto {
      private Long tandaCobro;
      @XmlJavaTypeAdapter(LocalDateAdapter.class)
      private LocalDate tandaHinicio;
-     //@XmlJavaTypeAdapter(LocalDateAdapter.class)
-     //private LocalDate tandaHfin;
+     @XmlJavaTypeAdapter(LocalDateAdapter.class)
+     private LocalDate tandaHfin;
      private MovieDto movieId;
      private SalaDto salaId;
     
@@ -37,8 +37,8 @@ public class TandaDto {
          this.tandaCobro = t.getTandaCobro();
          this.movieId = new MovieDto(t.getMovieId());
          //this.movieId = t.getMovieId().getMovieId();
-         //this.tandaHinicio = t.getTandaHinicio().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-         //this.tandaHfin = t.getTandaHfin().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+         this.tandaHinicio = t.getTandaHinicio().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+         this.tandaHfin = t.getTandaHfin().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
          this.salaId = new SalaDto(t.getSalaId());
          //this.salaId = t.getSalaId().getSalaId();
          /*try {
@@ -72,15 +72,15 @@ public class TandaDto {
     public void setTandaHinicio(LocalDate tandaHinicio) {
         this.tandaHinicio = tandaHinicio;
     }
-/*
-    public LocalDateTime getTandaHfin() {
+    
+    public LocalDate getTandaHfin() {
         return tandaHfin;
     }
 
-    public void setTandaHfin(LocalDateTime tandaHfin) {
+    public void setTandaHfin(LocalDate tandaHfin) {
         this.tandaHfin = tandaHfin;
     }
-*/
+
     public MovieDto getMovieId() {
         return movieId;
     }
