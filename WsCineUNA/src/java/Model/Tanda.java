@@ -35,7 +35,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Tanda.findByTandaId", query = "SELECT t FROM Tanda t WHERE t.tandaId = :tandaId")
     , @NamedQuery(name = "Tanda.findByTandaCobro", query = "SELECT t FROM Tanda t WHERE t.tandaCobro = :tandaCobro")
     , @NamedQuery(name = "Tanda.findBySalaId", query = "SELECT t FROM Tanda t WHERE t.salaId = :salaId")
-    , @NamedQuery(name = "Tanda.findByMovieId", query = "SELECT t FROM Tanda t WHERE t.movieId = :movieId")    
+    , @NamedQuery(name = "Tanda.findByMovieId", query = "SELECT t FROM Tanda t WHERE t.movieId.movieId = :movieId")    
     , @NamedQuery(name = "Tanda.findByTandaHinicio", query = "SELECT t FROM Tanda t WHERE t.tandaHinicio = :tandaHinicio")
     , @NamedQuery(name = "Tanda.findByTandaHfin", query = "SELECT t FROM Tanda t WHERE t.tandaHfin = :tandaHfin")})
 public class Tanda implements Serializable {
@@ -76,8 +76,8 @@ public class Tanda implements Serializable {
     
     public void actualizarTanda(TandaDto tDto){
         this.tandaCobro = tDto.getTandaCobro();
-        this.tandaHfin = Date.from(tDto.getTandaHfin().atStartOfDay(ZoneId.systemDefault()).toInstant());
-        this.tandaHinicio = Date.from(tDto.getTandaHinicio().atStartOfDay(ZoneId.systemDefault()).toInstant());
+        //this.tandaHfin = Date.from(tDto.getTandaHfin().atZone(ZoneId.systemDefault()).toInstant()); //atStartOfDay(ZoneId.systemDefault()).toInstant());
+        //this.tandaHinicio = Date.from(tDto.getTandaHinicio().atZone(ZoneId.systemDefault()).toInstant());
         this.movieId = new Movie(tDto.getMovieId());
         this.salaId = new Sala(tDto.getTandaId());
         //this.

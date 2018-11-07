@@ -46,6 +46,7 @@ public class TandaController {
         try {
              Respuesta res = tandaService.getListTandaM(id);
             if (!res.getEstado()) {
+                System.out.println("El error");
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }
             return Response.ok(new GenericEntity<List<TandaDto>>((List<TandaDto>) res.getResultado("TandaListM")) {}).build();

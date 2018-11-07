@@ -88,6 +88,7 @@ public class TandaService {
                 dtoList.add(newDto);
             });*/
             for(Tanda t: resultList){
+                System.out.println("agregando tanda");
                 dtoList.add(new TandaDto(t));
             }
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "TandaListM", dtoList);

@@ -8,7 +8,6 @@ package Model;
 import Util.LocalDateAdapter;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Date;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -29,14 +28,24 @@ public class TandaDto {
      private LocalDate tandaHfin;
      private MovieDto movieId;
      private SalaDto salaId;
+     private Integer horaTanda;
     
       public TandaDto(Tanda t) {
          this.tandaId = t.getTandaId();
          this.tandaCobro = t.getTandaCobro();
          this.movieId = new MovieDto(t.getMovieId());
+         //this.movieId = t.getMovieId().getMovieId();
          this.tandaHinicio = t.getTandaHinicio().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
          this.tandaHfin = t.getTandaHfin().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
          this.salaId = new SalaDto(t.getSalaId());
+         this.horaTanda = t.getTandaHinicio().getHours();
+         //this.salaId = t.getSalaId().getSalaId();
+         /*try {
+                this.tandaHinicio = LocalDateTime.ofInstant(t.getTandaHinicio().toInstant(), ZoneId.systemDefault());;
+            } catch (Exception ex) {
+
+            }*/
+         
     }
 
     public Long getTandaId() {
@@ -62,7 +71,7 @@ public class TandaDto {
     public void setTandaHinicio(LocalDate tandaHinicio) {
         this.tandaHinicio = tandaHinicio;
     }
-
+    
     public LocalDate getTandaHfin() {
         return tandaHfin;
     }
@@ -74,7 +83,7 @@ public class TandaDto {
     public MovieDto getMovieId() {
         return movieId;
     }
-
+    
     public void setMovieId(MovieDto movieId) {
         this.movieId = movieId;
     }
@@ -85,6 +94,32 @@ public class TandaDto {
 
     public void setSalaId(SalaDto salaId) {
         this.salaId = salaId;
+    }
+    
+    /*
+    public Long getMovieId() {
+        return movieId;
+    }
+    
+    public void setMovieId(MovieDto movieId) {
+        this.movieId = movieId.getMovieId();
+    }
+
+    public Long getSalaId() {
+        return salaId;
+    }
+
+    public void setSalaId(SalaDto salaId) {
+        this.salaId = salaId.getSalaId();
+    }
+    */
+
+    public Integer getHoraTanda() {
+        return horaTanda;
+    }
+
+    public void setHoraTanda(Integer horaTanda) {
+        this.horaTanda = horaTanda;
     }
       
 }
