@@ -44,7 +44,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Butaca.findByButImg", query = "SELECT b FROM Butaca b WHERE b.butImg = :butImg")
     , @NamedQuery(name = "Butaca.findByButLetra", query = "SELECT b FROM Butaca b WHERE b.butLetra = :butLetra")
     , @NamedQuery(name = "Butaca.findByButActiva", query = "SELECT b FROM Butaca b WHERE b.butActiva = :butActiva")
-    , @NamedQuery(name = "Butaca.findBySalaId", query = "SELECT b FROM Butaca b WHERE b.salaId = :salID")})
+    , @NamedQuery(name = "Butaca.findBySalaId", query = "SELECT b FROM Butaca b WHERE b.salaId.salaId = :salID")})//cambio query
 public class Butaca implements Serializable {
 
     private static final long serialVersionUID = 1L;
