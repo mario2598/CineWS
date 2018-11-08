@@ -39,6 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Movie.findByMovieResena", query = "SELECT m FROM Movie m WHERE m.movieResena = :movieResena")
     , @NamedQuery(name = "Movie.findByMovieUrlesp", query = "SELECT m FROM Movie m WHERE m.movieUrlesp = :movieUrlesp")
     , @NamedQuery(name = "Movie.findByMovieDate", query = "SELECT m FROM Movie m WHERE m.movieDate = :movieDate")
+    , @NamedQuery(name = "Movie.Report", query = "SELECT m FROM Movie m WHERE m.movieDate >= :fecha1 and  m.movieDate <= :fecha2")
     , @NamedQuery(name = "Movie.findByMovieEstado", query = "SELECT m FROM Movie m WHERE UPPER(m.movieEstado) = :movieEstado")//revisar ese upper() like
     , @NamedQuery(name = "Movie.findByMoviePortada", query = "SELECT m FROM Movie m WHERE m.moviePortada = :moviePortada")
     , @NamedQuery(name = "Movie.findByMovieDuracion", query = "SELECT m FROM Movie m WHERE m.movieDuracion = :movieDuracion")
