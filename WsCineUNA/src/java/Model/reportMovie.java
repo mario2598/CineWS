@@ -5,40 +5,37 @@
  */
 package Model;
 
-import Service.ComprobanteService;
-import Service.MovieService;
-import Util.Respuesta;
-import javax.ejb.EJB;
 
 /**
  *
  * @author mario
  */
 public class reportMovie {
-    private String Nombre;
+    private String nombre;
     private Integer cantidad;
-    @EJB
-    ComprobanteService cService;
 
-    public reportMovie(String Nombre,Long id) {
-        this.Nombre = Nombre;
-        Respuesta res = cService.countFromMovie(id);
-        try {
-           cantidad = (Integer) res.getResultado("Comprobante"); 
-        } catch (Exception e) {
+    public reportMovie(String Nombre,Integer cant) {
+        this.nombre = Nombre;
+        if(cant == null)
+        {
             cantidad = 0;
         }
-        
+        else{
+            cantidad = cant;
+        }
+    }
+
+    public reportMovie() {
     }
     
     
 
     public String getNombre() {
-        return Nombre;
+        return nombre;
     }
 
     public void setNombre(String Nombre) {
-        this.Nombre = Nombre;
+        this.nombre = Nombre;
     }
 
     public Integer getCantidad() {
