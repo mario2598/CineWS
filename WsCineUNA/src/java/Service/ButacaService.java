@@ -34,6 +34,8 @@ public class ButacaService {
     
     public Respuesta getButaca(Long id){
         try {
+            em.flush();
+            em.getEntityManagerFactory().getCache().evictAll();
             Query qryActividad = em.createNamedQuery("Butaca.findByButId", Butaca.class);
             qryActividad.setParameter("butId", id);
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Butaca", new ButacaDto((Butaca) qryActividad.getSingleResult()));
@@ -55,6 +57,8 @@ public class ButacaService {
      * @return lista de tipo butacaDto
      */
     public Respuesta getListaButacas(Long salaId){
+        em.flush();
+        em.getEntityManagerFactory().getCache().evictAll();
         ArrayList<Butaca> resultList;
         ArrayList<ButacaDto> dtoList;
         try{
