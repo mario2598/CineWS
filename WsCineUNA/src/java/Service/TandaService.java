@@ -31,15 +31,15 @@ import javax.persistence.Query;
 @Stateless
 @LocalBean
 public class TandaService {
+    
     private static final Logger LOG = Logger.getLogger(CineService.class.getName());
     @PersistenceContext(unitName = "WsCineUNAPU")
-     private EntityManager em;
-    
+    private EntityManager em;
     
     public Respuesta getTanda(Long id){
         try {
-           Query qryId = em.createNamedQuery("Tanda.findByTandaId", Tanda.class);            
-                qryId.setParameter("tandaId", id);   
+            Query qryId = em.createNamedQuery("Tanda.findByTandaId", Tanda.class);            
+            qryId.setParameter("tandaId", id);   
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Tanda", new TandaDto((Tanda) qryId.getSingleResult()));
         } catch (NoResultException ex) {
             LOG.log(Level.SEVERE, "Ocurrio un error al consultar una tanda única.", ex);
@@ -57,15 +57,15 @@ public class TandaService {
         ArrayList<Tanda> resultList;
         ArrayList<TandaDto> dtoList;
         try{
-            Query qryListButacas = em.createNamedQuery("Tanda.findBySalaId", Tanda.class);
-            qryListButacas.setParameter("salaId", salaId);
-            resultList = new ArrayList<>(qryListButacas.getResultList());
+            Query qryListTandas = em.createNamedQuery("Tanda.findBySalaId", Tanda.class);
+            qryListTandas.setParameter("salaId", salaId);
+            resultList = new ArrayList<>(qryListTandas.getResultList());
             dtoList = new ArrayList<>();
             resultList.stream().forEach(tanda -> {
                 TandaDto newDto = new TandaDto(tanda);
                 dtoList.add(newDto);
             });
-            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "TandaList", dtoList);
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "TandaListS", dtoList);
         } catch (NoResultException ex) {
             LOG.log(Level.SEVERE, "Ocurrio un error al consultar la lista de tandas realcionadas con la sala ID: "+ salaId +".", ex);
             return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No existe butacas relacionadas con la sala ID: "+ salaId +".", "getListaButacas NoResultException");
@@ -101,8 +101,7 @@ public class TandaService {
         }
     }
     
-    
-        public Respuesta guardarTanda(Tanda tanda) {
+    public Respuesta guardarTanda(Tanda tanda) {
         try {
             Tanda tandaAux;
             if (tanda!=null && tanda.getTandaId()!= null && tanda.getTandaId() > 0) {
@@ -111,11 +110,9 @@ public class TandaService {
                     return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encrontró la tanda a modificar.", "guardarTanda NoResultException");
                 }
                 tandaAux = em.merge(tandaAux);
-               
                 return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Tanda", new TandaDto(tandaAux));
             } else {
                  em.persist(tanda);
-
             }
              em.flush();
              return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Tanda", new TandaDto(tanda));             
@@ -125,7 +122,7 @@ public class TandaService {
         }
     }
         
-        public Respuesta eliminarTanda(Long id){
+    public Respuesta eliminarTanda(Long id){
         try{
             Tanda tandaAux;
             if(id!=null && id>0){

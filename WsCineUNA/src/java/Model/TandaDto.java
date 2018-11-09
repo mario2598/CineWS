@@ -35,10 +35,10 @@ public class TandaDto {
          this.tandaCobro = t.getTandaCobro();
          this.movieId = new MovieDto(t.getMovieId());
          //this.movieId = t.getMovieId().getMovieId();
-         this.tandaHinicio = t.getTandaHinicio().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-         this.tandaHfin = t.getTandaHfin().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+//         this.tandaHinicio = t.getTandaHinicio().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+//         this.tandaHfin = t.getTandaHfin().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
          this.salaId = new SalaDto(t.getSalaId());
-         this.horaTanda = t.getTandaHinicio().getHours();
+//         this.horaTanda = t.getTandaHinicio().getHours();
          //this.salaId = t.getSalaId().getSalaId();
          /*try {
                 this.tandaHinicio = LocalDateTime.ofInstant(t.getTandaHinicio().toInstant(), ZoneId.systemDefault());;

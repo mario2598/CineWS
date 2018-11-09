@@ -120,12 +120,13 @@ public class MovieService {
                 movie.actualizarMovie(movDto);//actualiza la movie si ya existía
                 movie = em.merge(movie);//actualiza
             } else {
+                System.out.println("Intenta persistir la pelicula: " + movDto.getMovieNombre());
                 movie = new Movie(movDto);//crea una nueva a partir del Dto
                 em.persist(movie);//periste
             }
             em.flush();//refresca
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Movie", new MovieDto(movie));    
-            } catch (Exception ex) {
+        } catch (Exception ex) {
             LOG.log(Level.SEVERE, "Ocurrio un error al guardar la película.", ex);
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar el empleado.", "guardarEmpleado " + ex.getMessage());
         }

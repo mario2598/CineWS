@@ -31,6 +31,7 @@ public class MovieDto {
      private String movieUrleng;
      @XmlJavaTypeAdapter(LocalDateAdapter.class)
      private LocalDate movieDate;
+     private String movieTipo;
      private String movieEstado;
      private String moviePortada;
      private Long movieDuracion;
@@ -41,6 +42,10 @@ public class MovieDto {
      @XmlTransient
      private List<ReviewDto> reviewList = new ArrayList<>();
      private byte[] movieUrlimg;
+     
+     public MovieDto(){
+         
+     }
      
      public MovieDto(Movie m) {
          this.movieId = m.getMovieId();
@@ -53,6 +58,7 @@ public class MovieDto {
          this.moviePortada = m.getMoviePortada();
          this.movieDuracion = m.getMovieDuracion();
          this.movieUrlimg = (byte[]) m.getMovieUrlimg();
+         this.movieTipo = m.getMovieTipo();
     }
 
     public void convList(Movie m){
@@ -179,6 +185,14 @@ public class MovieDto {
 
     public void setMoviePortada(String moviePortada) {
         this.moviePortada = moviePortada;
+    }
+
+    public String getMovieTipo() {
+        return movieTipo;
+    }
+
+    public void setMovieTipo(String movieTipo) {
+        this.movieTipo = movieTipo;
     }
      
      
