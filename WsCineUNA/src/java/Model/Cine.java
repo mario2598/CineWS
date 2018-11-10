@@ -47,6 +47,15 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Cine.findByCineCierra", query = "SELECT c FROM Cine c WHERE c.cineCierra = :cineCierra")})
 public class Cine implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "CINE_TEL")
+    private Long cineTel;
+    @Column(name = "CINE_ABRE")
+    private Long cineAbre;
+    @Column(name = "CINE_CIERRA")
+    private Long cineCierra;
+
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -62,24 +71,10 @@ public class Cine implements Serializable {
     @Column(name = "CINE_NOMBRE")
     private String cineNombre;
     @Basic(optional = false)
-    //@NotNull
-    @Column(name = "CINE_TEL")
-    private Long cineTel;
-    @Basic(optional = false)
     // @NotNull
     //@Size(min = 1, max = 80)
     @Column(name = "CINE_EMAIL")
     private String cineEmail;
-    @Basic(optional = false)
-    //@NotNull
-    @Column(name = "CINE_ABRE")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date cineAbre;
-    @Basic(optional = false)
-    //@NotNull
-    @Column(name = "CINE_CIERRA")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date cineCierra;
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "cineId", fetch = FetchType.LAZY)
     private List<Sala> salaList;
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "cineId", fetch = FetchType.LAZY)
@@ -95,7 +90,7 @@ public class Cine implements Serializable {
         this.cineId = cineId;
     }
 
-    public Cine(Long cineId, String cineNombre, Long cineTel, String cineEmail, Date cineAbre, Date cineCierra) {
+    public Cine(Long cineId, String cineNombre, Long cineTel, String cineEmail, Long cineAbre, Long cineCierra) {
         this();
         this.cineId = cineId;
         this.cineNombre = cineNombre;
@@ -109,8 +104,8 @@ public class Cine implements Serializable {
         this.cineId = c.getCineId();
         this.cineNombre = c.getCineNombre();
         this.cineTel = c.getCineTel();
-        this.cineAbre = Date.from(c.getCineAbre().atStartOfDay(ZoneId.systemDefault()).toInstant());
-        this.cineCierra = Date.from(c.getCineCierra().atStartOfDay(ZoneId.systemDefault()).toInstant());        
+        this.cineAbre = c.getCineAbre();
+        this.cineCierra = c.getCineCierra();        
     }
 
     public Long getCineId() {
@@ -143,22 +138,6 @@ public class Cine implements Serializable {
 
     public void setCineEmail(String cineEmail) {
         this.cineEmail = cineEmail;
-    }
-
-    public Date getCineAbre() {
-        return cineAbre;
-    }
-
-    public void setCineAbre(Date cineAbre) {
-        this.cineAbre = cineAbre;
-    }
-
-    public Date getCineCierra() {
-        return cineCierra;
-    }
-
-    public void setCineCierra(Date cineCierra) {
-        this.cineCierra = cineCierra;
     }
 
     @XmlTransient
@@ -202,6 +181,22 @@ public class Cine implements Serializable {
     @Override
     public String toString() {
         return "Model.Cine[ cineId=" + cineId + " ]";
+    }
+
+    public Long getCineAbre() {
+        return cineAbre;
+    }
+
+    public void setCineAbre(Long cineAbre) {
+        this.cineAbre = cineAbre;
+    }
+
+    public Long getCineCierra() {
+        return cineCierra;
+    }
+
+    public void setCineCierra(Long cineCierra) {
+        this.cineCierra = cineCierra;
     }
     
 }

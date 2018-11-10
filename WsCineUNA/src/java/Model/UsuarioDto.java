@@ -5,6 +5,7 @@
  */
 package Model;
 
+import java.io.Serializable;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -30,6 +31,7 @@ public class UsuarioDto {
     private String usuNewpassword; 
     private String usuCambio;
     private String usuCodAct;
+    private byte[] usuImg;
     
     //Constructores
 
@@ -49,6 +51,7 @@ public class UsuarioDto {
          this.usuCambio = usu.getUsuCambio();
          this.usuEstado = usu.getUsuEstado();
          this.usuCodAct = usu.getUsuCodAct();
+         this.usuImg = (byte[]) usu.getUsuImg();
     }
      
     public String getUsuCodAct(){
@@ -56,6 +59,16 @@ public class UsuarioDto {
     }
 
     //Metodos
+
+    public byte[] getUsuImg() {
+        return usuImg;
+    }
+
+    public void setUsuImg(byte[] usuImg) {
+        this.usuImg = usuImg;
+    }
+    
+    
     public void setUsuCodAct(String usuCodAct) {
         this.usuCodAct = usuCodAct;
     }

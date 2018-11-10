@@ -5,9 +5,6 @@
  */
 package Model;
 
-import Util.LocalDateAdapter;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -28,10 +25,8 @@ public class CineDto {
     private String cineNombre;
     private Long cineTel;
     private String cineEmail;
-    @XmlJavaTypeAdapter(LocalDateAdapter.class)
-    private LocalDate cineAbre;
-    @XmlJavaTypeAdapter(LocalDateAdapter.class)
-    private LocalDate cineCierra;
+    private Long cineAbre;
+    private Long cineCierra;
     @XmlTransient
     private List<SalaDto> salaList = new ArrayList<>();
     @XmlTransient
@@ -45,8 +40,8 @@ public class CineDto {
          this.cineId = c.getCineId();
          this.cineNombre = c.getCineNombre();
          this.cineTel = c.getCineTel();
-         this.cineAbre = c.getCineAbre().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-         this.cineCierra = c.getCineCierra().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();        
+         this.cineAbre = c.getCineAbre();
+         this.cineCierra = c.getCineCierra();        
     }
 
     public void convList(Cine c){
@@ -88,19 +83,19 @@ public class CineDto {
         this.cineEmail = cineEmail;
     }
 
-    public LocalDate getCineAbre() {
+    public Long getCineAbre() {
         return cineAbre;
     }
 
-    public void setCineAbre(LocalDate cineAbre) {
+    public void setCineAbre(Long cineAbre) {
         this.cineAbre = cineAbre;
     }
 
-    public LocalDate getCineCierra() {
+    public Long getCineCierra() {
         return cineCierra;
     }
 
-    public void setCineCierra(LocalDate cineCierra) {
+    public void setCineCierra(Long cineCierra) {
         this.cineCierra = cineCierra;
     }
     

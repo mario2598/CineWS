@@ -6,6 +6,8 @@
 package Model;
 
 import java.io.Serializable;
+import java.time.ZoneId;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +18,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -34,6 +38,14 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Comprobante.findByCompCosto", query = "SELECT c FROM Comprobante c WHERE c.compCosto = :compCosto")})
 public class Comprobante implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "COMP_COSTO")
+    private Long compCosto;
+    @Column(name = "COMP_DATE")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date compDate;
+
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -41,10 +53,6 @@ public class Comprobante implements Serializable {
    // @NotNull
     @Column(name = "COMP_ID")
     private Long compId;
-    @Basic(optional = false)
-   // @NotNull
-    @Column(name = "COMP_COSTO")
-    private Long compCosto;
     @JoinColumn(name = "BUT_ID", referencedColumnName = "BUT_ID")
     @ManyToOne(fetch = FetchType.LAZY)
     private Butaca butId;
@@ -68,6 +76,7 @@ public class Comprobante implements Serializable {
      public Comprobante(ComprobanteDto compDto) {
         this.compId = compDto.getCompId();
         this.compCosto = compDto.getCompCosto();
+        this.compDate = Date.from(compDto.getCompDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 
     public Comprobante(Long compId, Long compCosto) {
@@ -146,6 +155,14 @@ public class Comprobante implements Serializable {
     @Override
     public String toString() {
         return "Model.Comprobante[ compId=" + compId + " ]";
+    }
+    
+    public Date getCompDate() {
+        return compDate;
+    }
+
+    public void setCompDate(Date compDate) {
+        this.compDate = compDate;
     }
     
 }

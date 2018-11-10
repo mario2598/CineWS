@@ -42,6 +42,8 @@ public class MovieDto {
      @XmlTransient
      private List<ReviewDto> reviewList = new ArrayList<>();
      private byte[] movieUrlimg;
+     private String movieNombreing;
+     private String movieResenaing;
      
      public MovieDto(){
          
@@ -58,7 +60,12 @@ public class MovieDto {
          this.moviePortada = m.getMoviePortada();
          this.movieDuracion = m.getMovieDuracion();
          this.movieUrlimg = (byte[]) m.getMovieUrlimg();
+<<<<<<< HEAD
          this.movieTipo = m.getMovieTipo();
+=======
+         this.movieResenaing = m.getMovieResenaing();
+         this.movieNombreing = m.getMovieNombreing();
+>>>>>>> origin/mario/master5-6/11
     }
 
     public void convList(Movie m){
@@ -74,6 +81,22 @@ public class MovieDto {
 
     public void setMovieUrlimg(byte[] movieUrlimg) {
         this.movieUrlimg = movieUrlimg;
+    }
+
+    public String getMovieNombreing() {
+        return movieNombreing;
+    }
+
+    public void setMovieNombreing(String movieNombreing) {
+        this.movieNombreing = movieNombreing;
+    }
+
+    public String getMovieResenaing() {
+        return movieResenaing;
+    }
+
+    public void setMovieResenaing(String movieResenaing) {
+        this.movieResenaing = movieResenaing;
     }
 
     public Long getMovieDuracion() {

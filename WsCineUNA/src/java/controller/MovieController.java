@@ -5,14 +5,21 @@
  */
 package controller;
 
+import Model.Movie;
 import Model.MovieDto;
+import Model.reporteController;
 import Service.MovieService;
 import Util.CodigoRespuesta;
 import Util.Respuesta;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.inject.Inject;
+import javax.servlet.ServletContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -23,6 +30,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import net.sf.jasperreports.engine.JRException;
 
 /**
  *
@@ -33,6 +41,8 @@ public class MovieController {
    
     @EJB
     MovieService movieService;
+    @Inject
+     ServletContext context;
     
     /**
      * obtiene todas las películas
@@ -78,9 +88,37 @@ public class MovieController {
     
     /**
      * obtiene la lista de películas de acuerdo al estado
-     * @param estado
+     * @param f1
+     * @param f2
      * @return 
      */
+    @GET
+    @Path("/moviesReport/{date1}/{date2}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getMovieList(@PathParam("date1") String f1,@PathParam("date2") String f2) throws FileNotFoundException, IOException {
+        return null;
+    
+    }
+    
+    @GET
+    @Path("/movieReport/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getMovieReport(@PathParam("id") Long id) {
+    try {   
+            reporteController rc = new reporteController(context);
+            Respuesta res = rc.ganerateJasperReport(id);
+            if (!res.getEstado()) {
+                return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
+            }
+         
+            return Response.ok(res.getResultado("Reporte")).build();
+           
+       } catch (IOException | JRException ex) {
+            Logger.getLogger(MovieController.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error creando Reporte").build();
+        }      
+    }
+    
     @GET
     @Path("/getMovieList/{estado}")
     @Produces(MediaType.APPLICATION_JSON)

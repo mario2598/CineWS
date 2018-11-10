@@ -6,8 +6,6 @@
 package Model;
 
 import java.io.Serializable;
-import java.time.ZoneId;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,9 +16,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -40,6 +35,17 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Tanda.findByTandaHfin", query = "SELECT t FROM Tanda t WHERE t.tandaHfin = :tandaHfin")})
 public class Tanda implements Serializable {
 
+    @Column(name = "TANDA_COBRO")
+    private Long tandaCobro;
+    @Column(name = "TANDA_INIHH")
+    private Long tandaInihh;
+    @Column(name = "TANDA_INIMM")
+    private Long tandaInimm;
+    @Column(name = "TANDA_FINHH")
+    private Long tandaFinhh;
+    @Column(name = "TANDA_FINMM")
+    private Long tandaFinmm;
+
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -47,14 +53,8 @@ public class Tanda implements Serializable {
     //@NotNull
     @Column(name = "TANDA_ID")
     private Long tandaId;
-    @Column(name = "TANDA_COBRO")
-    private Long tandaCobro;
-    @Column(name = "TANDA_HINICIO")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date tandaHinicio;
-    @Column(name = "TANDA_HFIN")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date tandaHfin;
+
+
     @JoinColumn(name = "MOVIE_ID", referencedColumnName = "MOVIE_ID")
     @ManyToOne(fetch = FetchType.LAZY)
     private Movie movieId;
@@ -76,8 +76,12 @@ public class Tanda implements Serializable {
     
     public void actualizarTanda(TandaDto tDto){
         this.tandaCobro = tDto.getTandaCobro();
+<<<<<<< HEAD
         //this.tandaHfin = Date.from(tDto.getTandaHfin().atZone(ZoneId.systemDefault()).toInstant()); //atStartOfDay(ZoneId.systemDefault()).toInstant());
         //this.tandaHinicio = Date.from(tDto.getTandaHinicio().atZone(ZoneId.systemDefault()).toInstant());
+=======
+        
+>>>>>>> origin/mario/master5-6/11
         this.movieId = new Movie(tDto.getMovieId());
         this.salaId = new Sala(tDto.getTandaId());
         //this.
@@ -101,22 +105,6 @@ public class Tanda implements Serializable {
 
     public void setTandaCobro(Long tandaCobro) {
         this.tandaCobro = tandaCobro;
-    }
-
-    public Date getTandaHinicio() {
-        return tandaHinicio;
-    }
-
-    public void setTandaHinicio(Date tandaHinicio) {
-        this.tandaHinicio = tandaHinicio;
-    }
-
-    public Date getTandaHfin() {
-        return tandaHfin;
-    }
-
-    public void setTandaHfin(Date tandaHfin) {
-        this.tandaHfin = tandaHfin;
     }
 
     public Movie getMovieId() {
@@ -158,6 +146,38 @@ public class Tanda implements Serializable {
     @Override
     public String toString() {
         return "Model.Tanda[ tandaId=" + tandaId + " ]";
+    }
+
+    public Long getTandaInihh() {
+        return tandaInihh;
+    }
+
+    public void setTandaInihh(Long tandaInihh) {
+        this.tandaInihh = tandaInihh;
+    }
+
+    public Long getTandaInimm() {
+        return tandaInimm;
+    }
+
+    public void setTandaInimm(Long tandaInimm) {
+        this.tandaInimm = tandaInimm;
+    }
+
+    public Long getTandaFinhh() {
+        return tandaFinhh;
+    }
+
+    public void setTandaFinhh(Long tandaFinhh) {
+        this.tandaFinhh = tandaFinhh;
+    }
+
+    public Long getTandaFinmm() {
+        return tandaFinmm;
+    }
+
+    public void setTandaFinmm(Long tandaFinmm) {
+        this.tandaFinmm = tandaFinmm;
     }
     
 }

@@ -5,10 +5,14 @@
  */
 package Model;
 
+import Util.LocalDateAdapter;
+import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.Date;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  *
@@ -24,6 +28,8 @@ public class ComprobanteDto {
     private MovieDto movieId;
     private SalaDto salaId;
     private UsuarioDto usuId;
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
+    private LocalDate compDate;
     
     public ComprobanteDto(Comprobante c) {
          this.compId = c.getCompId();
@@ -32,6 +38,15 @@ public class ComprobanteDto {
          this.movieId = new MovieDto(c.getMovieId());
          this.salaId = new SalaDto(c.getSalaId());
          this.usuId = new UsuarioDto(c.getUsuId());
+         this.compDate =  c.getCompDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(); 
+    }
+
+    public LocalDate getCompDate() {
+        return compDate;
+    }
+
+    public void setCompDate(LocalDate compDate) {
+        this.compDate = compDate;
     }
 
     public Long getCompId() {
