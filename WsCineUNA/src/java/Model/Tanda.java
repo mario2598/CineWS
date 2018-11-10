@@ -76,12 +76,8 @@ public class Tanda implements Serializable {
     
     public void actualizarTanda(TandaDto tDto){
         this.tandaCobro = tDto.getTandaCobro();
-<<<<<<< HEAD
         //this.tandaHfin = Date.from(tDto.getTandaHfin().atZone(ZoneId.systemDefault()).toInstant()); //atStartOfDay(ZoneId.systemDefault()).toInstant());
         //this.tandaHinicio = Date.from(tDto.getTandaHinicio().atZone(ZoneId.systemDefault()).toInstant());
-=======
-        
->>>>>>> origin/mario/master5-6/11
         this.movieId = new Movie(tDto.getMovieId());
         this.salaId = new Sala(tDto.getTandaId());
         //this.

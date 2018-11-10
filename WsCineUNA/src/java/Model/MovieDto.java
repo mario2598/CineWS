@@ -60,12 +60,9 @@ public class MovieDto {
          this.moviePortada = m.getMoviePortada();
          this.movieDuracion = m.getMovieDuracion();
          this.movieUrlimg = (byte[]) m.getMovieUrlimg();
-<<<<<<< HEAD
          this.movieTipo = m.getMovieTipo();
-=======
          this.movieResenaing = m.getMovieResenaing();
          this.movieNombreing = m.getMovieNombreing();
->>>>>>> origin/mario/master5-6/11
     }
 
     public void convList(Movie m){

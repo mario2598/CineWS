@@ -25,40 +25,21 @@ public class TandaDto {
      private Long tandaCobro;
      private MovieDto movieId;
      private SalaDto salaId;
-<<<<<<< HEAD
      private Integer horaTanda;
-=======
      private Long tandaInihh;
      private Long tandaInimm;
      private Long tandaFinhh;
      private Long tandaFinmm;
->>>>>>> origin/mario/master5-6/11
     
       public TandaDto(Tanda t) {
          this.tandaId = t.getTandaId();
          this.tandaCobro = t.getTandaCobro();
-<<<<<<< HEAD
-         this.movieId = new MovieDto(t.getMovieId());
-         //this.movieId = t.getMovieId().getMovieId();
-//         this.tandaHinicio = t.getTandaHinicio().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-//         this.tandaHfin = t.getTandaHfin().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-         this.salaId = new SalaDto(t.getSalaId());
-//         this.horaTanda = t.getTandaHinicio().getHours();
-         //this.salaId = t.getSalaId().getSalaId();
-         /*try {
-                this.tandaHinicio = LocalDateTime.ofInstant(t.getTandaHinicio().toInstant(), ZoneId.systemDefault());;
-            } catch (Exception ex) {
-
-            }*/
-         
-=======
          this.movieId = new MovieDto(t.getMovieId());       
          this.salaId = new SalaDto(t.getSalaId());
          this.tandaFinhh = t.getTandaFinhh();
          this.tandaFinmm = t.getTandaFinmm();
          this.tandaInihh = t.getTandaInihh();
          this.tandaInimm = t.getTandaInimm();
->>>>>>> origin/mario/master5-6/11
     }
 
     public Long getTandaId() {
@@ -84,15 +65,9 @@ public class TandaDto {
     public void setTandaInihh(Long tandaInihh) {
         this.tandaInihh = tandaInihh;
     }
-<<<<<<< HEAD
-    
-    public LocalDate getTandaHfin() {
-        return tandaHfin;
-=======
 
     public Long getTandaInimm() {
         return tandaInimm;
->>>>>>> origin/mario/master5-6/11
     }
 
     public void setTandaInimm(Long tandaInimm) {
@@ -130,8 +105,6 @@ public class TandaDto {
     public void setSalaId(SalaDto salaId) {
         this.salaId = salaId;
     }
-<<<<<<< HEAD
-    */
 
     public Integer getHoraTanda() {
         return horaTanda;
@@ -140,8 +113,6 @@ public class TandaDto {
     public void setHoraTanda(Integer horaTanda) {
         this.horaTanda = horaTanda;
     }
-=======
 
->>>>>>> origin/mario/master5-6/11
       
 }
