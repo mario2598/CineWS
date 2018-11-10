@@ -6,6 +6,7 @@
 package Model;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,8 +16,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -43,6 +46,8 @@ public class Tanda implements Serializable {
     private Long tandaFinhh;
     @Column(name = "TANDA_FINMM")
     private Long tandaFinmm;
+    @OneToMany(mappedBy = "tandaId", fetch = FetchType.LAZY)
+    private List<Reserva> reservaList;
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -172,6 +177,15 @@ public class Tanda implements Serializable {
 
     public void setTandaFinmm(Long tandaFinmm) {
         this.tandaFinmm = tandaFinmm;
+    }
+
+    @XmlTransient
+    public List<Reserva> getReservaList() {
+        return reservaList;
+    }
+
+    public void setReservaList(List<Reserva> reservaList) {
+        this.reservaList = reservaList;
     }
     
 }

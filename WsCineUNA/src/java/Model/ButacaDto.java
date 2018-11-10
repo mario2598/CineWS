@@ -19,13 +19,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ButacaDto {
     private Long butId;
     private Long butColumna;
-    private String butEstado;
     private Long butFila;
     private String butImg;
     private String butLetra;
     private String butActiva;
     private Long salaId;
 
+    
     public ButacaDto(){
         
     }
@@ -33,7 +33,6 @@ public class ButacaDto {
     public ButacaDto(Butaca but) {
         this.butId = but.getButId();
         this.butColumna = but.getButColumna();
-        this.butEstado = but.getButEstado();
         this.butFila = but.getButFila();
         this.butImg = but.getButImg();
         this.butLetra = but.getButLetra();
@@ -63,14 +62,6 @@ public class ButacaDto {
 
     public void setButColumna(Long butColumna) {
         this.butColumna = butColumna;
-    }
-
-    public String getButEstado() {
-        return butEstado;
-    }
-
-    public void setButEstado(String butEstado) {
-        this.butEstado = butEstado;
     }
 
     public Long getButFila() {

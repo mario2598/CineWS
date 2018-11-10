@@ -45,6 +45,16 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Butaca.findBySalaId", query = "SELECT b FROM Butaca b WHERE b.salaId.salaId = :salID")})//cambio query
 public class Butaca implements Serializable {
 
+    @Column(name = "BUT_COLUMNA")
+    private Long butColumna;
+    @Column(name = "BUT_FILA")
+    private Long butFila;
+    @OneToMany(mappedBy = "butId", fetch = FetchType.LAZY)
+    private List<Reserva> reservaList;
+    @JoinColumn(name = "RES_ID", referencedColumnName = "RES_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Reserva resId;
+
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -54,13 +64,6 @@ public class Butaca implements Serializable {
 //    @NotNull
     @Column(name = "BUT_ID")
     private Long butId;
-    @Column(name = "BUT_COLUMNA")
-    private Long butColumna;
-//    @Size(max = 1)
-    @Column(name = "BUT_ESTADO")
-    private String butEstado;
-    @Column(name = "BUT_FILA")
-    private Long butFila;
 //    @Size(max = 100)
     @Column(name = "BUT_IMG")
     private String butImg;
@@ -79,20 +82,25 @@ public class Butaca implements Serializable {
     public Butaca() {
         this.comprobanteList = new ArrayList();
     }
-    
-    public void duplicateData(ButacaDto dto){
+
+    Butaca(ButacaDto dto) {
         this.butId = dto.getButId();
         this.butColumna = dto.getButColumna();
-        this.butEstado = dto.getButEstado();
         this.butFila = dto.getButFila();
         this.butImg = dto.getButImg();
         this.butLetra = dto.getButLetra();
         this.butActiva = dto.getButActiva();
     }
-
-    public Butaca(Long butId) {
-        this.butId = butId;
+    
+    public void duplicateData(ButacaDto dto){
+        this.butId = dto.getButId();
+        this.butColumna = dto.getButColumna();
+        this.butFila = dto.getButFila();
+        this.butImg = dto.getButImg();
+        this.butLetra = dto.getButLetra();
+        this.butActiva = dto.getButActiva();
     }
+   
 
     public Long getButId() {
         return butId;
@@ -108,14 +116,6 @@ public class Butaca implements Serializable {
 
     public void setButColumna(Long butColumna) {
         this.butColumna = butColumna;
-    }
-
-    public String getButEstado() {
-        return butEstado;
-    }
-
-    public void setButEstado(String butEstado) {
-        this.butEstado = butEstado;
     }
 
     public Long getButFila() {
@@ -191,5 +191,22 @@ public class Butaca implements Serializable {
     public String toString() {
         return "Model.Butaca[ butId=" + butId + " ]";
     }
-    
+
+    @XmlTransient
+    public List<Reserva> getReservaList() {
+        return reservaList;
+    }
+
+    public void setReservaList(List<Reserva> reservaList) {
+        this.reservaList = reservaList;
+    }
+
+    public Reserva getResId() {
+        return resId;
+    }
+
+    public void setResId(Reserva resId) {
+        this.resId = resId;
+    }
+
 }

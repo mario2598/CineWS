@@ -315,5 +315,6 @@ public class Movie implements Serializable {
     public void setMovieNombreing(String movieNombreing) {
         this.movieNombreing = movieNombreing;
     }
+
     
 }

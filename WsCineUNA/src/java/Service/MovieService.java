@@ -87,7 +87,7 @@ public class MovieService {
     public Respuesta getMovie(Long id){
         try{
             Query qryActividad = em.createNamedQuery("Movie.findByMovieId", Movie.class);
-            qryActividad.setParameter("movieId", id);
+            qryActividad.setParameter("resId", id);
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Movie", new MovieDto((Movie) qryActividad.getSingleResult()));
         }
         catch(NoResultException ex){

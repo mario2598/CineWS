@@ -6,9 +6,7 @@
 package Model;
 
 import java.io.Serializable;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -23,10 +21,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -48,7 +43,7 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Cine implements Serializable {
 
     @Basic(optional = false)
-    @NotNull
+ //   @NotNull
     @Column(name = "CINE_TEL")
     private Long cineTel;
     @Column(name = "CINE_ABRE")
@@ -198,5 +193,6 @@ public class Cine implements Serializable {
     public void setCineCierra(Long cineCierra) {
         this.cineCierra = cineCierra;
     }
-    
+
+   
 }

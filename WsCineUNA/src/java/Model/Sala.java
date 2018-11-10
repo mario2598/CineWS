@@ -44,6 +44,13 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Sala.findBySalaTipo", query = "SELECT s FROM Sala s WHERE s.salaTipo = :salaTipo")})
 public class Sala implements Serializable {
 
+    @Column(name = "SALA_COL")
+    private Long salaCol;
+    @Column(name = "SALA_FILAS")
+    private Long salaFilas;
+    @OneToMany(mappedBy = "salaId", fetch = FetchType.LAZY)
+    private List<Reserva> reservaList;
+
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -61,10 +68,6 @@ public class Sala implements Serializable {
     //@Size(max = 100)
     @Column(name = "SALA_IMGFONDO")
     private String salaImgfondo;
-    @Column(name = "SALA_COL")
-    private Long salaCol;
-    @Column(name = "SALA_FILAS")
-    private Long salaFilas;
     //@Size(max = 10)
     @Column(name = "SALA_NOMBRE")
     private String salaNombre;
@@ -220,6 +223,15 @@ public class Sala implements Serializable {
     @Override
     public String toString() {
         return "Model.Sala[ salaId=" + salaId + " ]";
+    }
+
+    @XmlTransient
+    public List<Reserva> getReservaList() {
+        return reservaList;
+    }
+
+    public void setReservaList(List<Reserva> reservaList) {
+        this.reservaList = reservaList;
     }
     
 }
