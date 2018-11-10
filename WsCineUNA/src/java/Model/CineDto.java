@@ -11,7 +11,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  *
@@ -41,7 +40,8 @@ public class CineDto {
          this.cineNombre = c.getCineNombre();
          this.cineTel = c.getCineTel();
          this.cineAbre = c.getCineAbre();
-         this.cineCierra = c.getCineCierra();        
+         this.cineCierra = c.getCineCierra();
+         this.cineEmail = c.getCineEmail();
     }
 
     public void convList(Cine c){
