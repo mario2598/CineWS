@@ -5,9 +5,7 @@
  */
 package Model;
 
-import Model.report;
 import Service.ComprobanteService;
-import Service.MovieService;
 import Util.CodigoRespuesta;
 import Util.Respuesta;
 import java.io.ByteArrayOutputStream;
@@ -20,29 +18,23 @@ import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 import javax.ejb.EJB;
 import javax.inject.Inject;
-import javax.jws.WebParam;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.servlet.ServletContext;
-import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 /**
  *
@@ -67,7 +59,7 @@ public class reporteController {
 
         try {
             String ruta = context.getRealPath("/");
-            String JasperRuta = ruta + "\\jasper\\Movie.jrxml";
+            String JasperRuta = ruta + "\\jasper\\MovieReporte.jrxml";
             String pdfRuta = ruta + "\\jasper\\jasperPrueba.pdf";
             String outPutFile = pdfRuta;          
             String dbUrl = "jdbc:oracle:thin:@localhost:1521:XE";
@@ -91,11 +83,14 @@ public class reporteController {
         }
     }
 
-     public Respuesta ganerateJasperMovieList(Long id) throws JRException, FileNotFoundException, IOException, ClassNotFoundException, SQLException {
-        
-          try {
+     public Respuesta ganerateJasperMovieList(String d1,String d2) throws JRException, FileNotFoundException, IOException, ClassNotFoundException, SQLException {      
+       
+           LocalDate f1 = LocalDate.parse( d1 );
+           LocalDate f2 = LocalDate.parse( d2 );
+ 
+         try {
             String ruta = context.getRealPath("/");
-            String JasperRuta = ruta + "\\jasper\\Movie.jrxml";
+            String JasperRuta = ruta + "\\jasper\\MovieListReport.jrxml";
             String pdfRuta = ruta + "\\jasper\\jasperPrueba.pdf";
             String outPutFile = pdfRuta;          
             String dbUrl = "jdbc:oracle:thin:@localhost:1521:XE";
@@ -107,7 +102,8 @@ public class reporteController {
              Connection conn = DriverManager.getConnection(dbUrl, dbUname, dbPwd);
             JasperReport jasperReport = JasperCompileManager.compileReport(JasperRuta);
             Map<String, Object> parametros = new HashMap<>();
-            parametros.put("P_ID", id);
+            parametros.put("P_DATE1", Date.from(f1.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            parametros.put("P_DATE2", Date.from(f2.atStartOfDay(ZoneId.systemDefault()).toInstant()));
             JasperPrint jasperprint = JasperFillManager.fillReport(jasperReport, parametros, conn);
             OutputStream outputStream = new FileOutputStream(new File(outPutFile));
 

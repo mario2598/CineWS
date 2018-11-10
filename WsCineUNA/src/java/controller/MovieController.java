@@ -5,15 +5,13 @@
  */
 package controller;
 
-import Model.Movie;
 import Model.MovieDto;
 import Model.reporteController;
 import Service.MovieService;
 import Util.CodigoRespuesta;
 import Util.Respuesta;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,7 +28,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import net.sf.jasperreports.engine.JRException;
+
 
 /**
  *
@@ -95,8 +93,20 @@ public class MovieController {
     @GET
     @Path("/moviesReport/{date1}/{date2}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getMovieList(@PathParam("date1") String f1,@PathParam("date2") String f2) throws FileNotFoundException, IOException {
-        return null;
+    public Response getMovieList(@PathParam("date1") String f1,@PathParam("date2") String f2) {
+       try {   
+            reporteController rc = new reporteController(context);
+            Respuesta res = rc.ganerateJasperMovieList(f1, f2);
+            if (!res.getEstado()) {
+                return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
+            }
+         
+            return Response.ok(res.getResultado("Reporte")).build();
+           
+       } catch (Exception ex) {
+            Logger.getLogger(MovieController.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error creando Reporte").build();
+        }      
     
     }
     
@@ -113,7 +123,7 @@ public class MovieController {
          
             return Response.ok(res.getResultado("Reporte")).build();
            
-       } catch (IOException | JRException ex) {
+       } catch (Exception ex) {
             Logger.getLogger(MovieController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error creando Reporte").build();
         }      
