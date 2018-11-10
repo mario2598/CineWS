@@ -48,8 +48,6 @@ public class Sala implements Serializable {
     private Long salaCol;
     @Column(name = "SALA_FILAS")
     private Long salaFilas;
-    @OneToMany(mappedBy = "salaId", fetch = FetchType.LAZY)
-    private List<Reserva> reservaList;
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -223,15 +221,6 @@ public class Sala implements Serializable {
     @Override
     public String toString() {
         return "Model.Sala[ salaId=" + salaId + " ]";
-    }
-
-    @XmlTransient
-    public List<Reserva> getReservaList() {
-        return reservaList;
-    }
-
-    public void setReservaList(List<Reserva> reservaList) {
-        this.reservaList = reservaList;
     }
     
 }

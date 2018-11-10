@@ -87,6 +87,7 @@ public class SalaController {
             sala.duplicateData(dto);
             Cine cine = new Cine();
             cine.setCineId(dto.getCineId());
+            System.out.println("intentando guardar sala con cineID: " + dto.getCineId());
             sala.setCineId(cine);
             for(ButacaDto b : dto.getButacaList()){
                 Butaca butaca = new Butaca();

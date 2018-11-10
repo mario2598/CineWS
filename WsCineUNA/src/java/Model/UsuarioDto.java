@@ -32,6 +32,7 @@ public class UsuarioDto {
     private String usuCambio;
     private String usuCodAct;
     private byte[] usuImg;
+    private Long cineID;
     
     //Constructores
 
@@ -51,6 +52,7 @@ public class UsuarioDto {
          this.usuCambio = usu.getUsuCambio();
          this.usuEstado = usu.getUsuEstado();
          this.usuCodAct = usu.getUsuCodAct();
+         this.cineID = usu.getCineId().getCineId();
          this.usuImg = (byte[]) usu.getUsuImg();
     }
      
@@ -171,6 +173,14 @@ public class UsuarioDto {
 
     public void setUsuCambio(String usuCambio) {
         this.usuCambio = usuCambio;
+    }
+
+    public Long getCineID() {
+        return cineID;
+    }
+
+    public void setCineID(Long cineID) {
+        this.cineID = cineID;
     }
   
 }
