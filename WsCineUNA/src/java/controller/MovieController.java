@@ -96,45 +96,28 @@ public class MovieController {
     @Path("/moviesReport/{date1}/{date2}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getMovieList(@PathParam("date1") String f1,@PathParam("date2") String f2) throws FileNotFoundException, IOException {
+        return null;
+    
+    }
+    
+    @GET
+    @Path("/movieReport/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getMovieReport(@PathParam("id") Long id) {
     try {   
             reporteController rc = new reporteController(context);
-            List<Movie> list = new  ArrayList<>();                   
-            list = movieService.reporteMovieList(f1, f2);
-            if(list.isEmpty() || list == null){
-                return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("No hay peliculas disponibles").build(); 
+            Respuesta res = rc.ganerateJasperReport(id);
+            if (!res.getEstado()) {
+                return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }
-            else{
-                Respuesta res = rc.ganerateJasperReport(list);       
-              return Response.ok(res.getResultado("Reporte")).build();
-            }
+         
+            return Response.ok(res.getResultado("Reporte")).build();
            
        } catch (IOException | JRException ex) {
             Logger.getLogger(MovieController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error creando Reporte").build();
         }      
     }
-    
-   /*  @GET
-    @Path("/movieReport/{id}}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getMovieList(@PathParam("id") Long id) {
-    try {   
-            reporteController rc = new reporteController(context);
-            Movie m;             
-            m = movieService.reporteMovid(id);
-            if(m == null){
-                return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Ocurrio un error consultando la pelicula").build(); 
-            }
-            else{
-              Respuesta res = rc.ganerateJasperReport(m);       
-              return Response.ok(res.getResultado("Reporte")).build();
-            }
-           
-       } catch (IOException | JRException ex) {
-            Logger.getLogger(MovieController.class.getName()).log(Level.SEVERE, null, ex);
-            return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error creando Reporte").build();
-        }      
-    }*/
     
     @GET
     @Path("/getMovieList/{estado}")

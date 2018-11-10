@@ -22,6 +22,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -55,6 +56,12 @@ public class Movie implements Serializable {
     private Long movieDuracion;
     @Column(name = "MOVIE_IDIOMA")
     private Long movieIdioma;
+   // @Size(max = 500)
+    @Column(name = "MOVIE_RESENAING")
+    private String movieResenaing;
+  //  @Size(max = 50)
+    @Column(name = "MOVIE_NOMBREING")
+    private String movieNombreing;
     @Lob
     @Column(name = "MOVIE_URLIMG")
     private Serializable movieUrlimg;
@@ -285,6 +292,23 @@ public class Movie implements Serializable {
 
     public void setMovieUrlimg(Serializable movieUrlimg) {
         this.movieUrlimg = movieUrlimg;
+    }
+
+    public String getMovieResenaing() {
+        return movieResenaing;
+    }
+
+    public void setMovieResenaing(String movieResenaing) {
+        this.movieResenaing = movieResenaing;
+    }
+
+
+    public String getMovieNombreing() {
+        return movieNombreing;
+    }
+
+    public void setMovieNombreing(String movieNombreing) {
+        this.movieNombreing = movieNombreing;
     }
     
 }

@@ -17,6 +17,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -46,88 +49,76 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
  * @author mario
  */
 public class reporteController {
+
     @Inject
-     ServletContext context;
+    ServletContext context;
     @EJB
     ComprobanteService cService;
-     @PersistenceContext(unitName = "WsCineUNAPU")
-     private EntityManager em;
-    
+    @PersistenceContext(unitName = "WsCineUNAPU")
+    private EntityManager em;
+
     ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 
     public reporteController(ServletContext context) {
         this.context = context;
     }
-    
-      public Respuesta ganerateJasperReport(List<Movie> l) throws JRException, FileNotFoundException, IOException {
-          reportMovie r ;
-          List<reportMovie> rM = new ArrayList<>();
-          Integer i;
+
+    public Respuesta ganerateJasperReport(Long id) throws JRException, FileNotFoundException, IOException {
+
+        try {
+            String ruta = context.getRealPath("/");
+            String JasperRuta = ruta + "\\jasper\\Movie.jrxml";
+            String pdfRuta = ruta + "\\jasper\\jasperPrueba.pdf";
+            String outPutFile = pdfRuta;          
+            String dbUrl = "jdbc:oracle:thin:@localhost:1521:XE";
+            String dbDriver = "oracle.jdbc.driver.OracleDriver";
+            String dbUname = "CineUNA";
+            String dbPwd = "una";
+            Class.forName(dbDriver);
+             // Get the connection
+             Connection conn = DriverManager.getConnection(dbUrl, dbUname, dbPwd);
+            JasperReport jasperReport = JasperCompileManager.compileReport(JasperRuta);
+            Map<String, Object> parametros = new HashMap<>();
+            parametros.put("P_ID", id);
+            JasperPrint jasperprint = JasperFillManager.fillReport(jasperReport, parametros, conn);
+            OutputStream outputStream = new FileOutputStream(new File(outPutFile));
+
+            JasperExportManager.exportReportToPdfStream(jasperprint, outputStream);
+            byte[] ReportBytes = convertDocToByteArray(outPutFile);
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Reporte", ReportBytes);
+        } catch (Exception ex) {
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar los datos de la pelicula.", "getComp " + ex.getMessage());
+        }
+    }
+
+     public Respuesta ganerateJasperMovieList(Long id) throws JRException, FileNotFoundException, IOException, ClassNotFoundException, SQLException {
+        
           try {
-         for(Movie m : l){
-           
-           r = new reportMovie(m.getMovieNombre(),m.getComprobanteList().size());
-           rM.add(r);
-         } 
-          Collections.sort(rM, (reportMovie p1, reportMovie p2) -> { 
-                return p2.getCantidad().compareTo(p1.getCantidad());
-            } 
-            );
-          
-         String ruta = context.getRealPath("/");
-         String JasperRuta = ruta+ "\\jasper\\movies.jrxml";
-         String pdfRuta = ruta+ "\\jasper\\jasperPrueba.pdf";
-         String outPutFile = pdfRuta;
-       
-         JRBeanCollectionDataSource cobrojrb = new JRBeanCollectionDataSource(rM);
+            String ruta = context.getRealPath("/");
+            String JasperRuta = ruta + "\\jasper\\Movie.jrxml";
+            String pdfRuta = ruta + "\\jasper\\jasperPrueba.pdf";
+            String outPutFile = pdfRuta;          
+            String dbUrl = "jdbc:oracle:thin:@localhost:1521:XE";
+            String dbDriver = "oracle.jdbc.driver.OracleDriver";
+            String dbUname = "CineUNA";
+            String dbPwd = "una";
+            Class.forName(dbDriver);
+             // Get the connection
+             Connection conn = DriverManager.getConnection(dbUrl, dbUname, dbPwd);
             JasperReport jasperReport = JasperCompileManager.compileReport(JasperRuta);
             Map<String, Object> parametros = new HashMap<>();
-            parametros.put("itemDataSource", cobrojrb);
-            JasperPrint jasperprint = JasperFillManager.fillReport(jasperReport, parametros, new JREmptyDataSource());        
+            parametros.put("P_ID", id);
+            JasperPrint jasperprint = JasperFillManager.fillReport(jasperReport, parametros, conn);
             OutputStream outputStream = new FileOutputStream(new File(outPutFile));
-            
-         JasperExportManager.exportReportToPdfStream(jasperprint, outputStream);
-         byte[] ReportBytes = convertDocToByteArray(outPutFile);
-         return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Reporte", ReportBytes);
-    }catch (Exception ex){
-        return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar los datos de la pelicula.", "getComp " + ex.getMessage());
-    }
+
+            JasperExportManager.exportReportToPdfStream(jasperprint, outputStream);
+            byte[] ReportBytes = convertDocToByteArray(outPutFile);
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Reporte", ReportBytes);
+        } catch (Exception ex) {
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar los datos de la pelicula.", "getComp " + ex.getMessage());
+        }
 }
-      
-    /*   public Respuesta ganerateJasperMovieInfo(Movie m) throws JRException, FileNotFoundException, IOException {
-          report r  = new report();
-          r.setNombre(m.getMovieNombre());
-          Integer i,j,k;
-          for(Tanda t : m.getTandaList()){
-      //        for(Comprobante c : t.ge)
-          }
-           
-          Collections.sort(rM, (reportMovie p1, reportMovie p2) -> { 
-                return p2.getCantidad().compareTo(p1.getCantidad());
-            } 
-            );
-          
-         String ruta = context.getRealPath("/");
-         String JasperRuta = ruta+ "\\jasper\\movies.jrxml";
-         String pdfRuta = ruta+ "\\jasper\\jasperPrueba.pdf";
-         String outPutFile = pdfRuta;
-       
-         JRBeanCollectionDataSource cobrojrb = new JRBeanCollectionDataSource(rM);
-            JasperReport jasperReport = JasperCompileManager.compileReport(JasperRuta);
-            Map<String, Object> parametros = new HashMap<>();
-            parametros.put("itemDataSource", cobrojrb);
-            JasperPrint jasperprint = JasperFillManager.fillReport(jasperReport, parametros, new JREmptyDataSource());        
-            OutputStream outputStream = new FileOutputStream(new File(outPutFile));
-            
-         JasperExportManager.exportReportToPdfStream(jasperprint, outputStream);
-         byte[] ReportBytes = convertDocToByteArray(outPutFile);
-         return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Reporte", ReportBytes);
-    }catch (Exception ex){
-        return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar los datos de la pelicula.", "getComp " + ex.getMessage());
-    }
-}*/
-      
-       public static byte[] convertDocToByteArray(String path)throws FileNotFoundException, IOException{
+    public static byte[] convertDocToByteArray(String path) throws FileNotFoundException, IOException {
         File file = new File(path);
         FileInputStream fis = new FileInputStream(file);
         ByteArrayOutputStream bos = new ByteArrayOutputStream();

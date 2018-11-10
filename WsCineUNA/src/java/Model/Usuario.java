@@ -14,13 +14,12 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -51,6 +50,12 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Usuario.findByUsuClave", query = "SELECT u FROM Usuario u WHERE u.usuUser = :usuUser and u.usuPassword = :usuPassword")})
 public class Usuario implements Serializable {
 
+    @Column(name = "USU_IDIOMA")
+    private Long usuIdioma;
+    @Lob
+    @Column(name = "USU_IMG")
+    private Serializable usuImg;
+
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -76,8 +81,6 @@ public class Usuario implements Serializable {
    // @Size(max = 80)
     @Column(name = "USU_EMAIL")
     private String usuEmail;
-    @Column(name = "USU_IDIOMA")
-    private Long usuIdioma;
     //@Size(max = 1)
     @Column(name = "USU_ESTADO")
     private String usuEstado;
@@ -124,6 +127,7 @@ public class Usuario implements Serializable {
          this.usuCambio = usu.getUsuCambio();
          this.usuEstado = usu.getUsuEstado();
          this.usuCodAct = usu.getUsuCodAct();
+         this.usuImg = usu.getUsuImg();
     }
 
     public Usuario(Long usuId) {
@@ -283,6 +287,15 @@ public class Usuario implements Serializable {
     @Override
     public String toString() {
         return "Model.Usuario[ usuId=" + usuId + " ]";
+    }
+
+
+    public Serializable getUsuImg() {
+        return usuImg;
+    }
+
+    public void setUsuImg(Serializable usuImg) {
+        this.usuImg = usuImg;
     }
     
 }

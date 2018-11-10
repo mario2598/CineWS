@@ -68,34 +68,6 @@ public class MovieService {
      * @return 
      */
     
-     public List reporteMovieList(String date1,String date2) {
-        try {
-            LocalDate n1 = LocalDate.parse(date1);
-            LocalDate n2= LocalDate.parse(date2);
-            List<Movie> listMovies;
-            Date dat1 =  Date.from(n1.atStartOfDay(ZoneId.systemDefault()).toInstant());
-            Date dat2 =  Date.from(n2.atStartOfDay(ZoneId.systemDefault()).toInstant());
-            Query qryActividad = em.createNamedQuery("Movie.findAll", Movie.class);
-            try {
-                listMovies= qryActividad.getResultList();
-            } catch (NoResultException ex) {
-                return null;
-            }
-            
-            List<Movie> listJasper = new ArrayList<>();
-            for(Movie m : listMovies){
-                
-               if(m.getMovieDate().before(dat2) && m.getMovieDate().after(dat1)||  m.getMovieDate().equals(dat1) ||  m.getMovieDate().equals(dat2) ){
-                   listJasper.add(m);  
-                }
-               
-            }
-            
-            return  listJasper;
-         } catch (Exception ex) {
-            return null;
-        }
-    }
      public Movie reporteMovid(Long id) {
         try {
             Movie m;
