@@ -52,7 +52,12 @@ public class UsuarioDto {
          this.usuCambio = usu.getUsuCambio();
          this.usuEstado = usu.getUsuEstado();
          this.usuCodAct = usu.getUsuCodAct();
-         this.cineID = usu.getCineId().getCineId();
+         if(usu.getCineId() == null){
+             
+         }
+         else{
+             this.cineID = usu.getCineId().getCineId();
+         }
          this.usuImg = (byte[]) usu.getUsuImg();
     }
      

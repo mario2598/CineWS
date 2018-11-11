@@ -32,19 +32,21 @@ public class UsuarioService {
     
     
      public Respuesta getUsuarioUsu(String user){
-        try {
+            Usuario u ;
             Query qryActividad = em.createNamedQuery("Usuario.findByUsuUser", Usuario.class);
             qryActividad.setParameter("usuUser", user);
-            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Usuario", new UsuarioDto((Usuario) qryActividad.getSingleResult()));
-
+           
+       try {
+             u = (Usuario) qryActividad.getSingleResult();
+             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Usuario", new UsuarioDto(u));
         } catch (NoResultException ex) {
-            return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No existe un usuario con las credenciales ingresadas.", "validarUsuario NoResultException");
+            return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No existe un usuario con las credenciales ingresadas.", "getUsuarioUsu NoResultException");
         } catch (NonUniqueResultException ex) {
             LOG.log(Level.SEVERE, "Ocurrio un error al consultar el usuario.", ex);
-            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar el usuario.", "validarUsuario NonUniqueResultException");
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar el usuario.", "getUsuarioUsu NonUniqueResultException");
         } catch (Exception ex) {
             LOG.log(Level.SEVERE, "Ocurrio un error al consultar el usuario.", ex);
-            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar el usuario.", "validarUsuario " + ex.getMessage());
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar el usuario.", "getUsuarioUsu " + ex.getMessage());
         }
     }
     

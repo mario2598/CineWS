@@ -2,3 +2,5 @@
 *.jar
 WsCineUNA/nbproject/private/private.properties
 *.properties
+WsCineUNA/build/web/WEB-INF/lib/javax.mail-api-1.4.7.jar.zip
+WsCineUNA/build/web/WEB-INF/lib/javamail1_4_7.zip

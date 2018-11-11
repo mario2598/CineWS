@@ -44,7 +44,8 @@ public class MovieDto {
      private List<TandaDto> tandaList = new ArrayList<>();
      @XmlTransient
      private List<ReviewDto> reviewList = new ArrayList<>();
-     private byte[] movieUrlimg;
+
+     private String movieUrlimg;
      
      public MovieDto(){
          
@@ -61,7 +62,7 @@ public class MovieDto {
          this.moviePortada = m.getMoviePortada();
          this.movieDuracion = m.getMovieDuracion();
          this.movieIdioma = m.getMovieIdioma();
-         this.movieUrlimg = (byte[]) m.getMovieUrlimg();
+         this.movieUrlimg =  (String) m.getMovieUrlimg();
          this.movieTipo = m.getMovieTipo();
          this.movieResenaing = m.getMovieResenaing();
          this.movieNombreing = m.getMovieNombreing();
@@ -73,12 +74,12 @@ public class MovieDto {
              comprobanteList.add(cDto);
          }
     }
-
-    public byte[] getMovieUrlimg() {
+    @XmlTransient
+    public String getMovieUrlimg() {
         return movieUrlimg;
-    }
-
-    public void setMovieUrlimg(byte[] movieUrlimg) {
+    } 
+    
+    public void setMovieUrlimg(String movieUrlimg) {
         this.movieUrlimg = movieUrlimg;
     }
 

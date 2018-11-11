@@ -130,7 +130,6 @@ public class Movie implements Serializable {
     }
     
     public void actualizarMovie(MovieDto movie){
-        this.movieId = movie.getMovieId();
         this.movieNombre = movie.getMovieNombre();
         this.movieResena = movie.getMovieResena();
         this.movieUrlesp = movie.getMovieUrlesp();
@@ -140,7 +139,7 @@ public class Movie implements Serializable {
         this.moviePortada = movie.getMoviePortada();
         this.movieDuracion = movie.getMovieDuracion();
         this.movieIdioma = movie.getMovieIdioma();
-        this.movieUrlimg = (byte[]) movie.getMovieUrlimg();
+        this.movieUrlimg = movie.getMovieUrlimg();
         this.movieTipo = movie.getMovieTipo();
         this.movieResenaing = movie.getMovieResenaing();
         this.movieNombreing = movie.getMovieNombreing();
