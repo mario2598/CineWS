@@ -55,7 +55,7 @@ public class MovieController {
             if (!res.getEstado()) {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }
-            return Response.ok(new GenericEntity<List<MovieDto>>((List<MovieDto>) res.getResultado("AllMovieList")) {}).build();
+            return Response.ok(new GenericEntity<List<MovieDto>>((List<MovieDto>) res.getResultado("Movie")) {}).build();
             //return Response.ok((UsuarioDto) res.getResultado("Usuario")).build();
         } catch (Exception ex) {
             Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
@@ -111,7 +111,7 @@ public class MovieController {
     }
     
     @GET
-    @Path("/movieReport/{id}")
+    @Path("/moviesReport/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getMovieReport(@PathParam("id") Long id) {
     try {   

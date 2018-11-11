@@ -37,7 +37,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Butaca.findAll", query = "SELECT b FROM Butaca b")
     , @NamedQuery(name = "Butaca.findByButId", query = "SELECT b FROM Butaca b WHERE b.butId = :butId")
     , @NamedQuery(name = "Butaca.findByButColumna", query = "SELECT b FROM Butaca b WHERE b.butColumna = :butColumna")
-    , @NamedQuery(name = "Butaca.findByButEstado", query = "SELECT b FROM Butaca b WHERE b.butEstado = :butEstado")
     , @NamedQuery(name = "Butaca.findByButFila", query = "SELECT b FROM Butaca b WHERE b.butFila = :butFila")
     , @NamedQuery(name = "Butaca.findByButImg", query = "SELECT b FROM Butaca b WHERE b.butImg = :butImg")
     , @NamedQuery(name = "Butaca.findByButLetra", query = "SELECT b FROM Butaca b WHERE b.butLetra = :butLetra")

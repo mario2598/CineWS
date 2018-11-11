@@ -5,16 +5,22 @@
  */
 package Model;
 
+import Service.ButacaService;
 import Service.ComprobanteService;
 import Util.CodigoRespuesta;
 import Util.Respuesta;
+import static com.itextpdf.text.Annotation.URL;
+import static com.itextpdf.text.pdf.PdfName.URL;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -29,6 +35,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.servlet.ServletContext;
+import static javax.servlet.SessionTrackingMode.URL;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -48,19 +55,21 @@ public class reporteController {
     ComprobanteService cService;
     @PersistenceContext(unitName = "WsCineUNAPU")
     private EntityManager em;
+    private static final String localBasePath = "data\\";
+    private static final String localSavedFilesPath = localBasePath + "saved files\\";
 
     ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 
     public reporteController(ServletContext context) {
         this.context = context;
     }
-
+    
     public Respuesta ganerateJasperReport(Long id) throws JRException, FileNotFoundException, IOException {
 
         try {
             String ruta = context.getRealPath("/");
-            String JasperRuta = ruta + "\\jasper\\MovieReporte.jrxml";
-            String pdfRuta = ruta + "\\jasper\\jasperPrueba.pdf";
+            String JasperRuta = ruta + "\\jasper\\CineUNAReport.jrxml";
+            String pdfRuta = ruta + "\\jasper\\MovieReport.pdf";
             String outPutFile = pdfRuta;          
             String dbUrl = "jdbc:oracle:thin:@localhost:1521:XE";
             String dbDriver = "oracle.jdbc.driver.OracleDriver";
@@ -71,8 +80,8 @@ public class reporteController {
              Connection conn = DriverManager.getConnection(dbUrl, dbUname, dbPwd);
             JasperReport jasperReport = JasperCompileManager.compileReport(JasperRuta);
             Map<String, Object> parametros = new HashMap<>();
-            parametros.put("P_ID", id);
-            JasperPrint jasperprint = JasperFillManager.fillReport(jasperReport, parametros, conn);
+            parametros.put("P_ID", id.intValue());
+            JasperPrint jasperprint = JasperFillManager.fillReport(jasperReport, parametros,conn);
             OutputStream outputStream = new FileOutputStream(new File(outPutFile));
 
             JasperExportManager.exportReportToPdfStream(jasperprint, outputStream);
@@ -90,8 +99,8 @@ public class reporteController {
  
          try {
             String ruta = context.getRealPath("/");
-            String JasperRuta = ruta + "\\jasper\\MovieListReport.jrxml";
-            String pdfRuta = ruta + "\\jasper\\jasperPrueba.pdf";
+            String JasperRuta = ruta + "\\jasper\\MoviesListReport.jrxml";
+            String pdfRuta = ruta + "\\jasper\\MovieListReport.pdf";
             String outPutFile = pdfRuta;          
             String dbUrl = "jdbc:oracle:thin:@localhost:1521:XE";
             String dbDriver = "oracle.jdbc.driver.OracleDriver";

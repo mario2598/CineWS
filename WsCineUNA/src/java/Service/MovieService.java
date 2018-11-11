@@ -116,7 +116,7 @@ public class MovieService {
                 moviesDto.add(new MovieDto(m));
             }
             
-            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "AllMovieList",moviesDto);
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Movie",moviesDto);
 
         } catch (NoResultException ex) {
             return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No existen películas.", "getListFromMovie NoResultException");
