@@ -82,7 +82,7 @@ public class Butaca implements Serializable {
         this.comprobanteList = new ArrayList();
     }
 
-    Butaca(ButacaDto dto) {
+    public Butaca(ButacaDto dto) {
         this.butId = dto.getButId();
         this.butColumna = dto.getButColumna();
         this.butFila = dto.getButFila();
