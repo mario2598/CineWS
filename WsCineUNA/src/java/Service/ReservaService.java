@@ -10,10 +10,7 @@ import Model.Movie;
 import Model.MovieDto;
 import Model.Reserva;
 import Model.ReservaDto;
-<<<<<<< HEAD
 import Model.Sala;
-=======
->>>>>>> 30ad594c5803facac699f5bbb915e7d8895fac7b
 import Model.Tanda;
 import Util.CodigoRespuesta;
 import Util.Respuesta;
