@@ -130,12 +130,20 @@ public class Movie implements Serializable {
     }
     
     public void actualizarMovie(MovieDto movie){
+        this.movieId = movie.getMovieId();
         this.movieNombre = movie.getMovieNombre();
         this.movieResena = movie.getMovieResena();
+        this.movieUrlesp = movie.getMovieUrlesp();
+        this.movieUrleng = movie.getMovieUrleng();
         this.movieDate = Date.from(movie.getMovieDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
         this.movieEstado = movie.getMovieEstado();
         this.moviePortada = movie.getMoviePortada();
-        this.movieUrlimg = movie.getMovieUrlimg();
+        this.movieDuracion = movie.getMovieDuracion();
+        this.movieIdioma = movie.getMovieIdioma();
+        this.movieUrlimg = (byte[]) movie.getMovieUrlimg();
+        this.movieTipo = movie.getMovieTipo();
+        this.movieResenaing = movie.getMovieResenaing();
+        this.movieNombreing = movie.getMovieNombreing();
     }
     
     public Movie(Long movieId) {
