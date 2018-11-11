@@ -10,8 +10,6 @@ import Model.reporteController;
 import Service.MovieService;
 import Util.CodigoRespuesta;
 import Util.Respuesta;
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
