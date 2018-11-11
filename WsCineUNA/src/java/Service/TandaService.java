@@ -151,4 +151,29 @@ public class TandaService {
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Se ha producido un error eliminando una tanda.", "eliminarTanda " + ex.getMessage());
         }
     }
+    
+    /**
+     * guardar Tanda a partir de un dto
+     */
+    public Respuesta guardarTanda(TandaDto tDto) {
+        try {
+            Tanda tanda;
+            if (tDto.getTandaId()!= null && tDto.getTandaId()> 0) {//si tra id
+                tanda = em.find(Tanda.class,tDto.getTandaId());//busca la película con ese id para actualizar
+                if (tanda == null) {
+                    return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encrontró la tanda a modificar.", "guardarTanda NoResultException");
+                }
+                tanda.actualizarTanda(tDto);//actualiza la tanda si ya existía
+                tanda = em.merge(tanda);//actualiza
+            } else {
+                tanda = new Tanda(tDto);//crea una nueva a partir del Dto
+                em.persist(tanda);//periste
+            }
+            em.flush();//refresca
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Tanda", new TandaDto(tanda));    
+        } catch (Exception ex) {
+            LOG.log(Level.SEVERE, "Ocurrio un error al guardar la tanda.", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar la tanda.", "guardarTanda " + ex.getMessage());
+        }
+    }
 }

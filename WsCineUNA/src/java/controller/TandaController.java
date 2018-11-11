@@ -19,6 +19,7 @@ import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -86,6 +87,28 @@ public class TandaController {
         } catch (Exception ex) {
             Logger.getLogger(TandaController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error eliminando la tanda(Controller)").build();
+        }
+    };
+    
+    /**
+     * guarda una película a partir de un Dto
+     * @param movieDto
+     * @return 
+     */
+    @POST
+    @Path("/guardarTanda")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response guardarTanda(TandaDto tDto) {
+        try {
+            Respuesta respuesta = tandaService.guardarTanda(tDto);
+            if (!respuesta.getEstado()) {
+                return Response.status(respuesta.getCodigoRespuesta().getValue()).entity(respuesta.getMensaje()).build();
+            }
+            return Response.ok((MovieDto) respuesta.getResultado("Tanda")).build();
+        } catch (Exception ex) {
+            Logger.getLogger(MovieController.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error guardando la Tanda(controller)").build();
         }
     };
     
