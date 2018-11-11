@@ -96,7 +96,7 @@ public class TandaController {
      * @return 
      */
     @POST
-    @Path("/guardarTanda")
+    @Path("/guardarTandaDto")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response guardarTanda(TandaDto tDto) {
