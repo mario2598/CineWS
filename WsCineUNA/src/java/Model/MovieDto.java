@@ -74,10 +74,12 @@ public class MovieDto {
          }
     }
 
+    @XmlTransient
     public byte[] getMovieUrlimg() {
         return movieUrlimg;
     }
 
+    @XmlTransient
     public void setMovieUrlimg(byte[] movieUrlimg) {
         this.movieUrlimg = movieUrlimg;
     }

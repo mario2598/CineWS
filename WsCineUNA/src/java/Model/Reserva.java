@@ -54,12 +54,6 @@ public class Reserva implements Serializable {
     @JoinColumn(name = "BUT_ID", referencedColumnName = "BUT_ID")
     @ManyToOne(fetch = FetchType.LAZY)
     private Butaca butId;
-    //?
-    @JoinColumn(name = "SALA_ID", referencedColumnName = "SALA_ID")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Sala salaId;
-    @OneToMany(mappedBy = "resId", fetch = FetchType.LAZY)
-    private List<Butaca> butacaList;
 
     public Reserva() {
         
@@ -100,23 +94,6 @@ public class Reserva implements Serializable {
 
     public void setButId(Butaca butId) {
         this.butId = butId;
-    }
-
-    public Sala getSalaId() {
-        return salaId;
-    }
-
-    public void setSalaId(Sala salaId) {
-        this.salaId = salaId;
-    }
-
-    @XmlTransient
-    public List<Butaca> getButacaList() {
-        return butacaList;
-    }
-
-    public void setButacaList(List<Butaca> butacaList) {
-        this.butacaList = butacaList;
     }
 
     @Override

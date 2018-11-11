@@ -81,6 +81,7 @@ public class ButacaService {
     }
     
     public Respuesta guardarButaca(Butaca butaca){
+        System.out.println("***********SALA ID:"+butaca.getSalaId());
         try {
             if(butaca!=null && butaca.getButId()!=null && butaca.getButId()>0){
                 Butaca butacaAux = em.find(Butaca.class, butaca.getButId());

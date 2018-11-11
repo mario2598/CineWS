@@ -6,11 +6,8 @@
 package Service;
 
 import Model.Butaca;
-import Model.Movie;
-import Model.MovieDto;
 import Model.Reserva;
 import Model.ReservaDto;
-import Model.Sala;
 import Model.Tanda;
 import Util.CodigoRespuesta;
 import Util.Respuesta;
