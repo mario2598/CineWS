@@ -6,6 +6,7 @@
 package Model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -66,8 +67,7 @@ public class Tanda implements Serializable {
     private Sala salaId;
 
     public Tanda() {
-        this.movieId=new Movie();
-        this.salaId = new Sala();
+        reservaList = new ArrayList<>();
     }
 
     public Tanda(TandaDto tDto){
@@ -79,11 +79,12 @@ public class Tanda implements Serializable {
     
     public void actualizarTanda(TandaDto tDto){
         this.tandaCobro = tDto.getTandaCobro();
-        //this.tandaHfin = Date.from(tDto.getTandaHfin().atZone(ZoneId.systemDefault()).toInstant()); //atStartOfDay(ZoneId.systemDefault()).toInstant());
-        //this.tandaHinicio = Date.from(tDto.getTandaHinicio().atZone(ZoneId.systemDefault()).toInstant());
+        this.tandaInihh = tDto.getTandaInihh();
+        this.tandaInimm = tDto.getTandaInimm();
+        this.tandaFinhh = tDto.getTandaFinhh();
+        this.tandaFinmm = tDto.getTandaFinmm();
         this.movieId = new Movie(tDto.getMovieId());
-        this.salaId = new Sala(tDto.getTandaId());
-        //this.
+        this.salaId = new Sala(tDto.getSalaId());
     }
     
     public Tanda(Long tandaId) {
