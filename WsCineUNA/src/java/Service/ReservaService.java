@@ -10,7 +10,10 @@ import Model.Movie;
 import Model.MovieDto;
 import Model.Reserva;
 import Model.ReservaDto;
+<<<<<<< HEAD
 import Model.Sala;
+=======
+>>>>>>> 30ad594c5803facac699f5bbb915e7d8895fac7b
 import Model.Tanda;
 import Util.CodigoRespuesta;
 import Util.Respuesta;
@@ -59,21 +62,29 @@ public class ReservaService {
      
      public Respuesta guardarReserva(ReservaDto rDto) {
         try {
-            Reserva r;
+            Reserva reserva;
             if (rDto.getResId()!= null && rDto.getResId() > 0) {//si tra id
-                r = em.find(Reserva.class,rDto.getResId());//busca la película con ese id para actualizar
-                if (r == null) {
+                reserva = em.find(Reserva.class,rDto.getResId());//busca la película con ese id para actualizar
+                if (reserva == null) {
                     return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encrontró la reserva a modificar.", "guardarReserva NoResultException");
                 }
-                r = new Reserva(rDto);//actualiza la movie si ya existía
-                r = em.merge(r);//actualiza
+                reserva = new Reserva(rDto);
+                Butaca b = new Butaca(rDto.getButId());
+                reserva.setButId(b);
+                Tanda t = new Tanda(rDto.getTandaId());
+                reserva.setTandaId(t);
+                reserva = em.merge(reserva);//actualiza
             } else {
                
-                r = new Reserva(rDto);
-                em.persist(r);//periste
+                reserva= new Reserva(rDto);
+                Butaca b = new Butaca(rDto.getButId());
+                reserva.setButId(b);
+                Tanda t = new Tanda(rDto.getTandaId());
+                reserva.setTandaId(t);
+                em.persist(reserva);//periste
             }
             em.flush();//refresca
-            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Reserva", new ReservaDto(r));    
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Reserva", new ReservaDto(reserva));    
         } catch (Exception ex) {
             LOG.log(Level.SEVERE, "Ocurrio un error al guardar la Reserva.", ex);
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar la reserva.", "guardarReserva " + ex.getMessage());
