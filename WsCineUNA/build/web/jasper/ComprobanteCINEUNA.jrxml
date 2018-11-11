@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ComprobanteCINEUNA" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6ac61f36-5f31-4a22-990d-80b66931c5ed">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CineAdapter"/>
+	<parameter name="P_ID" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[select u.USU_NOMBRE, m.MOVIE_NOMBRE,c.SALA_ID,c.COMP_DATE,c.BUT_ID, b.BUT_LETRA from COMPROBANTE c join USUARIO u on c.USU_ID = u.USU_ID	join MOVIE m on c.MOVIE_ID = m.MOVIE_ID JOIN BUTACA b on b.BUT_ID = c.BUT_ID where c.COMP_ID = $P{P_ID}]]>
+	</queryString>
+	<field name="USU_NOMBRE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="USU_NOMBRE"/>
+	</field>
+	<field name="MOVIE_NOMBRE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="MOVIE_NOMBRE"/>
+	</field>
+	<field name="SALA_ID" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="SALA_ID"/>
+	</field>
+	<field name="COMP_DATE" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="COMP_DATE"/>
+	</field>
+	<field name="BUT_ID" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="BUT_ID"/>
+	</field>
+	<field name="BUT_LETRA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="BUT_LETRA"/>
+	</field>
+	<group name="USU_NOMBRE">
+		<groupExpression><![CDATA[$F{USU_NOMBRE}]]></groupExpression>
+	</group>
+	<group name="MOVIE_NOMBRE">
+		<groupExpression><![CDATA[$F{MOVIE_NOMBRE}]]></groupExpression>
+	</group>
+	<group name="SALA_ID">
+		<groupExpression><![CDATA[$F{SALA_ID}]]></groupExpression>
+	</group>
+	<group name="COMP_DATE">
+		<groupExpression><![CDATA[$F{COMP_DATE}]]></groupExpression>
+	</group>
+	<group name="BUT_ID">
+		<groupExpression><![CDATA[$F{BUT_ID}]]></groupExpression>
+	</group>
+	<group name="BUT_LETRA">
+		<groupExpression><![CDATA[$F{BUT_LETRA}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="95" splitType="Stretch">
+			<staticText>
+				<reportElement x="150" y="10" width="280" height="69" uuid="65cf3e29-159e-42f0-82af-f5b882a6981c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Agency FB" size="42" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CINE UNA PZ]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="45" splitType="Stretch">
+			<staticText>
+				<reportElement x="220" y="0" width="160" height="30" uuid="3b743d11-7999-459d-be4c-e43506602f54"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Comprobante de Compra]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="182" splitType="Stretch">
+			<textField>
+				<reportElement x="130" y="9" width="100" height="30" uuid="5c06b87e-a9b5-41c7-9310-34d6916fb3df"/>
+				<textFieldExpression><![CDATA[$F{USU_NOMBRE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="9" width="139" height="30" uuid="6895c41d-efff-4f9b-88da-68b638bb1be4"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre de Usuario :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="130" y="40" width="100" height="30" uuid="c6e71a13-dd0b-4a24-92d3-cfe1b2e9dbe1"/>
+				<textFieldExpression><![CDATA[$F{SALA_ID}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="40" width="139" height="30" uuid="486e89b4-032a-4086-9001-0c5d80059eac"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Numero Sala :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="129" y="70" width="100" height="30" uuid="3bdc6454-21af-4b48-a592-ca4185d7700b"/>
+				<textFieldExpression><![CDATA[$F{COMP_DATE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="70" width="139" height="30" uuid="ae9d651f-0861-40ee-9eec-c3e79cda1f62"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="129" y="100" width="100" height="30" uuid="b0cc9c02-49fe-4f8d-9162-c22289512aa7"/>
+				<textFieldExpression><![CDATA[$F{MOVIE_NOMBRE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="100" width="139" height="30" uuid="424ddd1b-49fc-461b-88d9-91cf31141ad0"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre de Pelicula:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="130" y="130" width="100" height="30" uuid="ede51bee-de32-4e38-8e19-319f67205da8"/>
+				<textFieldExpression><![CDATA[$F{BUT_LETRA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="130" width="139" height="30" uuid="1cee5ea3-e132-4073-8844-3e5e6b84ff8d"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Letra de Butaca  :]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="48" splitType="Stretch">
+			<staticText>
+				<reportElement x="219" y="18" width="162" height="30" forecolor="#B3110E" uuid="34a59298-2a6c-421b-aba0-afcb82a67457"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Gracias por preferirnos!!]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>
