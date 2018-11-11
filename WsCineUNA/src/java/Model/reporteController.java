@@ -5,28 +5,21 @@
  */
 package Model;
 
-import Service.ButacaService;
 import Service.ComprobanteService;
 import Util.CodigoRespuesta;
 import Util.Respuesta;
-import static com.itextpdf.text.Annotation.URL;
-import static com.itextpdf.text.pdf.PdfName.URL;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,7 +28,6 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.servlet.ServletContext;
-import static javax.servlet.SessionTrackingMode.URL;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -55,8 +47,6 @@ public class reporteController {
     ComprobanteService cService;
     @PersistenceContext(unitName = "WsCineUNAPU")
     private EntityManager em;
-    private static final String localBasePath = "data\\";
-    private static final String localSavedFilesPath = localBasePath + "saved files\\";
 
     ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 
@@ -92,6 +82,33 @@ public class reporteController {
         }
     }
 
+         public Respuesta ganerateJasperComp(Long id) throws JRException, FileNotFoundException, IOException, ClassNotFoundException, SQLException {      
+         try {
+            String ruta = context.getRealPath("/");
+            String JasperRuta = ruta + "\\jasper\\ComprobanteCINEUNA.jrxml";
+            String pdfRuta = ruta + "\\jasper\\ComprobanteCINEUNA.pdf";
+            String outPutFile = pdfRuta;          
+            String dbUrl = "jdbc:oracle:thin:@localhost:1521:XE";
+            String dbDriver = "oracle.jdbc.driver.OracleDriver";
+            String dbUname = "CineUNA";
+            String dbPwd = "una";
+            Class.forName(dbDriver);
+             // Get the connection
+             Connection conn = DriverManager.getConnection(dbUrl, dbUname, dbPwd);
+            JasperReport jasperReport = JasperCompileManager.compileReport(JasperRuta);
+            Map<String, Object> parametros = new HashMap<>();
+            parametros.put("P_ID",id.intValue());
+            JasperPrint jasperprint = JasperFillManager.fillReport(jasperReport, parametros, conn);
+            OutputStream outputStream = new FileOutputStream(new File(outPutFile));
+
+            JasperExportManager.exportReportToPdfStream(jasperprint, outputStream);
+            byte[] ReportBytes = convertDocToByteArray(outPutFile);
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Reporte", ReportBytes);
+        } catch (Exception ex) {
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al crear comprobante.", "getComp " + ex.getMessage());
+        }
+}
+    
      public Respuesta ganerateJasperMovieList(String d1,String d2) throws JRException, FileNotFoundException, IOException, ClassNotFoundException, SQLException {      
        
            LocalDate f1 = LocalDate.parse( d1 );
