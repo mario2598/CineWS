@@ -35,6 +35,9 @@ public class MovieDto {
      private String movieEstado;
      private String moviePortada;
      private Long movieDuracion;
+     private Long movieIdioma;
+     private String movieNombreing;
+     private String movieResenaing;
      @XmlTransient
      private List<ComprobanteDto> comprobanteList = new ArrayList<>();
      @XmlTransient
@@ -42,8 +45,6 @@ public class MovieDto {
      @XmlTransient
      private List<ReviewDto> reviewList = new ArrayList<>();
      private byte[] movieUrlimg;
-     private String movieNombreing;
-     private String movieResenaing;
      
      public MovieDto(){
          
@@ -59,6 +60,7 @@ public class MovieDto {
          this.movieEstado = m.getMovieEstado();
          this.moviePortada = m.getMoviePortada();
          this.movieDuracion = m.getMovieDuracion();
+         this.movieIdioma = m.getMovieIdioma();
          this.movieUrlimg = (byte[]) m.getMovieUrlimg();
          this.movieTipo = m.getMovieTipo();
          this.movieResenaing = m.getMovieResenaing();
@@ -214,6 +216,15 @@ public class MovieDto {
     public void setMovieTipo(String movieTipo) {
         this.movieTipo = movieTipo;
     }
+
+    public Long getMovieIdioma() {
+        return movieIdioma;
+    }
+
+    public void setMovieIdioma(Long movieIdioma) {
+        this.movieIdioma = movieIdioma;
+    }
      
+    
      
 }

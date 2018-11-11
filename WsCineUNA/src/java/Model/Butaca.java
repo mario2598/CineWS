@@ -75,7 +75,7 @@ public class Butaca implements Serializable {
     @JoinColumn(name = "SALA_ID", referencedColumnName = "SALA_ID")
     @ManyToOne(fetch = FetchType.LAZY)
     private Sala salaId;
-    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "butId", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "butId", fetch = FetchType.LAZY)
     private List<Comprobante> comprobanteList;
 
     public Butaca() {

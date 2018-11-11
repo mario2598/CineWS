@@ -70,9 +70,9 @@ public class Cine implements Serializable {
     //@Size(min = 1, max = 80)
     @Column(name = "CINE_EMAIL")
     private String cineEmail;
-    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "cineId", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cineId", fetch = FetchType.LAZY)
     private List<Sala> salaList;
-    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "cineId", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cineId", fetch = FetchType.LAZY)
     private List<Usuario> usuarioList;
 
     public Cine() {

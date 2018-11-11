@@ -37,12 +37,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Reserva.findByResEstado", query = "SELECT r FROM Reserva r WHERE r.resEstado = :resEstado")})
 public class Reserva implements Serializable {
 
-  //  @Size(max = 1)
-    @Column(name = "RES_ESTADO")
-    private String resEstado;
-    @JoinColumn(name = "TANDA_ID", referencedColumnName = "TANDA_ID")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Tanda tandaId;
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -51,9 +45,16 @@ public class Reserva implements Serializable {
   //  @NotNull
     @Column(name = "RES_ID")
     private Long resId;
+  //  @Size(max = 1)
+    @Column(name = "RES_ESTADO")
+    private String resEstado;
+    @JoinColumn(name = "TANDA_ID", referencedColumnName = "TANDA_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Tanda tandaId;
     @JoinColumn(name = "BUT_ID", referencedColumnName = "BUT_ID")
     @ManyToOne(fetch = FetchType.LAZY)
     private Butaca butId;
+    //?
     @JoinColumn(name = "SALA_ID", referencedColumnName = "SALA_ID")
     @ManyToOne(fetch = FetchType.LAZY)
     private Sala salaId;
@@ -61,6 +62,7 @@ public class Reserva implements Serializable {
     private List<Butaca> butacaList;
 
     public Reserva() {
+        
     }
 
      public Reserva(ReservaDto r) {
