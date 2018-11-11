@@ -33,7 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Reserva.findAll", query = "SELECT r FROM Reserva r")
     , @NamedQuery(name = "Reserva.findByResId", query = "SELECT r FROM Reserva r WHERE r.resId = :resId")
-    , @NamedQuery(name = "Reserva.findByTandaId", query = "SELECT r FROM Reserva r WHERE r.tandaId = :tandaId")
+    , @NamedQuery(name = "Reserva.findByTandaId", query = "SELECT r FROM Reserva r WHERE r.tandaId.tandaId = :tandaId")
     , @NamedQuery(name = "Reserva.findByResEstado", query = "SELECT r FROM Reserva r WHERE r.resEstado = :resEstado")})
 public class Reserva implements Serializable {
 
