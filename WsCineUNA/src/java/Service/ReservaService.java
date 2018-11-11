@@ -56,6 +56,8 @@ public class ReservaService {
      
      public Respuesta guardarReserva(ReservaDto rDto) {
         try {
+            em.flush();
+            em.getEntityManagerFactory().getCache().evictAll();
             Reserva reserva;
             if (rDto.getResId()!= null && rDto.getResId() > 0) {//si tra id
                 reserva = em.find(Reserva.class,rDto.getResId());//busca la película con ese id para actualizar
@@ -107,6 +109,8 @@ public class ReservaService {
         
     public Respuesta eliminarListaReservas(Long tandaID){
         try{
+            em.flush();
+            em.getEntityManagerFactory().getCache().evictAll();
             Tanda tAux = em.find(Tanda.class, tandaID);
             if(tAux != null){
                 if(tAux.getReservaList()!=null){
@@ -131,6 +135,8 @@ public class ReservaService {
     
     public Respuesta eliminarReserva(Long id){
         try{
+            em.flush();
+            em.getEntityManagerFactory().getCache().evictAll();
             Reserva rAux;
             if(id!=null && id>0){
                 Query qryId = em.createNamedQuery("Reserva.findByResId", Reserva.class);            
@@ -152,4 +158,5 @@ public class ReservaService {
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Se ha producido un error eliminando una reserva.", "eliminarReserva " + ex.getMessage());
         }
     }
+    
 }

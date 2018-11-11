@@ -20,6 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -84,6 +85,23 @@ public class ReservaController {
         } catch(Exception ex){
             Logger.getLogger(ButacaController.class.getName()).log(Level.SEVERE, "Error en el metodo getListReservas.", ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error obteniendo la lista de reservas.").build();
+        }
+    }
+    
+    @DELETE
+    @Path("/butaca/{resId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response eliminarReserva(@PathParam("resId") Long id){
+        try{
+            Respuesta resp = rService.eliminarReserva(id);
+            if(!resp.getEstado()){
+                return Response.status(resp.getCodigoRespuesta().getValue()).entity(resp.getMensaje()).build();
+            }
+            return Response.ok().build();
+        } catch(Exception ex){
+            Logger.getLogger(ButacaController.class.getName()).log(Level.SEVERE, "Error en el metodo eliminarReserva de la clase ReservaController.", ex);
+            return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al eliminar la reserva.").build();
         }
     }
 }
