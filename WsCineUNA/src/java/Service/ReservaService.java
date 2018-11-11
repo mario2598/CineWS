@@ -5,10 +5,13 @@
  */
 package Service;
 
+import Model.Butaca;
 import Model.Movie;
 import Model.MovieDto;
 import Model.Reserva;
 import Model.ReservaDto;
+import Model.Sala;
+import Model.Tanda;
 import Util.CodigoRespuesta;
 import Util.Respuesta;
 import java.util.ArrayList;
@@ -94,6 +97,54 @@ public class ReservaService {
         } catch (Exception ex) {
             LOG.log(Level.SEVERE, "Ocurrio un error al consultar las reservas con esa tanda.", ex);
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar las reservas con esa tanda.", "getListReserva " + ex.getMessage());
+        }
+    }
+        
+    public Respuesta eliminarListaReservas(Long tandaID){
+        try{
+            Tanda tAux = em.find(Tanda.class, tandaID);
+            if(tAux != null){
+                if(tAux.getReservaList()!=null){
+                    for(Reserva r : tAux.getReservaList()){
+                       eliminarReserva(r.getResId());
+                    }
+                }
+                em.flush();
+                return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "");
+            } else {
+                return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "El id de la tanda proporcionado no corresponde a ninguna tanda.", "eliminarListaReservas NoResultExeption for tanda");
+            }
+        } catch(NoResultException ex){
+            LOG.log(Level.SEVERE, "El id de la sala proporcionado no corresponde a ninguna sala.", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "El id de la tanda proporcionado no corresponde a ninguna tanda.", "eliminarListaReservas NoResultExeption for tanda");
+        } catch(Exception ex){
+            LOG.log(Level.SEVERE, "Se ha producido un error eliminando la lista de reservas.", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Se ha producido un error eliminando la lista de reservas.", ex.getMessage());
+        }
+    }
+    
+    
+    public Respuesta eliminarReserva(Long id){
+        try{
+            Reserva rAux;
+            if(id!=null && id>0){
+                Query qryId = em.createNamedQuery("Reserva.findByResId", Reserva.class);            
+                qryId.setParameter("resId", id);   
+                rAux = (Reserva) qryId.getSingleResult();
+                if(rAux != null){
+                    em.remove(rAux);
+                } else {
+                    return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "La reserva que se desea eliminar no existe en la base de datos", "eliminarReserva NoResultExeption");
+                }
+            }
+            em.flush(); 
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "");
+        } catch(NoResultException ex){
+            LOG.log(Level.SEVERE, "La reserva que se desea eliminar no existe en la base de datos", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "La reserva que se desea eliminar no existe en la base de datos", "eliminarReserva NoResultExeption");
+        } catch(Exception ex){
+            LOG.log(Level.SEVERE, "Se ha producido un error eliminando una butaca.", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Se ha producido un error eliminando una reserva.", "eliminarReserva " + ex.getMessage());
         }
     }
 }
