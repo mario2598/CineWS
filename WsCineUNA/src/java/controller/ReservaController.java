@@ -89,7 +89,7 @@ public class ReservaController {
     }
     
     @DELETE
-    @Path("/butaca/{resId}")
+    @Path("/eliminarReserva/{resId}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response eliminarReserva(@PathParam("resId") Long id){
