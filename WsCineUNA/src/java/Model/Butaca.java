@@ -50,9 +50,6 @@ public class Butaca implements Serializable {
     private Long butFila;
     @OneToMany(mappedBy = "butId", fetch = FetchType.LAZY)
     private List<Reserva> reservaList;
-    @JoinColumn(name = "RES_ID", referencedColumnName = "RES_ID")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Reserva resId;
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -198,14 +195,6 @@ public class Butaca implements Serializable {
 
     public void setReservaList(List<Reserva> reservaList) {
         this.reservaList = reservaList;
-    }
-
-    public Reserva getResId() {
-        return resId;
-    }
-
-    public void setResId(Reserva resId) {
-        this.resId = resId;
     }
 
 }
