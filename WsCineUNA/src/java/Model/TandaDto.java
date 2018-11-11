@@ -16,25 +16,29 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "TandaDto")
 @XmlAccessorType(XmlAccessType.PUBLIC_MEMBER)
 public class TandaDto {
-     private Long tandaId;
-     private Long tandaCobro;
-     private MovieDto movieId;
-     private SalaDto salaId;
-     private Integer horaTanda;
-     private Long tandaInihh;
-     private Long tandaInimm;
-     private Long tandaFinhh;
-     private Long tandaFinmm;
+    private Long tandaId;
+    private Long tandaCobro;
+    private MovieDto movieId;
+    private SalaDto salaId;
+//    private Integer horaTanda;
+    private Long tandaInihh;
+    private Long tandaInimm;
+    private Long tandaFinhh;
+    private Long tandaFinmm;
     
-      public TandaDto(Tanda t) {
-         this.tandaId = t.getTandaId();
-         this.tandaCobro = t.getTandaCobro();
-         this.movieId = new MovieDto(t.getMovieId());       
-         this.salaId = new SalaDto(t.getSalaId());
-         this.tandaFinhh = t.getTandaFinhh();
-         this.tandaFinmm = t.getTandaFinmm();
-         this.tandaInihh = t.getTandaInihh();
-         this.tandaInimm = t.getTandaInimm();
+    public TandaDto(){
+        
+    }
+    
+    public TandaDto(Tanda t) {
+        this.tandaId = t.getTandaId();
+        this.tandaCobro = t.getTandaCobro();
+        this.movieId = new MovieDto(t.getMovieId());       
+        this.salaId = new SalaDto(t.getSalaId());
+        this.tandaFinhh = t.getTandaFinhh();
+        this.tandaFinmm = t.getTandaFinmm();
+        this.tandaInihh = t.getTandaInihh();
+        this.tandaInimm = t.getTandaInimm();
     }
 
     public Long getTandaId() {
@@ -101,13 +105,13 @@ public class TandaDto {
         this.salaId = salaId;
     }
 
-    public Integer getHoraTanda() {
-        return horaTanda;
-    }
-
-    public void setHoraTanda(Integer horaTanda) {
-        this.horaTanda = horaTanda;
-    }
+//    public Integer getHoraTanda() {
+//        return horaTanda;
+//    }
+//
+//    public void setHoraTanda(Integer horaTanda) {
+//        this.horaTanda = horaTanda;
+//    }
 
       
 }

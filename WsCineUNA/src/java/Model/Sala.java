@@ -88,8 +88,16 @@ public class Sala implements Serializable {
         this.tandaList = new ArrayList<>();
     }
     
+    public Sala(SalaDto dto){
+        this.butacaList = new ArrayList<>();
+        this.comprobanteList = new ArrayList<>();
+        this.tandaList = new ArrayList<>();
+        duplicateData(dto);
+    }
+    
     public void duplicateData(SalaDto dto){
-        this.salaId = dto.getSalaId();
+        if(dto.getSalaId()!=null)
+            this.salaId = dto.getSalaId();
         this.salaEstado = dto.getSalaEstado();
         this.salaImgfondo = dto.getSalaImgfondo();
         this.salaCol = dto.getSalaCol();

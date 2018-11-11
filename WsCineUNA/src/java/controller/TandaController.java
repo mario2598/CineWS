@@ -92,7 +92,7 @@ public class TandaController {
     
     /**
      * guarda una película a partir de un Dto
-     * @param movieDto
+     * @param tDto
      * @return 
      */
     @POST

@@ -5,10 +5,6 @@
  */
 package Service;
 
-import Model.Butaca;
-import Model.ButacaDto;
-import Model.Cine;
-import Model.CineDto;
 import Model.Tanda;
 import Model.TandaDto;
 import Util.CodigoRespuesta;
@@ -154,6 +150,8 @@ public class TandaService {
     
     /**
      * guardar Tanda a partir de un dto
+     * @param tDto
+     * @return 
      */
     public Respuesta guardarTanda(TandaDto tDto) {
         try {
