@@ -100,7 +100,8 @@ public class Cine implements Serializable {
         this.cineNombre = c.getCineNombre();
         this.cineTel = c.getCineTel();
         this.cineAbre = c.getCineAbre();
-        this.cineCierra = c.getCineCierra();        
+        this.cineCierra = c.getCineCierra(); 
+        this.cineEmail = c.getCineEmail();
     }
 
     public Long getCineId() {

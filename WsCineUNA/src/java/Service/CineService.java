@@ -67,10 +67,10 @@ public class CineService {
                 if (cineAux == null) {
                     return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encrontró el Cine a modificar.", "guardarCine NoResultException");
                 }
-                cineAux = em.merge(cineAux);
+                cine = em.merge(cine);
                 em.flush();
 
-                return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Cine", new CineDto(cineAux));
+                return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Cine", new CineDto(cine));
             } else {
                 return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "Se ha producido un error el guardar el cine", "guardarCine @param 'Cine' null ID");
             }
