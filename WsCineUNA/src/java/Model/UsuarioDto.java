@@ -31,7 +31,7 @@ public class UsuarioDto {
     private String usuNewpassword; 
     private String usuCambio;
     private String usuCodAct;
-    private byte[] usuImg;
+    private String usuImg;
     private Long cineID;
     
     //Constructores
@@ -55,7 +55,8 @@ public class UsuarioDto {
         this.usuCodAct = usu.getUsuCodAct();
         if(usu.getCineId()!=null)
             this.cineID = usu.getCineId().getCineId();
-        this.usuImg = (byte[]) usu.getUsuImg();
+        if(usu.getUsuImg() != null)
+        this.usuImg = (String) usu.getUsuImg();
     }
      
     public String getUsuCodAct(){
@@ -64,11 +65,11 @@ public class UsuarioDto {
 
     //Metodos
 
-    public byte[] getUsuImg() {
+    public String getUsuImg() {
         return usuImg;
     }
 
-    public void setUsuImg(byte[] usuImg) {
+    public void setUsuImg(String usuImg) {
         this.usuImg = usuImg;
     }
     

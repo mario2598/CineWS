@@ -44,7 +44,7 @@ public class UsuarioController {
     @Path("/usuario")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response guardarEmpleado(UsuarioDto usuarioDto) {
+    public Response guardarUsuario(UsuarioDto usuarioDto) {
         try {
             Respuesta respuesta = usuarioService.guardarUsuario(usuarioDto);
             if (!respuesta.getEstado()) {

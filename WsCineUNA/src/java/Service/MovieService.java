@@ -145,7 +145,7 @@ public class MovieService {
             } else {
                 System.out.println("Intenta persistir la pelicula: " + movDto.getMovieNombre());
                 movie = new Movie(movDto);//crea una nueva a partir del Dto
-                em.persist(movie);//periste
+                em.merge(movie);//periste
             }
             em.flush();//refresca
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Movie", new MovieDto(movie));    
