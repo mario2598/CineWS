@@ -6,6 +6,8 @@
 package Model;
 
 import java.io.Serializable;
+import java.time.ZoneId;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,6 +21,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -32,10 +36,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Reserva.findAll", query = "SELECT r FROM Reserva r")
     , @NamedQuery(name = "Reserva.findByResId", query = "SELECT r FROM Reserva r WHERE r.resId = :resId")
     , @NamedQuery(name = "Reserva.findByTandaId", query = "SELECT r FROM Reserva r WHERE r.tandaId.tandaId = :tandaId")
-    , @NamedQuery(name = "Reserva.findByResEstado", query = "SELECT r FROM Reserva r WHERE r.resEstado = :resEstado")})
+    , @NamedQuery(name = "Reserva.findByResEstado", query = "SELECT r FROM Reserva r WHERE r.resEstado = :resEstado")
+})
 public class Reserva implements Serializable {
-
-
+    
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -48,6 +52,9 @@ public class Reserva implements Serializable {
   //  @Size(max = 1)
     @Column(name = "RES_ESTADO")
     private String resEstado;
+    @Column(name = "RES_DATE")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date resDate;
     @JoinColumn(name = "TANDA_ID", referencedColumnName = "TANDA_ID")
     @ManyToOne(fetch = FetchType.LAZY)
     private Tanda tandaId;
@@ -66,6 +73,7 @@ public class Reserva implements Serializable {
          this.tandaId = new Tanda(r.getTandaId());
          this.butId = new Butaca(r.getButId());
          this.resEstado = r.getResEstado();        
+         this.resDate = Date.from(r.getResDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 
     public Reserva(Long resId) {
@@ -128,5 +136,12 @@ public class Reserva implements Serializable {
     public void setTandaId(Tanda tandaId) {
         this.tandaId = tandaId;
     }
-    
+
+    public Date getResDate() {
+        return resDate;
+    }
+
+    public void setResDate(Date resDate) {
+        this.resDate = resDate;
+    }
 }
