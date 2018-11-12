@@ -58,6 +58,7 @@ public class ReservaService {
      
      public Respuesta guardarReserva(ReservaDto rDto) {
         try {
+            //System.out.println("guardar ReservaService(Server)");
             em.flush();
             em.getEntityManagerFactory().getCache().evictAll();
             Reserva reserva;

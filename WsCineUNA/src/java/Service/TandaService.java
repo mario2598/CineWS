@@ -79,12 +79,7 @@ public class TandaService {
             qryListButacas.setParameter("movieId", movieId);
             resultList = new ArrayList<>(qryListButacas.getResultList());
             dtoList = new ArrayList<>();
-            /*resultList.stream().forEach(tanda -> {
-                TandaDto newDto = new TandaDto(tanda);
-                dtoList.add(newDto);
-            });*/
             for(Tanda t: resultList){
-                System.out.println("agregando tanda");
                 dtoList.add(new TandaDto(t));
             }
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "TandaListM", dtoList);

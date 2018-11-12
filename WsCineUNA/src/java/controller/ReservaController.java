@@ -54,7 +54,7 @@ public class ReservaController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response guardarReserva(ReservaDto dto){
-        try{        
+        try{
             Respuesta resp = rService.guardarReserva(dto);
             if(!resp.getEstado()){
                 return Response.status(resp.getCodigoRespuesta().getValue()).entity(resp.getMensaje()).build();
