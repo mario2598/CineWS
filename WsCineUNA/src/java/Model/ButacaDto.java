@@ -36,6 +36,7 @@ public class ButacaDto {
         this.butFila = but.getButFila();
         this.butImg = but.getButImg();
         this.butLetra = but.getButLetra();
+        if(but.getSalaId()!=null)
         this.salaId = but.getSalaId().getSalaId();
         this.butActiva = but.getButActiva();
     }

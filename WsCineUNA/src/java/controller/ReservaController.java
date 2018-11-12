@@ -64,7 +64,7 @@ public class ReservaController {
             if(!resp.getEstado()){
                 return Response.status(resp.getCodigoRespuesta().getValue()).entity(resp.getMensaje()).build();
             }
-            ButacaDto retorno = new ButacaDto((Butaca) resp.getResultado("Butaca"));
+            ReservaDto retorno = (ReservaDto) resp.getResultado("Reserva");
             return Response.ok(retorno).build();
         } catch(Exception ex){
             Logger.getLogger(ButacaController.class.getName()).log(Level.SEVERE, "Error en el metodo guardarReserva.", ex);

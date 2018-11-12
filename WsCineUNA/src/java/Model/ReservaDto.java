@@ -21,6 +21,9 @@ public class ReservaDto {
     private Long resId;
     private ButacaDto butId;
 
+    public ReservaDto() {
+    }
+    
     public ReservaDto(Reserva r) {
         this.butId = new ButacaDto(r.getButId());
         this.resEstado = r.getResEstado();
