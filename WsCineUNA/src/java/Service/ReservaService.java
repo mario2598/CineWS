@@ -37,6 +37,8 @@ public class ReservaService {
     
      public Respuesta getReserva(Long id){
         try{
+            em.flush();
+            em.getEntityManagerFactory().getCache().evictAll();
             Query qryActividad = em.createNamedQuery("Reserva.findByResId",Reserva.class);
             qryActividad.setParameter("resId", id);
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Reserva", new ReservaDto((Reserva) qryActividad.getSingleResult()));
@@ -88,6 +90,8 @@ public class ReservaService {
     }
         public Respuesta getListReserva(Long id){
         try {
+            em.flush();
+            em.getEntityManagerFactory().getCache().evictAll();
             //limpiarListas();
             Query qryActividad = em.createNamedQuery("Reserva.findByTandaId", Reserva.class);
             qryActividad.setParameter("tandaId", id);

@@ -5,13 +5,8 @@
  */
 package controller;
 
-import Model.Butaca;
 import Model.ButacaDto;
-import Model.Reserva;
 import Model.ReservaDto;
-import Model.Sala;
-import Model.Tanda;
-import Service.MovieService;
 import Service.ReservaService;
 import Util.CodigoRespuesta;
 import Util.Respuesta;
