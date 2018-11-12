@@ -9,6 +9,7 @@ import Model.Usuario;
 import Model.UsuarioDto;
 import Util.CodigoRespuesta;
 import Util.Respuesta;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.LocalBean;
@@ -49,8 +50,29 @@ public class UsuarioService {
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar el usuario.", "getUsuarioUsu " + ex.getMessage());
         }
     }
+     
+   public Respuesta getUsuarioList(){
+        ArrayList<Usuario> resultList;
+        ArrayList<UsuarioDto> dtoList;
+        try{
+            Query qryUsuList = em.createNamedQuery("Usuario.findAll", Usuario.class);
+            resultList = new ArrayList<>(qryUsuList.getResultList());
+            dtoList = new ArrayList<>();
+            resultList.stream().forEach(usu -> {
+                UsuarioDto newDto = new UsuarioDto(usu);
+                dtoList.add(newDto);
+            });
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "UsuList", dtoList);
+        } catch (NoResultException ex) {
+            LOG.log(Level.SEVERE, "Ocurrio un error al consultar la lista de usuarios.", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "Ocurrio un error al consultar la lista de usuarios.", "getUsuarioList NoResultException");
+        } catch (Exception ex) {
+            LOG.log(Level.SEVERE, "Ocurrio un error al consultar la lista de usuarios.", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar la lista de usuarios.", "getUsuarioList " + ex.getMessage());
+        }
+   }
     
-      public Respuesta getUsuarioUsu(Long id){
+    public Respuesta getUsuarioUsu(Long id){
         try {
             Query qryActividad = em.createNamedQuery("Usuario.findByUsuId", Usuario.class);
             qryActividad.setParameter("usuId", id);
@@ -135,14 +157,14 @@ public class UsuarioService {
         }
     }
     
-     public String activarUsuario(String user) {
-             Usuario usu;
-             Query qryUsu = em.createNamedQuery("Usuario.findByUsuCodAct",Usuario.class);            
-             qryUsu.setParameter("usuCodAct",user);             
-             usu = (Usuario) qryUsu.getSingleResult();
-             usu.setUsuEstado("A");
-             usu = em.merge(usu);
-             em.flush();
-             return usu.getUsuNombre();
+    public String activarUsuario(String user) {
+        Usuario usu;
+        Query qryUsu = em.createNamedQuery("Usuario.findByUsuCodAct",Usuario.class);            
+        qryUsu.setParameter("usuCodAct",user);             
+        usu = (Usuario) qryUsu.getSingleResult();
+        usu.setUsuEstado("A");
+        usu = em.merge(usu);
+        em.flush();
+        return usu.getUsuNombre();
     }
 }

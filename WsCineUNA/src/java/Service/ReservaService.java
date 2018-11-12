@@ -89,7 +89,8 @@ public class ReservaService {
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar la reserva.", "guardarReserva " + ex.getMessage());
         }
     }
-        public Respuesta getListReserva(Long id){
+    
+    public Respuesta getListReserva(Long id){
         try {
             em.flush();
             em.getEntityManagerFactory().getCache().evictAll();
