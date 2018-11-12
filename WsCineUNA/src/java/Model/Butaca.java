@@ -78,6 +78,9 @@ public class Butaca implements Serializable {
     public Butaca() {
         this.comprobanteList = new ArrayList();
     }
+    public Butaca(Long id) {
+        this.butId = id;
+    }
 
     public Butaca(ButacaDto dto) {
         this.butId = dto.getButId();

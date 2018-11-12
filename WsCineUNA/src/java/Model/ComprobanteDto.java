@@ -23,30 +23,25 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlAccessorType(XmlAccessType.PUBLIC_MEMBER)
 public class ComprobanteDto {
     private Long compId;
-    private Long compCosto;
-    private ButacaDto butId;
-    private MovieDto movieId;
-    private SalaDto salaId;
-    private UsuarioDto usuId;
+    private String compCosto;
+    private String butId;
+    private String movieId;
+    private String salaId;
+    private String usuId;
     @XmlJavaTypeAdapter(LocalDateAdapter.class)
     private LocalDate compDate;
     
     public ComprobanteDto(Comprobante c) {
          this.compId = c.getCompId();
-         this.compCosto = c.getCompCosto();
-         this.butId = new ButacaDto(c.getButId());
-         this.movieId = new MovieDto(c.getMovieId());
-         this.salaId = new SalaDto(c.getSalaId());
-         this.usuId = new UsuarioDto(c.getUsuId());
+         this.compCosto = c.getCompCosto().toString();
+         this.butId = c.getButId().getButId().toString();
+         this.movieId = c.getMovieId().getMovieId().toString();
+         this.salaId = c.getSalaId().getSalaId().toString();
+         this.usuId = c.getUsuId().getUsuId().toString();
          this.compDate =  c.getCompDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(); 
     }
 
-    public LocalDate getCompDate() {
-        return compDate;
-    }
-
-    public void setCompDate(LocalDate compDate) {
-        this.compDate = compDate;
+    public ComprobanteDto() {
     }
 
     public Long getCompId() {
@@ -57,46 +52,54 @@ public class ComprobanteDto {
         this.compId = compId;
     }
 
-    public Long getCompCosto() {
+    public String getCompCosto() {
         return compCosto;
     }
 
-    public void setCompCosto(Long compCosto) {
+    public void setCompCosto(String compCosto) {
         this.compCosto = compCosto;
     }
 
-    public ButacaDto getButId() {
+    public String getButId() {
         return butId;
     }
 
-    public void setButId(ButacaDto butId) {
+    public void setButId(String butId) {
         this.butId = butId;
     }
 
-    public MovieDto getMovieId() {
+    public String getMovieId() {
         return movieId;
     }
 
-    public void setMovieId(MovieDto movieId) {
+    public void setMovieId(String movieId) {
         this.movieId = movieId;
     }
 
-    public SalaDto getSalaId() {
+    public String getSalaId() {
         return salaId;
     }
 
-    public void setSalaId(SalaDto salaId) {
+    public void setSalaId(String salaId) {
         this.salaId = salaId;
     }
 
-    public UsuarioDto getUsuId() {
+    public String getUsuId() {
         return usuId;
     }
 
-    public void setUsuId(UsuarioDto usuId) {
+    public void setUsuId(String usuId) {
         this.usuId = usuId;
     }
-    
-    
+
+    public LocalDate getCompDate() {
+        return compDate;
+    }
+
+    public void setCompDate(LocalDate compDate) {
+        this.compDate = compDate;
+    }
+
+
     
 }

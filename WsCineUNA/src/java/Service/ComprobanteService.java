@@ -104,15 +104,15 @@ public class ComprobanteService {
      public Respuesta guardarComp(ComprobanteDto compDto) {
         try {
             Comprobante comp;
-            Usuario usu = null;
-            Sala sala = null;
-            Movie movie = null;
-            Butaca but = null;
+            Usuario usu;
+            Sala sala;
+            Movie movie;
+            Butaca but;
             try {
-                usu = em.find(Usuario.class,compDto.getUsuId());
-                sala = em.find(Sala.class,compDto.getSalaId());
-                movie = em.find(Movie.class,compDto.getMovieId());
-                but = em.find(Butaca.class,compDto.getButId());      
+                usu = new Usuario(Long.valueOf(compDto.getUsuId()));
+                sala = new Sala(Long.valueOf(compDto.getSalaId()));
+                movie = new Movie(Long.valueOf(compDto.getMovieId()));
+                but = new Butaca(Long.valueOf(compDto.getButId()));    
             } catch (Exception e) {
                 return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "Error guardando comprobante.", "guardarComp NoResultException");
             }
@@ -135,9 +135,9 @@ public class ComprobanteService {
                 comp.setMovieId(movie);
                 comp.setSalaId(sala);
                 comp.setUsuId(usu);   
-                em.persist(comp);  
+                comp= em.merge(comp);
                 }
-            em.flush();
+             em.flush();
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Comprobante", new ComprobanteDto(comp));
         } catch (Exception ex) {
             LOG.log(Level.SEVERE, "Ocurrio un error al guardar el comprobante.", ex);
