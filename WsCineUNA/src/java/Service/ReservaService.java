@@ -6,11 +6,8 @@
 package Service;
 
 import Model.Butaca;
-import Model.Movie;
-import Model.MovieDto;
 import Model.Reserva;
 import Model.ReservaDto;
-import Model.Sala;
 import Model.Tanda;
 import Util.CodigoRespuesta;
 import Util.Respuesta;
@@ -87,7 +84,8 @@ public class ReservaService {
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar la reserva.", "guardarReserva " + ex.getMessage());
         }
     }
-        public Respuesta getListReserva(Long id){
+    
+    public Respuesta getListReserva(Long id){
         try {
             //limpiarListas();
             Query qryActividad = em.createNamedQuery("Reserva.findByTandaId", Reserva.class);
@@ -98,7 +96,7 @@ public class ReservaService {
                 reservasDto.add(new ReservaDto(r));
             }
 
-            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "ReservaList",reservasDto);
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "ReservasList",reservasDto);
 
         } catch (NoResultException ex) {
             return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No existe reservas cen esa tanda.", "getListReserva NoResultException");
