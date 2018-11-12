@@ -38,7 +38,7 @@ public class UsuarioDto {
     public UsuarioDto() {
         
     }
-<<<<<<< HEAD
+
      public UsuarioDto(Usuario usu) {
          this.usuId = usu.getUsuId();
          this.usuUser = usu.getUsuUser();
@@ -60,27 +60,7 @@ public class UsuarioDto {
              this.cineID = usu.getCineId().getCineId();
          }
          this.usuImg =  (String) usu.getUsuImg();
-=======
-    
-    public UsuarioDto(Usuario usu) {
-        this.usuId = usu.getUsuId();
-        this.usuUser = usu.getUsuUser();
-        this.usuNombre = usu.getUsuNombre();
-        this.usuPapellido = usu.getUsuPapellido();
-        this.usuSapellido = usu.getUsuSapellido();
-        this.usuPassword = usu.getUsuPassword();
-        this.usuEmail = usu.getUsuEmail();
-        this.usuIdioma = usu.getUsuIdioma();
-        this.usuAdmin = usu.getUsuAdmin();
-        this.usuNewpassword = usu.getUsuNewpassword();
-        this.usuCambio = usu.getUsuCambio();
-        this.usuEstado = usu.getUsuEstado();
-        this.usuCodAct = usu.getUsuCodAct();
-        if(usu.getCineId()!=null)
-            this.cineID = usu.getCineId().getCineId();
-        this.usuImg = (byte[]) usu.getUsuImg();
->>>>>>> 7fd7aba46ff874193af079344c7e1dc5130749cb
-    }
+     }
      
     public String getUsuCodAct(){
         return usuCodAct;
