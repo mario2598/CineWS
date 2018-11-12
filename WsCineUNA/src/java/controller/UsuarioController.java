@@ -37,14 +37,7 @@ public class UsuarioController {
     @Path("/usuariosPrueba")
     @Produces(MediaType.APPLICATION_JSON)
     public String getUsuario() {
-<<<<<<< HEAD
-    
-
         return "hola";
-        
-=======
-        return "hola";
->>>>>>> master9_f
     }
     
     @POST
