@@ -38,6 +38,7 @@ import javax.ws.rs.core.Response;
 public class ComprobanteController {
     @Inject
     ServletContext context;
+    
     @EJB
     private final ComprobanteService cService = new ComprobanteService();
     
@@ -74,8 +75,7 @@ public class ComprobanteController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response guardarComprobante(ComprobanteDto dto){
-        try{
-           
+        try{           
             Respuesta resp = cService.guardarComp(dto);
             if(!resp.getEstado()){
                 return Response.status(resp.getCodigoRespuesta().getValue()).entity(resp.getMensaje()).build();

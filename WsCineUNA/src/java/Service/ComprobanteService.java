@@ -104,15 +104,16 @@ public class ComprobanteService {
      public Respuesta guardarComp(ComprobanteDto compDto) {
         try {
             Comprobante comp;
-            Usuario usu = null;
-            Sala sala = null;
-            Movie movie = null;
-            Butaca but = null;
-            try {
-                usu = em.find(Usuario.class,compDto.getUsuId());
-                sala = em.find(Sala.class,compDto.getSalaId());
-                movie = em.find(Movie.class,compDto.getMovieId());
-                but = em.find(Butaca.class,compDto.getButId());      
+            Usuario usu;
+            Sala sala ;
+            Movie movie ;
+
+            try {               
+                usu = new Usuario(compDto.getUsuId());
+                sala = new Sala(compDto.getSalaId());
+                usu = new Usuario(compDto.getUsuId());               
+                movie = new Movie(compDto.getMovieId());
+               // but = em.find(Butaca.class,compDto.getButId());      
             } catch (Exception e) {
                 return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "Error guardando comprobante.", "guardarComp NoResultException");
             }
@@ -123,18 +124,18 @@ public class ComprobanteService {
                     return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encrontró el Comprobante a modificar.", "guardarComp NoResultException");
                 }
                 comp = new Comprobante(compDto);
-                comp.setButId(but);
-                comp.setMovieId(movie);
-                comp.setSalaId(sala);
-                comp.setUsuId(usu);              
+                usu = new Usuario(compDto.getUsuId());
+                sala = new Sala(compDto.getSalaId());
+                usu = new Usuario(compDto.getUsuId());               
+                movie = new Movie(compDto.getMovieId());         
                 comp= em.merge(comp);
                 } else {
          
                 comp = new Comprobante(compDto);
-                comp.setButId(but);
-                comp.setMovieId(movie);
-                comp.setSalaId(sala);
-                comp.setUsuId(usu);   
+                usu = new Usuario(compDto.getUsuId());
+                sala = new Sala(compDto.getSalaId());
+                usu = new Usuario(compDto.getUsuId());               
+                movie = new Movie(compDto.getMovieId());  
                 em.persist(comp);  
                 }
             em.flush();

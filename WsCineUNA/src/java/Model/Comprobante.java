@@ -12,11 +12,14 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -49,6 +52,8 @@ public class Comprobante implements Serializable {
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
+    @SequenceGenerator(name = "COMPROBANTE_ID_GENERATOR", sequenceName = "CINEUNA.COMPROBANTE_SEQ01", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "COMPROBANTE_ID_GENERATOR")
     @Basic(optional = false)
    // @NotNull
     @Column(name = "COMP_ID")
@@ -76,7 +81,10 @@ public class Comprobante implements Serializable {
      public Comprobante(ComprobanteDto compDto) {
         this.compId = compDto.getCompId();
         this.compCosto = compDto.getCompCosto();
-        this.compDate = Date.from(compDto.getCompDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
+     //   this.compDate = Date.from(compDto.getCompDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
+        this.movieId = new Movie(compDto.getMovieId());
+        this.salaId = new Sala(compDto.getSalaId());
+        this.usuId = new Usuario(compDto.getUsuId());
     }
 
     public Comprobante(Long compId, Long compCosto) {
