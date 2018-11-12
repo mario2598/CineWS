@@ -39,6 +39,7 @@ public class SalaDto {
     }
     
     public SalaDto(Sala s) {
+<<<<<<< HEAD
         this.salaId = s.getSalaId();
         this.salaEstado = s.getSalaEstado();
         this.salaImgfondo = s.getSalaImgfondo();
@@ -48,6 +49,19 @@ public class SalaDto {
         this.salaCol = s.getSalaCol();  
         if(s.getCineId()!=null)
            this.cineId = s.getCineId().getCineId();
+=======
+         this.salaId = s.getSalaId();
+         this.salaEstado = s.getSalaEstado();
+         this.salaImgfondo = s.getSalaImgfondo();
+         this.salaTipo = s.getSalaTipo();
+         this.salaNombre = s.getSalaNombre();
+         this.salaFilas = s.getSalaFilas();
+         this.salaCol = s.getSalaCol();  
+         if(s.getCineId() != null){
+          this.cineId = s.getCineId().getCineId();
+         }
+  
+>>>>>>> master9_m
     }
 
     

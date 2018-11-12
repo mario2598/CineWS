@@ -31,32 +31,36 @@ public class UsuarioDto {
     private String usuNewpassword; 
     private String usuCambio;
     private String usuCodAct;
-    private byte[] usuImg;
+    private String usuImg;
     private Long cineID;
     
     //Constructores
     public UsuarioDto() {
         
     }
-    
-    public UsuarioDto(Usuario usu) {
-        this.usuId = usu.getUsuId();
-        this.usuUser = usu.getUsuUser();
-        this.usuNombre = usu.getUsuNombre();
-        this.usuPapellido = usu.getUsuPapellido();
-        this.usuSapellido = usu.getUsuSapellido();
-        this.usuPassword = usu.getUsuPassword();
-        this.usuEmail = usu.getUsuEmail();
-        this.usuIdioma = usu.getUsuIdioma();
-        this.usuAdmin = usu.getUsuAdmin();
-        this.usuNewpassword = usu.getUsuNewpassword();
-        this.usuCambio = usu.getUsuCambio();
-        this.usuEstado = usu.getUsuEstado();
-        this.usuCodAct = usu.getUsuCodAct();
-        if(usu.getCineId()!=null)
-            this.cineID = usu.getCineId().getCineId();
-        this.usuImg = (byte[]) usu.getUsuImg();
-    }
+
+     public UsuarioDto(Usuario usu) {
+         this.usuId = usu.getUsuId();
+         this.usuUser = usu.getUsuUser();
+         this.usuNombre = usu.getUsuNombre();
+         this.usuPapellido = usu.getUsuPapellido();
+         this.usuSapellido = usu.getUsuSapellido();
+         this.usuPassword = usu.getUsuPassword();
+         this.usuEmail = usu.getUsuEmail();
+         this.usuIdioma = usu.getUsuIdioma();
+         this.usuAdmin = usu.getUsuAdmin();
+         this.usuNewpassword = usu.getUsuNewpassword();
+         this.usuCambio = usu.getUsuCambio();
+         this.usuEstado = usu.getUsuEstado();
+         this.usuCodAct = usu.getUsuCodAct();
+         if(usu.getCineId() == null){
+             
+         }
+         else{
+             this.cineID = usu.getCineId().getCineId();
+         }
+         this.usuImg =  (String) usu.getUsuImg();
+     }
      
     public String getUsuCodAct(){
         return usuCodAct;
@@ -64,11 +68,11 @@ public class UsuarioDto {
 
     //Metodos
 
-    public byte[] getUsuImg() {
+    public String getUsuImg() {
         return usuImg;
     }
 
-    public void setUsuImg(byte[] usuImg) {
+    public void setUsuImg(String usuImg) {
         this.usuImg = usuImg;
     }
     
