@@ -111,6 +111,7 @@ public class MovieService {
     public Respuesta getListMovies(String estado){
         try {
             //limpiarListas();
+            em.getEntityManagerFactory().getCache().evictAll();
             Query qryActividad = em.createNamedQuery("Movie.findByMovieEstado", Movie.class);
             qryActividad.setParameter("movieEstado", estado);
             List<Movie> movies = qryActividad.getResultList();
@@ -148,6 +149,7 @@ public class MovieService {
                 em.persist(movie);//periste
             }
             em.flush();//refresca
+            em.getEntityManagerFactory().getCache().evictAll();
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Movie", new MovieDto(movie));    
         } catch (Exception ex) {
             LOG.log(Level.SEVERE, "Ocurrio un error al guardar la película.", ex);
@@ -173,6 +175,7 @@ public class MovieService {
                 return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "Debe cargar la pelicula a eliminar.", "eliminarPelícula NoResultException");
             }
             em.flush();
+            em.getEntityManagerFactory().getCache().evictAll();
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "");//no se ocupa obtener la película de la respuesta
         } catch (Exception ex) {
             if (ex.getCause() != null && ex.getCause().getCause().getClass() == SQLIntegrityConstraintViolationException.class) {

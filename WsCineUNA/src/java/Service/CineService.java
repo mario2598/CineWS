@@ -69,6 +69,7 @@ public class CineService {
                 }
                 cineAux = em.merge(cineAux);
                 em.flush();
+
                 return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Cine", new CineDto(cineAux));
             } else {
                 return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "Se ha producido un error el guardar el cine", "guardarCine @param 'Cine' null ID");

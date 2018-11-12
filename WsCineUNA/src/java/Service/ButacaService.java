@@ -82,6 +82,8 @@ public class ButacaService {
     
     public Respuesta guardarButaca(Butaca butaca){
         System.out.println("***********SALA ID:"+butaca.getSalaId());
+        em.flush();
+        em.getEntityManagerFactory().getCache().evictAll();
         try {
             if(butaca!=null && butaca.getButId()!=null && butaca.getButId()>0){
                 Butaca butacaAux = em.find(Butaca.class, butaca.getButId());
@@ -116,6 +118,7 @@ public class ButacaService {
                     return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "La butaca que se desea eliminar no existe en la base de datos", "eliminarButaca NoResultExeption");
                 }
                 em.flush();
+                em.getEntityManagerFactory().getCache().evictAll();
                 if(!getButaca(butacaAux.getButId()).getEstado()){
                     return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "");
                 } else {
@@ -148,6 +151,7 @@ public class ButacaService {
                     }
                 }
                 em.flush();
+                em.getEntityManagerFactory().getCache().evictAll();
                 return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "");
             } else {
                 return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "El id de la sala proporcionado no corresponde a ninguna sala.", "eliminarListaButacas NoResultExeption for Sala");

@@ -138,6 +138,7 @@ public class ComprobanteService {
                 comp= em.merge(comp);
                 }
              em.flush();
+             em.getEntityManagerFactory().getCache().evictAll();
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Comprobante", new ComprobanteDto(comp));
         } catch (Exception ex) {
             LOG.log(Level.SEVERE, "Ocurrio un error al guardar el comprobante.", ex);
@@ -158,6 +159,7 @@ public class ComprobanteService {
                     return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "El comprobante que se desea eliminar no existe en la base de datos", "eliminarTanda NoResultExeption");
                 }
                 em.flush();
+                em.getEntityManagerFactory().getCache().evictAll();
                 if(!getComp(compAux.getCompId()).getEstado()){
                     return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "");
                 } else {
