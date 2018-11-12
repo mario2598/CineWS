@@ -66,8 +66,7 @@ public class CineController {
             if (!respuesta.getEstado()) {
                 return Response.status(respuesta.getCodigoRespuesta().getValue()).entity(respuesta.getMensaje()).build();
             }
-            CineDto retorno = new CineDto((Cine) respuesta.getResultado("Cine"));
-            return Response.ok(retorno).build();
+            return Response.ok(respuesta.getResultado("Cine")).build();
         } catch (Exception ex) {
             Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error guardando el cine").build();

@@ -46,7 +46,10 @@ public class SalaDto {
          this.salaNombre = s.getSalaNombre();
          this.salaFilas = s.getSalaFilas();
          this.salaCol = s.getSalaCol();  
-         this.cineId = s.getCineId().getCineId();
+         if(s.getCineId() != null){
+          this.cineId = s.getCineId().getCineId();
+         }
+  
     }
 
     

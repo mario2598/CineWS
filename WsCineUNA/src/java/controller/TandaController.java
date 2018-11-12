@@ -7,7 +7,6 @@ package controller;
 
 import Model.MovieDto;
 import Model.TandaDto;
-import Service.MovieService;
 import Service.TandaService;
 import Util.CodigoRespuesta;
 import Util.Respuesta;
@@ -105,9 +104,9 @@ public class TandaController {
             if (!respuesta.getEstado()) {
                 return Response.status(respuesta.getCodigoRespuesta().getValue()).entity(respuesta.getMensaje()).build();
             }
-            return Response.ok((MovieDto) respuesta.getResultado("Tanda")).build();
+            return Response.ok((TandaDto) respuesta.getResultado("Tanda")).build();
         } catch (Exception ex) {
-            Logger.getLogger(MovieController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TandaController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error guardando la Tanda(controller)").build();
         }
     };
