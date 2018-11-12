@@ -11,10 +11,12 @@ import Model.ReservaDto;
 import Model.Tanda;
 import Util.CodigoRespuesta;
 import Util.Respuesta;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -104,6 +106,29 @@ public class ReservaService {
             }
 
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "ReservasList",reservasDto);
+
+        } catch (NoResultException ex) {
+            return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No existe reservas cen esa tanda.", "getListReserva NoResultException");
+        } catch (Exception ex) {
+            LOG.log(Level.SEVERE, "Ocurrio un error al consultar las reservas con esa tanda.", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar las reservas con esa tanda.", "getListReserva " + ex.getMessage());
+        }
+    }
+    
+    public Respuesta getListReserva(Long id, LocalDate date){
+        try {
+            em.flush();
+            em.getEntityManagerFactory().getCache().evictAll();
+            //limpiarListas();
+            Query qryActividad = em.createNamedQuery("Reserva.findByTandaId", Reserva.class);
+            qryActividad.setParameter("tandaId", id);
+            List<Reserva> reservas = qryActividad.getResultList();
+            ArrayList<ReservaDto> reservasDto = new ArrayList<>();
+            for (Reserva r : reservas) {
+                reservasDto.add(new ReservaDto(r));
+            }
+            ArrayList<ReservaDto> reservasFiltradas = new ArrayList<>(reservasDto.stream().filter(resAux -> resAux.getResDate().equals(date)).collect(Collectors.toList()));
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "ReservasList", reservasFiltradas);
 
         } catch (NoResultException ex) {
             return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No existe reservas cen esa tanda.", "getListReserva NoResultException");

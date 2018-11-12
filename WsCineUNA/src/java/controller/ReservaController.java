@@ -9,7 +9,9 @@ import Model.ButacaDto;
 import Model.ReservaDto;
 import Service.ReservaService;
 import Util.CodigoRespuesta;
+import Util.DateUtil;
 import Util.Respuesta;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -67,12 +69,29 @@ public class ReservaController {
         }
     }
     
-     @GET
+    @GET
     @Path("/getReservas/{tandaId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getListReservas(@PathParam("tandaId") Long tandaID){
         try{
             Respuesta resp = rService.getListReserva(tandaID);
+            if(!resp.getEstado()){
+                return Response.status(resp.getCodigoRespuesta().getValue()).entity(resp.getMensaje()).build();
+            }
+            return Response.ok((ArrayList<ButacaDto>) resp.getResultado("ReservasList")).build();
+        } catch(Exception ex){
+            Logger.getLogger(ButacaController.class.getName()).log(Level.SEVERE, "Error en el metodo getListReservas.", ex);
+            return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error obteniendo la lista de reservas.").build();
+        }
+    }
+    
+    @GET
+    @Path("/getReservas/{tandaId}/{date}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getListReservas(@PathParam("tandaId") Long tandaID, @PathParam("date") String date){
+        try{
+            
+            Respuesta resp = rService.getListReserva(tandaID, DateUtil.String2LocalDate(date));
             if(!resp.getEstado()){
                 return Response.status(resp.getCodigoRespuesta().getValue()).entity(resp.getMensaje()).build();
             }

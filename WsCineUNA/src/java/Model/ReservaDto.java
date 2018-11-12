@@ -5,9 +5,14 @@
  */
 package Model;
 
+import Util.LocalDateAdapter;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  *
@@ -20,6 +25,8 @@ public class ReservaDto {
     private TandaDto tandaId;
     private Long resId;
     private ButacaDto butId;
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
+    private LocalDate resDate;
 
     public ReservaDto() {
     }
@@ -29,6 +36,7 @@ public class ReservaDto {
         this.resEstado = r.getResEstado();
         this.tandaId = new TandaDto(r.getTandaId());
         this.resId = r.getResId();
+        this.resDate = r.getResDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     }
     
     public String getResEstado() {
@@ -61,6 +69,14 @@ public class ReservaDto {
 
     public void setButId(ButacaDto butId) {
         this.butId = butId;
+    }
+
+    public LocalDate getResDate() {
+        return resDate;
+    }
+
+    public void setResDate(LocalDate resDate) {
+        this.resDate = resDate;
     }
     
     
