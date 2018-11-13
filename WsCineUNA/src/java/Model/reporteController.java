@@ -85,7 +85,7 @@ public class reporteController {
          public Respuesta ganerateJasperComp(Long id) throws JRException, FileNotFoundException, IOException, ClassNotFoundException, SQLException {      
          try {
             String ruta = context.getRealPath("/");
-            String JasperRuta = ruta + "\\jasper\\ComprobanteCINEUNA.jrxml";
+            String JasperRuta = ruta + "\\jasper\\ComprobanteCompraCineUNA.jrxml";
             String pdfRuta = ruta + "\\jasper\\ComprobanteCINEUNA.pdf";
             String outPutFile = pdfRuta;          
             String dbUrl = "jdbc:oracle:thin:@localhost:1521:XE";

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ComprobanteCompraCineUNA" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5ffaf221-3f9d-463d-b17d-cc78e215bfea">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CineAdapter"/>
+	<parameter name="P_ID" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[3]]></defaultValueExpression>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[select u.USU_NOMBRE, m.MOVIE_NOMBRE,c.COMP_COSTO,s.SALA_NOMBRE,c.COMP_DATE,c.BUT_ID, b.BUT_LETRA from COMPROBANTE c join USUARIO u on c.USU_ID = u.USU_ID	join MOVIE m on c.MOVIE_ID = m.MOVIE_ID JOIN BUTACA b on b.BUT_ID = c.BUT_ID JOIN SALA s on s.SALA_ID = c.SALA_ID where c.COMP_ID = $P{P_ID}]]>
+	</queryString>
+	<field name="USU_NOMBRE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="USU_NOMBRE"/>
+	</field>
+	<field name="MOVIE_NOMBRE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="MOVIE_NOMBRE"/>
+	</field>
+	<field name="COMP_COSTO" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="COMP_COSTO"/>
+	</field>
+	<field name="SALA_NOMBRE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="SALA_NOMBRE"/>
+	</field>
+	<field name="COMP_DATE" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="COMP_DATE"/>
+	</field>
+	<field name="BUT_ID" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="BUT_ID"/>
+	</field>
+	<field name="BUT_LETRA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="BUT_LETRA"/>
+	</field>
+	<group name="USU_NOMBRE">
+		<groupExpression><![CDATA[$F{USU_NOMBRE}]]></groupExpression>
+	</group>
+	<group name="MOVIE_NOMBRE">
+		<groupExpression><![CDATA[$F{MOVIE_NOMBRE}]]></groupExpression>
+	</group>
+	<group name="COMP_COSTO">
+		<groupExpression><![CDATA[$F{COMP_COSTO}]]></groupExpression>
+	</group>
+	<group name="SALA_NOMBRE">
+		<groupExpression><![CDATA[$F{SALA_NOMBRE}]]></groupExpression>
+	</group>
+	<group name="COMP_DATE">
+		<groupExpression><![CDATA[$F{COMP_DATE}]]></groupExpression>
+	</group>
+	<group name="BUT_ID">
+		<groupExpression><![CDATA[$F{BUT_ID}]]></groupExpression>
+	</group>
+	<group name="BUT_LETRA">
+		<groupExpression><![CDATA[$F{BUT_LETRA}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="-10" y="-10" width="570" height="89" uuid="7ec49251-56e1-4e30-a38b-3858529dea34"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Agency FB" size="42" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CINE UNA PZ]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="40" splitType="Stretch">
+			<staticText>
+				<reportElement x="197" y="0" width="160" height="30" uuid="30cf4a9b-2689-42fe-86f6-9bd17860ebc7"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Comprobante de Compra]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="120" splitType="Stretch">
+			<staticText>
+				<reportElement x="180" y="10" width="100" height="30" uuid="b216971d-d11f-40e5-a534-a9f41a3e145a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a3dbd33a-2bac-4acd-b937-bf816057991a"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre Usuario :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="180" y="90" width="100" height="30" uuid="c269253d-4d18-48d2-b037-f683ee6f5023">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="add19dab-b46b-4f1e-8e71-7af2d88daacf"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre Sala :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="180" y="50" width="100" height="30" uuid="2ea8defc-7d58-41ad-99bf-bd9d37088797">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d1a2032a-1bb5-497b-a79a-ca20eb501e17"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="280" y="50" width="100" height="30" uuid="5b8dd9bb-8b39-4d9c-9d9f-51e9181560c9">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d1a2032a-1bb5-497b-a79a-ca20eb501e17"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{COMP_DATE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="10" width="100" height="30" uuid="d8769b51-5397-468f-b304-7e6004542874">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a3dbd33a-2bac-4acd-b937-bf816057991a"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{USU_NOMBRE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="90" width="100" height="30" uuid="17662240-a70b-423f-a892-531c6ce9d15d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="add19dab-b46b-4f1e-8e71-7af2d88daacf"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{SALA_NOMBRE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<staticText>
+				<reportElement x="180" y="59" width="100" height="30" uuid="a192ba4b-99a4-4cce-ba00-aae922fc6384">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="005da01a-e74a-4456-9f88-49d408285b7a"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Letra de butaca :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="280" y="59" width="100" height="30" uuid="79d01318-b638-4b33-a97d-afe063ebe8c7">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="005da01a-e74a-4456-9f88-49d408285b7a"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{BUT_LETRA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="180" y="20" width="100" height="30" uuid="96fb02bb-a7f4-4273-a637-ab9d2d56d156">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9fb4d40a-9a89-45b0-a15e-112b3e5053c9"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pelicula : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="280" y="20" width="100" height="30" uuid="cdcb8137-7a85-438c-8eea-e79fbb455735">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9fb4d40a-9a89-45b0-a15e-112b3e5053c9"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{MOVIE_NOMBRE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<staticText>
+				<reportElement x="196" y="6" width="162" height="30" forecolor="#B3110E" uuid="dba6006a-1b0d-4ee8-8beb-d80bd28a065a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Gracias por preferirnos!!]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>
